@@ -1,3 +1,9 @@
+## 1.0.1
+
+- Fixed repository URL
+- Added example project
+- Improved documentation
+
 ## 1.0.0
 
 - Initial release
