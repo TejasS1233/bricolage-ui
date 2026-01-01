@@ -31,7 +31,6 @@ Components for structuring your UI.
 - [Divider](/components/divider) - Visual separator
 - [Accordion](/components/accordion) - Collapsible content panels
 - [Tabs](/components/tabs) - Tabbed navigation
-- [Stepper](/components/stepper) - Step-by-step process indicator
 
 ### Feedback
 
