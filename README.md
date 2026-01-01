@@ -1,32 +1,80 @@
-# Flutter Studio - Complete System
+# Flutter Studio
 
-A modern Flutter component library with an interactive theme customization website.
+A complete Flutter UI component ecosystem with 40+ beautiful, customizable components. Available as both a traditional package and a modern CLI tool inspired by shadcn/ui.
 
-##  Projects
+## Projects
 
 ### [`flutter_studio/`](flutter_studio/)
 
-The main Flutter component library published to pub.dev. Contains 40+ customizable UI components with a flexible theme system.
+Flutter component library published to pub.dev. Contains 40+ customizable UI components with a flexible theme system.
 
-**For users:** Install via `flutter pub add flutter_studio`
+**Installation:**
+
+```bash
+flutter pub add flutter_studio
+```
+
+**Usage:**
+
+```dart
+import 'package:flutter_studio/flutter_studio.dart';
+```
+
+### [`flutter_studio_cli/`](flutter_studio_cli/)
+
+**NEW!** CLI tool for adding components directly to your project - shadcn/ui style. Copy components into your codebase instead of importing from a package.
+
+**Installation:**
+
+```bash
+dart pub global activate flutter_studio_cli
+```
+
+**Usage:**
+
+```bash
+flutter_studio init                    # Setup project
+flutter_studio add button card dialog  # Add components
+flutter_studio list                    # View all components
+```
+
+**Why use the CLI?**
+
+- Own the code - components live in your project
+- Full control - customize however you want
+- No package dependency - just copy what you need
 
 ### [`flutter_web_preview/`](flutter_web_preview/)
 
-Interactive web application for customizing and previewing components. Users can:
+Interactive web application for customizing and previewing components in real-time.
+
+**Features:**
 
 - Customize theme (colors, typography, spacing, radius, shadows, fonts)
-- Preview components in real-time on mobile/desktop frames
-- Export customized theme files as a ZIP
+- Preview components on mobile/desktop frames
+- Export customized theme files as ZIP
 
-**For deployment:** Deploy to your hosting platform to provide users with a theme generator.
+**Live Demo:** [https://flutterstudio.vercel.app](https://flutterstudio.vercel.app)
 
-##  Quick Start
+> **Note:** The live demo is a static Flutter web build optimized for component preview functionality. The UI is currently non-responsive and best viewed on desktop. A fully responsive web experience is under development.(will put docs about installation and complete guide on it as well :)
 
-### Publish the Library
+## Quick Start
+
+### Use the Package
 
 ```bash
-cd flutter_studio
-dart pub publish
+flutter pub add flutter_studio
+```
+
+### Use the CLI Tool
+
+```bash
+# Install globally
+dart pub global activate flutter_studio_cli
+
+# In your Flutter project
+flutter_studio init
+flutter_studio add button card
 ```
 
 ### Run the Website Locally
@@ -36,18 +84,8 @@ cd flutter_web_preview
 flutter run -d chrome
 ```
 
-### Deploy the Website
+## Links
 
-```bash
-cd flutter_web_preview
-flutter build web
-# Deploy the build/web/ directory to your hosting
-```
-
-##  User Workflow
-
-1. Install library: `flutter pub add flutter_studio`
-2. Visit your website to customize theme
-3. Download ZIP with customized theme files
-4. Copy theme files to their Flutter project
-5. Import and use components with custom theme
+- **Package:** [pub.dev/packages/flutter_studio](https://pub.dev/packages/flutter_studio)
+- **CLI Tool:** [pub.dev/packages/flutter_studio_cli](https://pub.dev/packages/flutter_studio_cli)
+- **Live Demo:** [flutterstudio.vercel.app](https://flutterstudio.vercel.app)
