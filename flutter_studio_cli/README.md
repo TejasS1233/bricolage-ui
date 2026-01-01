@@ -1,6 +1,19 @@
 # Flutter Studio CLI
 
-A command-line tool for adding beautiful, customizable UI components to your Flutter projects. Inspired by shadcn/ui, but for Flutter.
+**Production-grade component installation for Flutter.** Add beautiful, customizable UI components directly to your project—own the code, zero runtime dependencies, infinite customization.
+
+## Why CLI Over Package?
+
+Traditional packages lock you into their implementation. The Flutter Studio CLI gives you complete ownership of your UI code.
+
+| Feature             | CLI (Recommended)         | Package                |
+| ------------------- | ------------------------- | ---------------------- |
+| **Code Ownership**  | ✅ Lives in your codebase | ❌ External dependency |
+| **Customization**   | ✅ Modify freely          | ⚠️ Limited to props    |
+| **Dark Mode**       | ✅ Uses Theme.of(context) | ⚠️ Static colors       |
+| **Bundle Size**     | ✅ Only what you add      | ⚠️ Full package        |
+| **Version Control** | ✅ Track changes          | ❌ Version only        |
+| **Type Safety**     | ✅ Full access            | ⚠️ API surface only    |
 
 ## Installation
 
@@ -24,7 +37,7 @@ flutter pub global activate flutter_studio_cli
 flutter_studio init
 ```
 
-This creates `lib/components/` and `lib/theme/` directories and downloads all theme files.
+This creates `lib/components/` and `lib/theme/` directories and downloads all theme files (colors, typography, spacing, radius, shadows).
 
 ### Add components to your project
 
@@ -32,7 +45,7 @@ This creates `lib/components/` and `lib/theme/` directories and downloads all th
 flutter_studio add button card textfield
 ```
 
-Components are copied directly into your project. You own the code and can customize it however you want.
+Components are copied directly into your project under `lib/components/`. You own the code and can customize it however you want.
 
 ### List available components
 
@@ -40,7 +53,7 @@ Components are copied directly into your project. You own the code and can custo
 flutter_studio list
 ```
 
-## Available Components
+## Available Components (40+)
 
 **Buttons & Inputs:** button, textfield, textarea, checkbox, radio, switch, slider, select, dropdown
 
@@ -54,13 +67,14 @@ flutter_studio list
 
 **Advanced:** table, accordion, bottomsheet, popover, formfield, togglegroup
 
-## Why Flutter Studio CLI?
+## Production Benefits
 
-- 40+ Beautiful Components - Pre-built, customizable UI components
-- Copy, Don't Import - Components live in your project, not in node_modules
-- Full Control - Modify the code however you want
-- Fast Setup - Initialize and add components in seconds
-- Consistent Design - Built-in theme system with colors, typography, spacing
+- **Own Your Code**: Components live in your project. Customize them without constraints.
+- **Zero Runtime Dependencies**: No external packages in your dependency tree.
+- **Theme Integration**: Components use `Theme.of(context)` for automatic Dark Mode support.
+- **Version Control**: Track every component change in your Git history.
+- **Bundle Optimization**: Only the components you use are in your build.
+- **Type Safety**: Full access to implementation details, not just public APIs.
 
 ## Example Workflow
 
@@ -71,19 +85,31 @@ cd my_flutter_app
 # Initialize Flutter Studio
 flutter_studio init
 
-# Add some components
-flutter_studio add button card badge
+# Add components you need
+flutter_studio add button card badge dialog
 
 # Use them in your code
 import 'package:my_flutter_app/components/custom_button.dart';
 import 'package:my_flutter_app/components/custom_card.dart';
+
+// Customize freely - it's your code now!
 ```
+
+## Rapid Prototyping Alternative
+
+For quick mockups where customization isn't critical, use the package:
+
+```bash
+flutter pub add flutter_studio
+```
+
+[View Package Documentation →](https://pub.dev/packages/flutter_studio)
 
 ## Links
 
-- [GitHub Repository](https://github.com/TejasS1233/flutter-studio)
-- [Flutter Studio Package](https://pub.dev/packages/flutter_studio)
-- [Components Preview](https://flutterstudio.vercel.app)
+- **GitHub Repository**: [github.com/TejasS1233/flutter-studio](https://github.com/TejasS1233/flutter-studio)
+- **Flutter Studio Package**: [pub.dev/packages/flutter_studio](https://pub.dev/packages/flutter_studio)
+- **Live Component Preview**: [flutterstudio.vercel.app](https://flutterstudio.vercel.app)
 
 ## License
 

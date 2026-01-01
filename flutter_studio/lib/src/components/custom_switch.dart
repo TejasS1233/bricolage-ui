@@ -21,34 +21,39 @@ class CustomSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     final switchWidget = Switch(
       value: value,
       onChanged: onChanged,
-      activeColor: activeColor ?? UIColors.primary,
-      inactiveThumbColor: inactiveColor ?? UIColors.gray300,
+      activeColor: activeColor ?? colorScheme.primary,
+      inactiveThumbColor: inactiveColor ?? colorScheme.outline,
       activeTrackColor: Color.fromRGBO(
-        (activeColor ?? UIColors.primary).red,
-        (activeColor ?? UIColors.primary).green,
-        (activeColor ?? UIColors.primary).blue,
+        (activeColor ?? colorScheme.primary).red,
+        (activeColor ?? colorScheme.primary).green,
+        (activeColor ?? colorScheme.primary).blue,
         0.5,
       ),
-      inactiveTrackColor: trackColor ?? UIColors.muted,
+      inactiveTrackColor: trackColor ?? colorScheme.surfaceContainerHighest,
     );
 
     if (label != null) {
-      return Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            label!,
-            style: const TextStyle(
-              color: UIColors.foreground,
-              fontSize: 14,
+      return MergeSemantics(
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              label!,
+              style: TextStyle(
+                color: colorScheme.onSurface,
+                fontSize: 14,
+              ),
             ),
-          ),
-          const SizedBox(width: 12),
-          switchWidget,
-        ],
+            const SizedBox(width: 12),
+            switchWidget,
+          ],
+        ),
       );
     }
 

@@ -4,7 +4,7 @@ import '../theme/typography.dart';
 
 enum CustomTextFieldSize { small, medium, large }
 
-/// A customizable text field component
+/// A customizable text field component with accessibility support
 class CustomTextField extends StatelessWidget {
   final TextEditingController? controller;
   final String? label;
@@ -30,6 +30,7 @@ class CustomTextField extends StatelessWidget {
   final double? fontSize;
   final FontWeight? fontWeight;
   final bool enabled;
+  final String? semanticLabel;
 
   const CustomTextField({
     Key? key,
@@ -57,6 +58,7 @@ class CustomTextField extends StatelessWidget {
     this.fontSize,
     this.fontWeight,
     this.enabled = true,
+    this.semanticLabel,
   }) : super(key: key);
 
   EdgeInsets _getDefaultPadding() {
@@ -83,87 +85,97 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final defaultBgColor = backgroundColor ?? UIColors.white;
-    final defaultBorderColor = borderColor ?? UIColors.gray300;
-    final defaultFocusedBorderColor = focusedBorderColor ?? UIColors.primary;
-    final defaultTextColor = textColor ?? UIColors.gray900;
-    final defaultLabelColor = labelColor ?? UIColors.gray700;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    final defaultBgColor = backgroundColor ?? colorScheme.surface;
+    final defaultBorderColor = borderColor ?? colorScheme.outline;
+    final defaultFocusedBorderColor = focusedBorderColor ?? colorScheme.primary;
+    final defaultTextColor = textColor ?? colorScheme.onSurface;
+    final defaultLabelColor = labelColor ?? colorScheme.onSurfaceVariant;
     final defaultBorderRadius = borderRadius ?? 8.0;
     final defaultContentPadding = contentPadding ?? _getDefaultPadding();
     final defaultBorderWidth = borderWidth ?? 1.5;
     final defaultFontSize = fontSize ?? _getDefaultFontSize();
     final defaultFontWeight = fontWeight ?? UITypography.fontWeightNormal;
 
-    return TextField(
-      controller: controller,
-      obscureText: obscureText,
-      keyboardType: keyboardType,
-      onChanged: onChanged,
-      maxLines: maxLines,
+    return Semantics(
+      textField: true,
       enabled: enabled,
-      style: TextStyle(
-        color: defaultTextColor,
-        fontSize: defaultFontSize,
-        fontWeight: defaultFontWeight,
-      ),
-      decoration: InputDecoration(
-        labelText: label,
-        labelStyle: TextStyle(
-          color: defaultLabelColor,
+      label: semanticLabel ?? label,
+      hint: placeholder,
+      child: TextField(
+        controller: controller,
+        obscureText: obscureText,
+        keyboardType: keyboardType,
+        onChanged: onChanged,
+        maxLines: maxLines,
+        enabled: enabled,
+        style: TextStyle(
+          color: defaultTextColor,
           fontSize: defaultFontSize,
+          fontWeight: defaultFontWeight,
         ),
-        hintText: placeholder,
-        hintStyle: TextStyle(
-          color: UIColors.gray400,
-          fontSize: defaultFontSize,
-        ),
-        helperText: helperText,
-        errorText: errorText,
-        filled: true,
-        fillColor: defaultBgColor,
-        contentPadding: defaultContentPadding,
-        prefixIcon: prefixIcon != null
-            ? Icon(prefixIcon, color: UIColors.gray500)
-            : null,
-        suffixIcon: suffixIcon != null
-            ? IconButton(
-                icon: Icon(suffixIcon, color: UIColors.gray500),
-                onPressed: onSuffixIconTap,
-              )
-            : null,
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(defaultBorderRadius),
-          borderSide: BorderSide(
-            color: defaultBorderColor,
-            width: defaultBorderWidth,
+        decoration: InputDecoration(
+          labelText: label,
+          labelStyle: TextStyle(
+            color: defaultLabelColor,
+            fontSize: defaultFontSize,
           ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(defaultBorderRadius),
-          borderSide: BorderSide(
-            color: defaultFocusedBorderColor,
-            width: defaultBorderWidth,
+          hintText: placeholder,
+          hintStyle: TextStyle(
+            color: colorScheme.onSurface.withOpacity(0.4),
+            fontSize: defaultFontSize,
           ),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(defaultBorderRadius),
-          borderSide: BorderSide(
-            color: UIColors.error,
-            width: defaultBorderWidth,
+          helperText: helperText,
+          errorText: errorText,
+          filled: true,
+          fillColor: defaultBgColor,
+          contentPadding: defaultContentPadding,
+          prefixIcon: prefixIcon != null
+              ? Icon(prefixIcon, color: colorScheme.onSurfaceVariant)
+              : null,
+          suffixIcon: suffixIcon != null
+              ? IconButton(
+                  icon: Icon(suffixIcon, color: colorScheme.onSurfaceVariant),
+                  onPressed: onSuffixIconTap,
+                  tooltip: obscureText ? 'Toggle password visibility' : null,
+                )
+              : null,
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(defaultBorderRadius),
+            borderSide: BorderSide(
+              color: defaultBorderColor,
+              width: defaultBorderWidth,
+            ),
           ),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(defaultBorderRadius),
-          borderSide: BorderSide(
-            color: UIColors.error,
-            width: defaultBorderWidth,
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(defaultBorderRadius),
+            borderSide: BorderSide(
+              color: defaultFocusedBorderColor,
+              width: defaultBorderWidth,
+            ),
           ),
-        ),
-        disabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(defaultBorderRadius),
-          borderSide: BorderSide(
-            color: UIColors.gray200,
-            width: defaultBorderWidth,
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(defaultBorderRadius),
+            borderSide: BorderSide(
+              color: colorScheme.error,
+              width: defaultBorderWidth,
+            ),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(defaultBorderRadius),
+            borderSide: BorderSide(
+              color: colorScheme.error,
+              width: defaultBorderWidth,
+            ),
+          ),
+          disabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(defaultBorderRadius),
+            borderSide: BorderSide(
+              color: colorScheme.outline.withOpacity(0.3),
+              width: defaultBorderWidth,
+            ),
           ),
         ),
       ),

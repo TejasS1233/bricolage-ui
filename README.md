@@ -1,12 +1,53 @@
 # Flutter Studio
 
-A complete Flutter UI component ecosystem with 40+ beautiful, customizable components. Available as both a traditional package and a modern CLI tool inspired by shadcn/ui.
+**Production-ready Flutter components that you own.** Copy components directly into your project with our CLI tool, or use the package for rapid prototyping.
 
-## Projects
+## Recommended: CLI Tool (Production Mode)
 
-### [`flutter_studio/`](flutter_studio/)
+The Flutter Studio CLI lets you add components directly to your codebase—no runtime dependencies, complete control, infinite customization.
 
-Flutter component library published to pub.dev. Contains 40+ customizable UI components with a flexible theme system.
+**Installation:**
+
+```bash
+dart pub global activate flutter_studio_cli
+```
+
+**Usage:**
+
+```bash
+flutter_studio init                    # Setup your project
+flutter_studio add button card dialog  # Copy components you need
+flutter_studio list                    # View all 40+ components
+```
+
+**Why CLI-First?**
+
+| Feature             | CLI (Production)              | Package (Prototype)         |
+| ------------------- | ----------------------------- | --------------------------- |
+| **Code Ownership**  | Code lives in your project | External dependency      |
+| **Customization**   | Modify anything freely     | Limited to exposed props |
+| **Runtime Deps**    | Zero dependencies          | Package adds to bundle   |
+| **Dark Mode**       | Uses your Theme            | Static colors            |
+| **Version Control** | Track component changes    | Package version only     |
+| **Bundle Size**     | Only what you use          | Entire package           |
+
+### Available Components (40+)
+
+**Buttons & Inputs:** button, textfield, textarea, checkbox, radio, switch, slider, select, dropdown
+
+**Layout:** card, appbar, bottomnavbar, tabs, divider
+
+**Navigation:** breadcrumb, pagination
+
+**Feedback:** alert, toast, dialog, spinner, progress, skeleton
+
+**Display:** badge, chip, avatar, tooltip, empty
+
+**Advanced:** table, accordion, bottomsheet, popover, formfield, togglegroup
+
+## Alternative: Package Mode (Rapid Prototyping)
+
+Use the traditional package for quick mockups and demos where customization isn't critical.
 
 **Installation:**
 
@@ -18,31 +59,35 @@ flutter pub add flutter_studio
 
 ```dart
 import 'package:flutter_studio/flutter_studio.dart';
+
+// Use components directly
+CustomButton(
+  text: 'Click Me',
+  onPressed: () {},
+)
 ```
+
+**When to use Package Mode:**
+
+- Building quick prototypes or demos
+- Testing UI concepts rapidly
+- Don't need extensive customization
+- Prefer convenience over control
+
+## Projects
 
 ### [`flutter_studio_cli/`](flutter_studio_cli/)
 
-**NEW!** CLI tool for adding components directly to your project - shadcn/ui style. Copy components into your codebase instead of importing from a package.
+CLI tool for production development. Copy components into your project with full customization control.
 
-**Installation:**
+- **Docs:** [CLI README](flutter_studio_cli/README.md)
+- **Package:** [pub.dev/packages/flutter_studio_cli](https://pub.dev/packages/flutter_studio_cli)
 
-```bash
-dart pub global activate flutter_studio_cli
-```
+### [`flutter_studio/`](flutter_studio/)
 
-**Usage:**
+Component library package for rapid prototyping and demos.
 
-```bash
-flutter_studio init                    # Setup project
-flutter_studio add button card dialog  # Add components
-flutter_studio list                    # View all components
-```
-
-**Why use the CLI?**
-
-- Own the code - components live in your project
-- Full control - customize however you want
-- No package dependency - just copy what you need
+- **Package:** [pub.dev/packages/flutter_studio](https://pub.dev/packages/flutter_studio)
 
 ### [`flutter_web_preview/`](flutter_web_preview/)
 
@@ -56,36 +101,11 @@ Interactive web application for customizing and previewing components in real-ti
 
 **Live Demo:** [https://flutterstudio.vercel.app](https://flutterstudio.vercel.app)
 
-> **Note:** The live demo is a static Flutter web build optimized for component preview functionality. The UI is currently non-responsive and best viewed on desktop. A fully responsive web experience is under development.(will put docs about installation and complete guide on it as well :)
-
-## Quick Start
-
-### Use the Package
-
-```bash
-flutter pub add flutter_studio
-```
-
-### Use the CLI Tool
-
-```bash
-# Install globally
-dart pub global activate flutter_studio_cli
-
-# In your Flutter project
-flutter_studio init
-flutter_studio add button card
-```
-
-### Run the Website Locally
-
-```bash
-cd flutter_web_preview
-flutter run -d chrome
-```
+> **Note:** The live demo is a static Flutter web build optimized for component preview functionality. The UI is currently non-responsive and best viewed on desktop. A fully responsive web experience is under development.
 
 ## Links
 
-- **Package:** [pub.dev/packages/flutter_studio](https://pub.dev/packages/flutter_studio)
 - **CLI Tool:** [pub.dev/packages/flutter_studio_cli](https://pub.dev/packages/flutter_studio_cli)
+- **Package:** [pub.dev/packages/flutter_studio](https://pub.dev/packages/flutter_studio)
 - **Live Demo:** [flutterstudio.vercel.app](https://flutterstudio.vercel.app)
+- **GitHub:** [github.com/TejasS1233/flutter-studio](https://github.com/TejasS1233/flutter-studio)

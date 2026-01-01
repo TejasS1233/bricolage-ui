@@ -15,14 +15,30 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => AppState(createAllComponents()),
-      child: MaterialApp(
-        title: 'Flutter UI Library Preview',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
-          useMaterial3: true,
-        ),
-        home: const PreviewScreen(),
+      child: Consumer<AppState>(
+        builder: (context, appState, _) {
+          return MaterialApp(
+            title: 'Flutter UI Library Preview',
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
+              useMaterial3: true,
+              fontFamily: appState.globalTheme.fontFamily,
+              textTheme: TextTheme(
+                bodyLarge: TextStyle(
+                  fontFamily: appState.globalTheme.fontFamily,
+                ),
+                bodyMedium: TextStyle(
+                  fontFamily: appState.globalTheme.fontFamily,
+                ),
+                bodySmall: TextStyle(
+                  fontFamily: appState.globalTheme.fontFamily,
+                ),
+              ),
+            ),
+            home: const PreviewScreen(),
+          );
+        },
       ),
     );
   }

@@ -3,7 +3,7 @@ import '../theme/colors.dart';
 
 enum CustomCardVariant { elevated, outlined, filled }
 
-/// A customizable card component
+/// A customizable card component with accessibility support
 class CustomCard extends StatelessWidget {
   final Widget child;
   final CustomCardVariant variant;
@@ -17,6 +17,7 @@ class CustomCard extends StatelessWidget {
   final VoidCallback? onTap;
   final double? width;
   final double? height;
+  final String? semanticLabel;
 
   const CustomCard({
     Key? key,
@@ -32,12 +33,17 @@ class CustomCard extends StatelessWidget {
     this.onTap,
     this.width,
     this.height,
+    this.semanticLabel,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final defaultBgColor = backgroundColor ?? UIColors.white;
-    final defaultBorderColor = borderColor ?? UIColors.gray200;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    final defaultBgColor = backgroundColor ?? colorScheme.surface;
+    final defaultBorderColor =
+        borderColor ?? colorScheme.outline.withOpacity(0.2);
     final defaultBorderRadius = borderRadius ?? 12.0;
     final defaultPadding = padding ?? const EdgeInsets.all(16.0);
     final defaultMargin = margin ?? EdgeInsets.zero;
@@ -60,7 +66,7 @@ class CustomCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(defaultBorderRadius),
           boxShadow: [
             BoxShadow(
-              color: UIColors.gray900.withOpacity(0.1),
+              color: colorScheme.shadow.withOpacity(0.1),
               blurRadius: defaultElevation * 2,
               offset: Offset(0, defaultElevation),
             ),
@@ -93,14 +99,22 @@ class CustomCard extends StatelessWidget {
       child: cardContent,
     );
 
+    // Wrap with Semantics for accessibility
+    Widget semanticCard = Semantics(
+      container: true,
+      button: onTap != null,
+      label: semanticLabel,
+      child: card,
+    );
+
     if (onTap != null) {
       return InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(defaultBorderRadius),
-        child: card,
+        child: semanticCard,
       );
     }
 
-    return card;
+    return semanticCard;
   }
 }

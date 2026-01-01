@@ -172,7 +172,6 @@ class MobilePhoneFrame extends StatelessWidget {
     );
   }
 
-
   Widget _buildContent() {
     if (components.isEmpty) {
       return Container(
@@ -200,32 +199,62 @@ class MobilePhoneFrame extends StatelessWidget {
       }
     }
 
-    return Scaffold(
-      appBar: appBar != null
-          ? PreferredSize(
-              preferredSize: const Size.fromHeight(56),
-              child: appBar,
-            )
-          : null,
-      body: centerComponents.isEmpty
-          ? const Center(
-              child: Text(
-                'Select components from the left panel',
-                style: TextStyle(color: Colors.grey),
-              ),
-            )
-          : SingleChildScrollView(
-              padding: const EdgeInsets.all(20),
-              child: Center(
-                child: Wrap(
-                  spacing: 16,
-                  runSpacing: 16,
-                  alignment: WrapAlignment.center,
-                  children: centerComponents,
-                ),
-              ),
+    // Apply GlobalTheme to components
+    return Consumer<AppState>(
+      builder: (context, appState, _) {
+        final theme = appState.globalTheme;
+
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: theme.primary,
+              onPrimary: theme.primaryForeground,
+              secondary: theme.secondary,
+              onSecondary: theme.secondaryForeground,
+              surface: theme.card,
+              onSurface: theme.cardForeground,
+              background: theme.background,
+              onBackground: theme.foreground,
+              error: theme.destructive,
+              onError: theme.destructiveForeground,
+              outline: theme.border,
+              surfaceContainerHighest: theme.muted,
+              onSurfaceVariant: theme.mutedForeground,
             ),
-      bottomNavigationBar: bottomNav,
+            textTheme: Theme.of(context).textTheme.apply(
+              fontFamily: theme.fontFamily,
+              fontSizeFactor: theme.fontSizeScale,
+            ),
+          ),
+          child: Scaffold(
+            appBar: appBar != null
+                ? PreferredSize(
+                    preferredSize: const Size.fromHeight(56),
+                    child: appBar,
+                  )
+                : null,
+            body: centerComponents.isEmpty
+                ? const Center(
+                    child: Text(
+                      'Select components from the left panel',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  )
+                : SingleChildScrollView(
+                    padding: const EdgeInsets.all(20),
+                    child: Center(
+                      child: Wrap(
+                        spacing: 16,
+                        runSpacing: 16,
+                        alignment: WrapAlignment.center,
+                        children: centerComponents,
+                      ),
+                    ),
+                  ),
+            bottomNavigationBar: bottomNav,
+          ),
+        );
+      },
     );
   }
 }
