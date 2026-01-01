@@ -52,7 +52,6 @@ Components for app navigation.
 
 - [App Bar](/components/appbar) - Top application bar
 - [Bottom Nav Bar](/components/bottomnavbar) - Bottom navigation
-- [Drawer](/components/drawer) - Side navigation drawer
 - [Breadcrumb](/components/breadcrumb) - Hierarchical navigation
 - [Pagination](/components/pagination) - Page navigation controls
 
@@ -64,7 +63,6 @@ Components for displaying data and content.
 - [Badge](/components/badge) - Status indicators
 - [Chip](/components/chip) - Compact element for tags
 - [Table](/components/table) - Data tables
-- [Timeline](/components/timeline) - Chronological information
 
 ### Overlay
 
@@ -72,7 +70,6 @@ Components that appear on top of content.
 
 - [Bottom Sheet](/components/bottomsheet) - Modal bottom panel
 - [Popover](/components/popover) - Contextual popup
-- [Context Menu](/components/contextmenu) - Right-click menu
 
 ## Usage
 
