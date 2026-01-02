@@ -45,7 +45,7 @@ class AppState extends ChangeNotifier {
   void toggleComponent(String id) {
     final component = _components.firstWhere((c) => c.id == id);
     component.isSelected = !component.isSelected;
-    _showPreset = selectedComponents.isEmpty;
+    _showPreset = false;
     notifyListeners();
   }
 
@@ -72,7 +72,7 @@ class AppState extends ChangeNotifier {
     for (var component in _components) {
       component.isSelected = false;
     }
-    _showPreset = true;
+    _showPreset = false;
     notifyListeners();
   }
 
@@ -194,12 +194,11 @@ class AppState extends ChangeNotifier {
         final component = _components.firstWhere((c) => c.id == entry.key);
         component.isSelected = true;
 
-        // Apply custom properties
         for (var prop in entry.value.entries) {
           component.properties[prop.key] = prop.value;
         }
       } catch (e) {
-        // Component not found, skip
+        print('Component ${entry.key} not found');
       }
     }
   }

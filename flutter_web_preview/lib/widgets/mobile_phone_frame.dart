@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../models/app_state.dart';
+import '../models/component_config.dart';
 
 class MobilePhoneFrame extends StatelessWidget {
   final List<Widget> components;
@@ -177,7 +178,6 @@ class MobilePhoneFrame extends StatelessWidget {
     return Consumer<AppState>(
       builder: (context, appState, _) {
         if (components.isEmpty) {
-          // Load preset on first render if nothing selected
           if (appState.showPreset) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               appState.loadPreset(PresetType.dashboard);
@@ -194,22 +194,17 @@ class MobilePhoneFrame extends StatelessWidget {
           }
         }
 
-        Widget? appBar;
-        Widget? bottomNav;
-        final List<Widget> centerComponents = [];
-
-        for (final component in components) {
-          if (component.runtimeType.toString().contains('AppBar')) {
-            appBar = component;
-          } else if (component.runtimeType.toString().contains('BottomNav')) {
-            bottomNav = component;
-          } else {
-            centerComponents.add(component);
-          }
-        }
-
-        // Apply GlobalTheme to components
         final theme = appState.globalTheme;
+
+        final appBarConfig = appState.selectedComponents
+            .where((c) => c.id == 'appbar')
+            .firstOrNull;
+        final bottomNavConfig = appState.selectedComponents
+            .where((c) => c.id == 'bottomnav')
+            .firstOrNull;
+
+        final appBar = appBarConfig?.buildWidget(theme: theme);
+        final bottomNav = bottomNavConfig?.buildWidget(theme: theme);
 
         return Theme(
           data: Theme.of(context).copyWith(
@@ -247,11 +242,20 @@ class MobilePhoneFrame extends StatelessWidget {
                       child: appBar,
                     )
                   : null,
-              body: centerComponents.isEmpty
-                  ? const Center(
-                      child: Text(
-                        'Select components from the left panel',
-                        style: TextStyle(color: Colors.grey),
+              body:
+                  appState.selectedComponents
+                      .where((c) => c.id != 'appbar' && c.id != 'bottomnav')
+                      .isEmpty
+                  ? Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(24.0),
+                        child: Text(
+                          appState.selectedComponents.isEmpty
+                              ? 'Select components from the left panel'
+                              : 'Add more components to see them here',
+                          style: const TextStyle(color: Colors.grey),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     )
                   : SingleChildScrollView(
@@ -259,7 +263,11 @@ class MobilePhoneFrame extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: _buildLayoutForPreset(
-                          centerComponents,
+                          appState.selectedComponents
+                              .where(
+                                (c) => c.id != 'appbar' && c.id != 'bottomnav',
+                              )
+                              .toList(),
                           theme,
                           appState.currentPreset ?? PresetType.dashboard,
                         ),
@@ -274,10 +282,13 @@ class MobilePhoneFrame extends StatelessWidget {
   }
 
   List<Widget> _buildLayoutForPreset(
-    List<Widget> components,
+    List<ComponentConfig> components,
     dynamic theme,
     PresetType presetType,
   ) {
+    print(
+      'Building layout for $presetType with ${components.length} components',
+    );
     switch (presetType) {
       case PresetType.dashboard:
         return _buildDashboardLayout(components, theme);
@@ -292,49 +303,63 @@ class MobilePhoneFrame extends StatelessWidget {
     }
   }
 
-  List<Widget> _buildDashboardLayout(List<Widget> components, dynamic theme) {
+  List<Widget> _buildDashboardLayout(
+    List<ComponentConfig> components,
+    dynamic theme,
+  ) {
     final List<Widget> layout = [];
 
     final avatars = components
-        .where((c) => c.runtimeType.toString().contains('Avatar'))
+        .where((c) => c.id == 'avatar')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final badges = components
-        .where((c) => c.runtimeType.toString().contains('Badge'))
+        .where((c) => c.id == 'badge')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final cards = components
-        .where((c) => c.runtimeType.toString().contains('Card'))
+        .where((c) => c.id == 'card')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final buttons = components
-        .where((c) => c.runtimeType.toString().contains('Button'))
+        .where((c) => c.id == 'button')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final alerts = components
-        .where((c) => c.runtimeType.toString().contains('Alert'))
+        .where((c) => c.id == 'alert')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final progress = components
-        .where((c) => c.runtimeType.toString().contains('Progress'))
+        .where((c) => c.id == 'progress')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final textfields = components
-        .where((c) => c.runtimeType.toString().contains('TextField'))
+        .where((c) => c.id == 'textfield')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final chips = components
-        .where((c) => c.runtimeType.toString().contains('Chip'))
+        .where((c) => c.id == 'chip')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final switches = components
-        .where((c) => c.runtimeType.toString().contains('Switch'))
+        .where((c) => c.id == 'switch')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final others = components
         .where(
-          (c) =>
-              !c.runtimeType.toString().contains('Avatar') &&
-              !c.runtimeType.toString().contains('Badge') &&
-              !c.runtimeType.toString().contains('Card') &&
-              !c.runtimeType.toString().contains('Button') &&
-              !c.runtimeType.toString().contains('Alert') &&
-              !c.runtimeType.toString().contains('Progress') &&
-              !c.runtimeType.toString().contains('TextField') &&
-              !c.runtimeType.toString().contains('Chip') &&
-              !c.runtimeType.toString().contains('Switch'),
+          (c) => ![
+            'avatar',
+            'badge',
+            'card',
+            'button',
+            'alert',
+            'progress',
+            'textfield',
+            'chip',
+            'switch',
+          ].contains(c.id),
         )
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
 
     // Header section with avatar and badge
@@ -512,38 +537,61 @@ class MobilePhoneFrame extends StatelessWidget {
 
     // Other components
     if (others.isNotEmpty) {
-      layout.add(Wrap(spacing: 16, runSpacing: 16, children: others));
+      layout.add(
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: others
+              .map(
+                (other) => Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: other,
+                ),
+              )
+              .toList(),
+        ),
+      );
     }
 
     return layout;
   }
 
-  List<Widget> _buildProfileLayout(List<Widget> components, dynamic theme) {
+  List<Widget> _buildProfileLayout(
+    List<ComponentConfig> components,
+    dynamic theme,
+  ) {
     final List<Widget> layout = [];
 
     final avatars = components
-        .where((c) => c.runtimeType.toString().contains('Avatar'))
+        .where((c) => c.id == 'avatar')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final badges = components
-        .where((c) => c.runtimeType.toString().contains('Badge'))
+        .where((c) => c.id == 'badge')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final cards = components
-        .where((c) => c.runtimeType.toString().contains('Card'))
+        .where((c) => c.id == 'card')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final buttons = components
-        .where((c) => c.runtimeType.toString().contains('Button'))
+        .where((c) => c.id == 'button')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final textfields = components
-        .where((c) => c.runtimeType.toString().contains('TextField'))
+        .where((c) => c.id == 'textfield')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final chips = components
-        .where((c) => c.runtimeType.toString().contains('Chip'))
+        .where((c) => c.id == 'chip')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final dividers = components
-        .where((c) => c.runtimeType.toString().contains('Divider'))
+        .where((c) => c.id == 'divider')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final switches = components
-        .where((c) => c.runtimeType.toString().contains('Switch'))
+        .where((c) => c.id == 'switch')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
 
     // Profile header - centered avatar with badge
@@ -641,32 +689,76 @@ class MobilePhoneFrame extends StatelessWidget {
       layout.add(Center(child: buttons.first));
     }
 
+    // Other components
+    final others = components
+        .where(
+          (c) => ![
+            'avatar',
+            'badge',
+            'card',
+            'button',
+            'textfield',
+            'chip',
+            'divider',
+            'switch',
+          ].contains(c.id),
+        )
+        .map((c) => c.buildWidget(theme: theme))
+        .toList();
+
+    if (others.isNotEmpty) {
+      layout.add(const SizedBox(height: 16));
+      layout.add(
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: others
+              .map(
+                (other) => Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: other,
+                ),
+              )
+              .toList(),
+        ),
+      );
+    }
+
     return layout;
   }
 
-  List<Widget> _buildFeedLayout(List<Widget> components, dynamic theme) {
+  List<Widget> _buildFeedLayout(
+    List<ComponentConfig> components,
+    dynamic theme,
+  ) {
     final List<Widget> layout = [];
 
     final textfields = components
-        .where((c) => c.runtimeType.toString().contains('TextField'))
+        .where((c) => c.id == 'textfield')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final chips = components
-        .where((c) => c.runtimeType.toString().contains('Chip'))
+        .where((c) => c.id == 'chip')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final cards = components
-        .where((c) => c.runtimeType.toString().contains('Card'))
+        .where((c) => c.id == 'card')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final avatars = components
-        .where((c) => c.runtimeType.toString().contains('Avatar'))
+        .where((c) => c.id == 'avatar')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final badges = components
-        .where((c) => c.runtimeType.toString().contains('Badge'))
+        .where((c) => c.id == 'badge')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final buttons = components
-        .where((c) => c.runtimeType.toString().contains('Button'))
+        .where((c) => c.id == 'button')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final dividers = components
-        .where((c) => c.runtimeType.toString().contains('Divider'))
+        .where((c) => c.id == 'divider')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
 
     // Search bar
@@ -748,35 +840,78 @@ class MobilePhoneFrame extends StatelessWidget {
       );
     }
 
+    // Other components
+    final others = components
+        .where(
+          (c) => ![
+            'textfield',
+            'chip',
+            'card',
+            'avatar',
+            'badge',
+            'button',
+            'divider',
+          ].contains(c.id),
+        )
+        .map((c) => c.buildWidget(theme: theme))
+        .toList();
+
+    if (others.isNotEmpty) {
+      layout.add(
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: others
+              .map(
+                (other) => Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: other,
+                ),
+              )
+              .toList(),
+        ),
+      );
+    }
+
     return layout;
   }
 
-  List<Widget> _buildFormLayout(List<Widget> components, dynamic theme) {
+  List<Widget> _buildFormLayout(
+    List<ComponentConfig> components,
+    dynamic theme,
+  ) {
     final List<Widget> layout = [];
 
     final textfields = components
-        .where((c) => c.runtimeType.toString().contains('TextField'))
+        .where((c) => c.id == 'textfield')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final dropdowns = components
-        .where((c) => c.runtimeType.toString().contains('Dropdown'))
+        .where((c) => c.id == 'dropdown')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final checkboxes = components
-        .where((c) => c.runtimeType.toString().contains('Checkbox'))
+        .where((c) => c.id == 'checkbox')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final radios = components
-        .where((c) => c.runtimeType.toString().contains('Radio'))
+        .where((c) => c.id == 'radio')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final sliders = components
-        .where((c) => c.runtimeType.toString().contains('Slider'))
+        .where((c) => c.id == 'slider')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final switches = components
-        .where((c) => c.runtimeType.toString().contains('Switch'))
+        .where((c) => c.id == 'switch')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final buttons = components
-        .where((c) => c.runtimeType.toString().contains('Button'))
+        .where((c) => c.id == 'button')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final alerts = components
-        .where((c) => c.runtimeType.toString().contains('Alert'))
+        .where((c) => c.id == 'alert')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
 
     // Alert at top
@@ -858,38 +993,84 @@ class MobilePhoneFrame extends StatelessWidget {
       );
     }
 
+    // Other components
+    final others = components
+        .where(
+          (c) => ![
+            'textfield',
+            'dropdown',
+            'checkbox',
+            'radio',
+            'slider',
+            'switch',
+            'button',
+            'alert',
+          ].contains(c.id),
+        )
+        .map((c) => c.buildWidget(theme: theme))
+        .toList();
+
+    if (others.isNotEmpty) {
+      layout.add(const SizedBox(height: 16));
+      layout.add(
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: others
+              .map(
+                (other) => Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: other,
+                ),
+              )
+              .toList(),
+        ),
+      );
+    }
+
     return layout;
   }
 
-  List<Widget> _buildSettingsLayout(List<Widget> components, dynamic theme) {
+  List<Widget> _buildSettingsLayout(
+    List<ComponentConfig> components,
+    dynamic theme,
+  ) {
     final List<Widget> layout = [];
 
     final avatars = components
-        .where((c) => c.runtimeType.toString().contains('Avatar'))
+        .where((c) => c.id == 'avatar')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final cards = components
-        .where((c) => c.runtimeType.toString().contains('Card'))
+        .where((c) => c.id == 'card')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final switches = components
-        .where((c) => c.runtimeType.toString().contains('Switch'))
+        .where((c) => c.id == 'switch')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final sliders = components
-        .where((c) => c.runtimeType.toString().contains('Slider'))
+        .where((c) => c.id == 'slider')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final radios = components
-        .where((c) => c.runtimeType.toString().contains('Radio'))
+        .where((c) => c.id == 'radio')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final checkboxes = components
-        .where((c) => c.runtimeType.toString().contains('Checkbox'))
+        .where((c) => c.id == 'checkbox')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final dividers = components
-        .where((c) => c.runtimeType.toString().contains('Divider'))
+        .where((c) => c.id == 'divider')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final buttons = components
-        .where((c) => c.runtimeType.toString().contains('Button'))
+        .where((c) => c.id == 'button')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
     final alerts = components
-        .where((c) => c.runtimeType.toString().contains('Alert'))
+        .where((c) => c.id == 'alert')
+        .map((c) => c.buildWidget(theme: theme))
         .toList();
 
     // Profile section
@@ -1022,6 +1203,41 @@ class MobilePhoneFrame extends StatelessWidget {
       layout.add(
         Center(
           child: SizedBox(width: double.infinity, child: buttons.first),
+        ),
+      );
+    }
+
+    // Other components
+    final others = components
+        .where(
+          (c) => ![
+            'avatar',
+            'card',
+            'switch',
+            'slider',
+            'radio',
+            'checkbox',
+            'divider',
+            'button',
+            'alert',
+          ].contains(c.id),
+        )
+        .map((c) => c.buildWidget(theme: theme))
+        .toList();
+
+    if (others.isNotEmpty) {
+      layout.add(const SizedBox(height: 16));
+      layout.add(
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: others
+              .map(
+                (other) => Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: other,
+                ),
+              )
+              .toList(),
         ),
       );
     }
