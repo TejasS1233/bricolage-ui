@@ -120,6 +120,7 @@ export default defineConfig({
   },
 
   head: [
+    ['meta', { name: 'google-site-verification', content: 'T0Dvi6wXWHUiT-lDYluEfyGiyQTNQmrLJDoEQVpD7Z8' }],
     ['link', { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/logo-32x32.png' }],
     ['link', { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/logo-32x32.png' }],
     ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/logo-32x32.png' }],
