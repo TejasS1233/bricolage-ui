@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme/colors.dart';
+import '../theme/theme.dart';
 
 class CustomRadio<T> extends StatelessWidget {
   final T value;
@@ -42,7 +42,7 @@ class CustomRadio<T> extends StatelessWidget {
                 label!,
                 style: const TextStyle(
                   color: UIColors.foreground,
-                  fontSize: 14,
+                  fontSize: UITypography.fontSizeSM,
                 ),
               ),
             ],

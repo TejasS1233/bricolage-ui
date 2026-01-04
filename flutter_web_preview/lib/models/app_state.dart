@@ -46,6 +46,7 @@ class AppState extends ChangeNotifier {
     final component = _components.firstWhere((c) => c.id == id);
     component.isSelected = !component.isSelected;
     _showPreset = false;
+    _currentPreset = null; // Clear preset when manually selecting components
     notifyListeners();
   }
 

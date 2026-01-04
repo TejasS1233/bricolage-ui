@@ -123,20 +123,29 @@ CustomTextField(
 )
 ```
 
-### Override Theme Files (CLI Mode)
+### Override Theme File (CLI Mode)
 
-When using CLI, directly edit theme files for full control:
+When using CLI, directly edit the unified theme file for full control:
 
 ```dart
-// lib/theme/colors.dart
+// lib/theme/theme.dart
 class UIColors {
   static const Color primary = Color(0xFF6366F1);
   static const Color secondary = Color(0xFF8B5CF6);
   // Full customization
 }
+
+class UITypography {
+  // Typography customization
+}
+
+class UIRadius {
+  // Border radius customization
+}
+// ... all theme classes in one file
 ```
 
-All theme files: `colors.dart`, `typography.dart`, `radius.dart`, `spacing.dart`, `shadows.dart`, `effects.dart`
+All theme constants are in a single consolidated `theme.dart` file for convenience.
 
 ## Accessibility
 

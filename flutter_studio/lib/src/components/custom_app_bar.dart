@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme/colors.dart';
-import '../theme/typography.dart';
+import '../theme/theme.dart';
 
 enum CustomAppBarSize { small, medium, large }
 

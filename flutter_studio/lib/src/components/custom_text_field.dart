@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme/typography.dart';
+import '../theme/theme.dart';
 
 enum CustomTextFieldSize { small, medium, large }
 
@@ -84,14 +84,11 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
-    final defaultBgColor = backgroundColor ?? colorScheme.surface;
-    final defaultBorderColor = borderColor ?? colorScheme.outline;
-    final defaultFocusedBorderColor = focusedBorderColor ?? colorScheme.primary;
-    final defaultTextColor = textColor ?? colorScheme.onSurface;
-    final defaultLabelColor = labelColor ?? colorScheme.onSurfaceVariant;
+    final defaultBgColor = backgroundColor ?? UIColors.background;
+    final defaultBorderColor = borderColor ?? UIColors.border;
+    final defaultFocusedBorderColor = focusedBorderColor ?? UIColors.primary;
+    final defaultTextColor = textColor ?? UIColors.foreground;
+    final defaultLabelColor = labelColor ?? UIColors.mutedForeground;
     final defaultBorderRadius = borderRadius ?? 8.0;
     final defaultContentPadding = contentPadding ?? _getDefaultPadding();
     final defaultBorderWidth = borderWidth ?? 1.5;
@@ -123,7 +120,7 @@ class CustomTextField extends StatelessWidget {
           ),
           hintText: placeholder,
           hintStyle: TextStyle(
-            color: colorScheme.onSurface.withOpacity(0.4),
+            color: UIColors.mutedForeground,
             fontSize: defaultFontSize,
           ),
           helperText: helperText,
@@ -132,11 +129,11 @@ class CustomTextField extends StatelessWidget {
           fillColor: defaultBgColor,
           contentPadding: defaultContentPadding,
           prefixIcon: prefixIcon != null
-              ? Icon(prefixIcon, color: colorScheme.onSurfaceVariant)
+              ? Icon(prefixIcon, color: UIColors.mutedForeground)
               : null,
           suffixIcon: suffixIcon != null
               ? IconButton(
-                  icon: Icon(suffixIcon, color: colorScheme.onSurfaceVariant),
+                  icon: Icon(suffixIcon, color: UIColors.mutedForeground),
                   onPressed: onSuffixIconTap,
                   tooltip: obscureText ? 'Toggle password visibility' : null,
                 )
@@ -158,21 +155,21 @@ class CustomTextField extends StatelessWidget {
           errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(defaultBorderRadius),
             borderSide: BorderSide(
-              color: colorScheme.error,
+              color: UIColors.error,
               width: defaultBorderWidth,
             ),
           ),
           focusedErrorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(defaultBorderRadius),
             borderSide: BorderSide(
-              color: colorScheme.error,
+              color: UIColors.error,
               width: defaultBorderWidth,
             ),
           ),
           disabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(defaultBorderRadius),
             borderSide: BorderSide(
-              color: colorScheme.outline.withOpacity(0.3),
+              color: UIColors.border,
               width: defaultBorderWidth,
             ),
           ),

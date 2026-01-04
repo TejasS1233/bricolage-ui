@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/theme.dart';
 
 class BreadcrumbItem {
   final String label;
@@ -26,15 +27,15 @@ class CustomBreadcrumb extends StatelessWidget {
     this.separator = const Icon(Icons.chevron_right, size: 16),
     this.textColor,
     this.activeTextColor,
-    this.fontSize = 14.0,
+    this.fontSize = UITypography.fontSizeSM,
     this.iconSize = 16.0,
   });
 
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: 8,
-      runSpacing: 8,
+      spacing: UISpacing.sm,
+      runSpacing: UISpacing.sm,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: items.asMap().entries.map((entry) {
         final index = entry.key;
@@ -58,19 +59,20 @@ class CustomBreadcrumb extends StatelessWidget {
                         item.icon,
                         size: iconSize,
                         color: isLast
-                            ? (activeTextColor ?? Colors.black87)
-                            : (textColor ?? Colors.grey[600]),
+                            ? (activeTextColor ?? UIColors.foreground)
+                            : (textColor ?? UIColors.mutedForeground),
                       ),
-                      const SizedBox(width: 6),
+                      const SizedBox(width: UISpacing.xs * 1.5),
                     ],
                     Text(
                       item.label,
                       style: TextStyle(
                         fontSize: fontSize,
                         color: isLast
-                            ? (activeTextColor ?? Colors.black87)
-                            : (textColor ?? Colors.grey[600]),
-                        fontWeight: isLast ? FontWeight.w600 : FontWeight.normal,
+                            ? (activeTextColor ?? UIColors.foreground)
+                            : (textColor ?? UIColors.mutedForeground),
+                        fontWeight:
+                            isLast ? FontWeight.w600 : FontWeight.normal,
                         decoration: !isLast && item.onTap != null
                             ? TextDecoration.underline
                             : null,
@@ -81,7 +83,7 @@ class CustomBreadcrumb extends StatelessWidget {
               ),
             ),
             if (!isLast) ...[
-              const SizedBox(width: 8),
+              const SizedBox(width: UISpacing.sm),
               separator,
             ],
           ],

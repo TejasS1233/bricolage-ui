@@ -5,7 +5,7 @@ import '../models/app_state.dart';
 import '../widgets/component_selector.dart';
 import '../widgets/mobile_phone_frame.dart';
 import '../widgets/customization_panel.dart';
-import '../services/zip_builder.dart';
+import '../services/component_code_generator.dart';
 import '../services/download_helper.dart';
 
 // Breakpoint constants
@@ -23,25 +23,18 @@ class _PreviewScreenState extends State<PreviewScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   Future<void> _handleDownload(BuildContext context, AppState appState) async {
-    if (appState.selectedComponents.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Select components to export')),
-      );
-      return;
-    }
-
     try {
-      final zipData = await ZipBuilder.buildThemeZip(
-        appState.selectedComponents,
+      // Generate the consolidated theme.dart file with user's customizations
+      final themeContent = ComponentCodeGenerator.generateConsolidatedThemeFile(
         appState.globalTheme,
       );
 
-      DownloadHelper.downloadZip(zipData, 'flutter_ui_theme.zip');
+      DownloadHelper.downloadFile(themeContent, 'theme.dart');
 
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Theme exported successfully!'),
+            content: Text('theme.dart downloaded successfully!'),
             backgroundColor: Colors.green,
           ),
         );
@@ -60,7 +53,8 @@ class _PreviewScreenState extends State<PreviewScreen> {
     return LayoutBuilder(
       builder: (context, constraints) {
         final isDesktop = constraints.maxWidth >= kDesktopBreakpoint;
-        final isTablet = constraints.maxWidth >= kTabletBreakpoint &&
+        final isTablet =
+            constraints.maxWidth >= kTabletBreakpoint &&
             constraints.maxWidth < kDesktopBreakpoint;
         final isMobile = constraints.maxWidth < kTabletBreakpoint;
 
@@ -284,16 +278,11 @@ class _PreviewScreenState extends State<PreviewScreen> {
     return Consumer<AppState>(
       builder: (context, appState, _) {
         return Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 12,
-            vertical: 6,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
             color: const Color(0xFF0460c6).withOpacity(0.05),
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(
-              color: const Color(0xFF0460c6).withOpacity(0.2),
-            ),
+            border: Border.all(color: const Color(0xFF0460c6).withOpacity(0.2)),
           ),
           child: DropdownButton<PresetType>(
             value: appState.currentPreset,
@@ -359,6 +348,14 @@ class _PreviewScreenState extends State<PreviewScreen> {
             onChanged: (PresetType? value) {
               if (value != null) {
                 appState.loadPreset(value);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Loaded ${value.name.toUpperCase()} preset'),
+                    duration: const Duration(seconds: 2),
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: Colors.green.shade600,
+                  ),
+                );
               }
             },
           ),
@@ -375,18 +372,13 @@ class _PreviewScreenState extends State<PreviewScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(color: Colors.grey.shade200),
-                ),
+                border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
               ),
               child: Row(
                 children: [
                   const Text(
                     'Components',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const Spacer(),
                   IconButton(
@@ -418,18 +410,13 @@ class _PreviewScreenState extends State<PreviewScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(color: Colors.grey.shade200),
-                ),
+                border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
               ),
               child: Row(
                 children: [
                   const Text(
                     'Customize Theme',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const Spacer(),
                   IconButton(
@@ -450,10 +437,7 @@ class _PreviewScreenState extends State<PreviewScreen> {
   Widget _buildDeviceFrameSelector(AppState appState, {bool compact = false}) {
     return Container(
       margin: EdgeInsets.all(compact ? 8 : 16),
-      padding: EdgeInsets.symmetric(
-        horizontal: compact ? 8 : 16,
-        vertical: 8,
-      ),
+      padding: EdgeInsets.symmetric(horizontal: compact ? 8 : 16, vertical: 8),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),

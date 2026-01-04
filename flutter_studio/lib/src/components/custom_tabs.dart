@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme/colors.dart';
-import '../theme/typography.dart';
+import '../theme/theme.dart';
 
 class CustomTabs extends StatelessWidget {
   final List<String> tabs;
@@ -25,7 +24,7 @@ class CustomTabs extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         border: Border(
-          bottom: BorderSide(color: UIColors.border, width: 1),
+          bottom: BorderSide(color: UIColors.border, width: UIBorder.thin),
         ),
       ),
       child: TabBar(
@@ -35,11 +34,11 @@ class CustomTabs extends StatelessWidget {
         labelColor: labelColor ?? UIColors.foreground,
         unselectedLabelColor: unselectedLabelColor ?? UIColors.mutedForeground,
         labelStyle: const TextStyle(
-          fontSize: 14,
+          fontSize: UITypography.fontSizeSM,
           fontWeight: UITypography.fontWeightMedium,
         ),
         unselectedLabelStyle: const TextStyle(
-          fontSize: 14,
+          fontSize: UITypography.fontSizeSM,
           fontWeight: UITypography.fontWeightNormal,
         ),
         onTap: onTap,

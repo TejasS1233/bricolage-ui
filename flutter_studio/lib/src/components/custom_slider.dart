@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme/colors.dart';
+import '../theme/theme.dart';
 
 class CustomSlider extends StatelessWidget {
   final double value;
@@ -36,23 +36,19 @@ class CustomSlider extends StatelessWidget {
             label!,
             style: const TextStyle(
               color: UIColors.foreground,
-              fontSize: 14,
+              fontSize: UITypography.fontSizeSM,
               fontWeight: FontWeight.w500,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: UISpacing.sm),
         ],
         SliderTheme(
           data: SliderThemeData(
             activeTrackColor: activeColor ?? UIColors.primary,
             inactiveTrackColor: inactiveColor ?? UIColors.muted,
             thumbColor: thumbColor ?? UIColors.primary,
-            overlayColor: Color.fromRGBO(
-              (activeColor ?? UIColors.primary).red,
-              (activeColor ?? UIColors.primary).green,
-              (activeColor ?? UIColors.primary).blue,
-              0.1,
-            ),
+            overlayColor:
+                (activeColor ?? UIColors.primary).withValues(alpha: 0.1),
             trackHeight: 4.0,
           ),
           child: Slider(

@@ -39,9 +39,4 @@ export 'src/components/custom_dropdown.dart';
 export 'src/components/custom_popover.dart';
 export 'src/components/custom_table.dart';
 
-export 'src/theme/colors.dart';
-export 'src/theme/typography.dart';
-export 'src/theme/radius.dart';
-export 'src/theme/spacing.dart';
-export 'src/theme/shadows.dart';
-export 'src/theme/effects.dart';
+export 'src/theme/theme.dart';

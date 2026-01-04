@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/theme.dart';
 
 class DropdownItem {
   final String label;
@@ -34,9 +35,9 @@ class CustomDropdown extends StatefulWidget {
     this.backgroundColor,
     this.textColor,
     this.hoverColor,
-    this.borderRadius = 8.0,
+    this.borderRadius = UIRadius.md,
     this.elevation = 4.0,
-    this.fontSize = 14.0,
+    this.fontSize = UITypography.fontSizeSM,
     this.width,
   });
 
@@ -60,7 +61,8 @@ class _CustomDropdownState extends State<CustomDropdown> {
           Positioned.fill(
             child: GestureDetector(
               onTap: _hideDropdown,
-              child: Container(color: Colors.transparent),
+              child:
+                  Container(color: UIColors.background.withValues(alpha: 0.0)),
             ),
           ),
           // Dropdown menu
@@ -71,17 +73,18 @@ class _CustomDropdownState extends State<CustomDropdown> {
             child: Material(
               elevation: widget.elevation,
               borderRadius: BorderRadius.circular(widget.borderRadius),
-              color: widget.backgroundColor ?? Colors.white,
+              color: widget.backgroundColor ?? UIColors.background,
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(widget.borderRadius),
-                  border: Border.all(color: Colors.grey.shade200),
+                  border: Border.all(color: UIColors.gray200),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: widget.items.map((item) {
                     if (item.isDivider) {
-                      return Divider(height: 1, color: Colors.grey.shade300);
+                      return Divider(
+                          height: UIBorder.thin, color: UIColors.gray300);
                     }
                     return _buildMenuItem(item);
                   }).toList(),
@@ -108,18 +111,20 @@ class _CustomDropdownState extends State<CustomDropdown> {
         item.onTap?.call();
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        padding: const EdgeInsets.symmetric(
+            horizontal: UISpacing.md, vertical: UISpacing.md / 1.33),
         child: Row(
           children: [
             if (item.icon != null) ...[
-              Icon(item.icon, size: 18, color: widget.textColor ?? Colors.grey[700]),
-              const SizedBox(width: 12),
+              Icon(item.icon,
+                  size: 18, color: widget.textColor ?? UIColors.gray700),
+              const SizedBox(width: UISpacing.md / 1.33),
             ],
             Text(
               item.label,
               style: TextStyle(
                 fontSize: widget.fontSize,
-                color: widget.textColor ?? Colors.grey[800],
+                color: widget.textColor ?? UIColors.gray800,
               ),
             ),
           ],

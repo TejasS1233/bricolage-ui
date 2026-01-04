@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/theme.dart';
 
 enum SpinnerType { circular, dots, pulse }
 
@@ -20,14 +21,16 @@ class CustomSpinner extends StatefulWidget {
   State<CustomSpinner> createState() => _CustomSpinnerState();
 }
 
-class _CustomSpinnerState extends State<CustomSpinner> with SingleTickerProviderStateMixin {
+class _CustomSpinnerState extends State<CustomSpinner>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: Duration(milliseconds: widget.type == SpinnerType.pulse ? 1500 : 1200),
+      duration: Duration(
+          milliseconds: widget.type == SpinnerType.pulse ? 1500 : 1200),
       vsync: this,
     )..repeat();
   }
@@ -48,11 +51,11 @@ class _CustomSpinnerState extends State<CustomSpinner> with SingleTickerProvider
           child: CircularProgressIndicator(
             strokeWidth: widget.strokeWidth,
             valueColor: AlwaysStoppedAnimation<Color>(
-              widget.color ?? Colors.blue,
+              widget.color ?? UIColors.primary,
             ),
           ),
         );
-      
+
       case SpinnerType.dots:
         return SizedBox(
           width: widget.size * 2,
@@ -73,7 +76,7 @@ class _CustomSpinnerState extends State<CustomSpinner> with SingleTickerProvider
                       height: widget.size / 4,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: widget.color ?? Colors.blue,
+                        color: widget.color ?? UIColors.primary,
                       ),
                     ),
                   );
@@ -82,7 +85,7 @@ class _CustomSpinnerState extends State<CustomSpinner> with SingleTickerProvider
             }),
           ),
         );
-      
+
       case SpinnerType.pulse:
         return AnimatedBuilder(
           animation: _controller,
@@ -99,7 +102,7 @@ class _CustomSpinnerState extends State<CustomSpinner> with SingleTickerProvider
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: widget.color ?? Colors.blue,
+                      color: widget.color ?? UIColors.primary,
                       width: widget.strokeWidth,
                     ),
                   ),

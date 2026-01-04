@@ -176,17 +176,28 @@ Don't settle for Material Blue. Flutter Studio comes with **12+ professional pre
 
 1. **Pick a preset** in the [web preview](https://flutterstudio.vercel.app) dropdown
 2. **Customize** colors, typography, spacing, and visual effects
-3. **Export** → Theme is generated as `colors.dart`, `typography.dart`, `effects.dart`, etc.
-4. **Copy-paste** the generated files into your project's `lib/theme/` folder
+3. **Export** → Theme is generated as a single unified `theme.dart` file
+4. **Copy-paste** the generated file into your project's `lib/theme/` folder
 
 ```dart
-// Your exported theme (lib/theme/colors.dart)
+// Your exported theme (lib/theme/theme.dart)
 class UIColors {
   static const Color primary = Color(0xFFFFE600);    // Neo-Brutalism yellow
   static const Color background = Color(0xFFFFFBEB); // Warm white
   static const Color border = Color(0xFF000000);     // Sharp black borders
   // ... all your customized colors
 }
+
+class UITypography {
+  static const double fontSizeBase = 16.0;
+  // ... typography settings
+}
+
+class UIRadius {
+  static const double md = 8.0;
+  // ... radius values
+}
+// ... and more theme classes in one file
 ```
 
 ---

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/theme.dart';
 
 class CustomSwitch extends StatelessWidget {
   final bool value;
@@ -20,21 +21,14 @@ class CustomSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
     final switchWidget = Switch(
       value: value,
       onChanged: onChanged,
-      activeColor: activeColor ?? colorScheme.primary,
-      inactiveThumbColor: inactiveColor ?? colorScheme.outline,
-      activeTrackColor: Color.fromRGBO(
-        (activeColor ?? colorScheme.primary).red,
-        (activeColor ?? colorScheme.primary).green,
-        (activeColor ?? colorScheme.primary).blue,
-        0.5,
-      ),
-      inactiveTrackColor: trackColor ?? colorScheme.surfaceContainerHighest,
+      activeColor: activeColor ?? UIColors.primary,
+      inactiveThumbColor: inactiveColor ?? UIColors.gray400,
+      activeTrackColor:
+          (activeColor ?? UIColors.primary).withValues(alpha: 0.5),
+      inactiveTrackColor: trackColor ?? UIColors.muted,
     );
 
     if (label != null) {
@@ -45,11 +39,11 @@ class CustomSwitch extends StatelessWidget {
             Text(
               label!,
               style: TextStyle(
-                color: colorScheme.onSurface,
-                fontSize: 14,
+                color: UIColors.foreground,
+                fontSize: UITypography.fontSizeSM,
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: UISpacing.md * 0.75),
             switchWidget,
           ],
         ),

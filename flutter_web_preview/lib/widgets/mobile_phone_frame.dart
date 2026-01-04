@@ -285,15 +285,24 @@ class MobilePhoneFrame extends StatelessWidget {
                         padding: const EdgeInsets.all(16),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: _buildLayoutForPreset(
-                            appState.selectedComponents
-                                .where(
-                                  (c) => c.id != 'appbar' && c.id != 'bottomnav',
+                          children: appState.currentPreset != null
+                              ? _buildLayoutForPreset(
+                                  appState.selectedComponents
+                                      .where(
+                                        (c) => c.id != 'appbar' && c.id != 'bottomnav',
+                                      )
+                                      .toList(),
+                                  theme,
+                                  appState.currentPreset!,
                                 )
-                                .toList(),
-                            theme,
-                            appState.currentPreset ?? PresetType.dashboard,
-                          ),
+                              : _buildSimpleLayout(
+                                  appState.selectedComponents
+                                      .where(
+                                        (c) => c.id != 'appbar' && c.id != 'bottomnav',
+                                      )
+                                      .toList(),
+                                  theme,
+                                ),
                         ),
                       ),
                 bottomNavigationBar: bottomNav,
@@ -325,6 +334,21 @@ class MobilePhoneFrame extends StatelessWidget {
       case PresetType.settings:
         return _buildSettingsLayout(components, theme);
     }
+  }
+
+  // Simple layout: just show the selected components without mock data
+  List<Widget> _buildSimpleLayout(
+    List<ComponentConfig> components,
+    dynamic theme,
+  ) {
+    final List<Widget> layout = [];
+    
+    for (var component in components) {
+      layout.add(component.buildWidget(theme: theme));
+      layout.add(const SizedBox(height: 16));
+    }
+    
+    return layout;
   }
 
   Widget _buildStatCard(dynamic theme, String title, String value, String change, IconData icon, bool isPositive) {

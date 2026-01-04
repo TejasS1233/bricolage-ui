@@ -83,8 +83,7 @@ All components should be added to `flutter_studio/lib/src/components/`.
 
 ```dart
 import 'package:flutter/material.dart';
-import '../theme/colors.dart';
-import '../theme/typography.dart';
+import '../theme/theme.dart';
 
 enum CustomComponentSize { small, medium, large }
 
@@ -173,8 +172,7 @@ flutter_studio/
 │   │   │   ├── custom_button.dart
 │   │   │   └── custom_card.dart
 │   │   └── theme/           # Theme constants
-│   │       ├── colors.dart
-│   │       └── typography.dart
+│   │       └── theme.dart
 │   └── flutter_studio.dart  # Public exports
 └── test/                    # Widget tests
 ```

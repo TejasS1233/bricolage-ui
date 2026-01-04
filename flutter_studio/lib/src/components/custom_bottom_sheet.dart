@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme/colors.dart';
-import '../theme/radius.dart';
+import '../theme/theme.dart';
 
 class CustomBottomSheet {
   static Future<T?> show<T>({

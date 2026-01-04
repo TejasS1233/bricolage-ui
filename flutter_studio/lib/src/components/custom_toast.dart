@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme/colors.dart';
-import '../theme/typography.dart';
-import '../theme/radius.dart';
-import '../theme/shadows.dart';
+import '../theme/theme.dart';
 
 enum ToastVariant { default_, success, error, warning, info }
 
@@ -53,7 +50,7 @@ class CustomToast {
         top: 80,
         right: 16,
         child: Material(
-          color: Colors.transparent,
+          color: UIColors.background.withValues(alpha: 0.0),
           child: Container(
             constraints: const BoxConstraints(maxWidth: 350),
             decoration: BoxDecoration(
@@ -61,12 +58,12 @@ class CustomToast {
               borderRadius: BorderRadius.circular(UIRadius.lg),
               boxShadow: const [UIShadows.lg],
             ),
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(UISpacing.md),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(icon ?? defaultIcon, color: fgColor, size: 20),
-                const SizedBox(width: 12),
+                const SizedBox(width: UISpacing.md / 1.33),
                 Flexible(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,7 +74,7 @@ class CustomToast {
                           title,
                           style: TextStyle(
                             color: fgColor,
-                            fontSize: 14,
+                            fontSize: UITypography.fontSizeSM,
                             fontWeight: UITypography.fontWeightMedium,
                           ),
                         ),
@@ -85,10 +82,11 @@ class CustomToast {
                         message,
                         style: TextStyle(
                           color: title != null
-                              ? Color.fromRGBO(
-                                  fgColor.red, fgColor.green, fgColor.blue, 0.9)
+                              ? fgColor.withValues(alpha: 0.9)
                               : fgColor,
-                          fontSize: title != null ? 13 : 14,
+                          fontSize: title != null
+                              ? UITypography.fontSizeXS + 1
+                              : UITypography.fontSizeSM,
                         ),
                       ),
                     ],

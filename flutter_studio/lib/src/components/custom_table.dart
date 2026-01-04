@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/theme.dart';
 
 class TableColumn {
   final String header;
@@ -34,9 +35,9 @@ class CustomTable extends StatefulWidget {
     this.rowBackgroundColor,
     this.alternateRowColor,
     this.borderColor,
-    this.fontSize = 14.0,
-    this.headerFontSize = 14.0,
-    this.cellPadding = const EdgeInsets.all(12),
+    this.fontSize = UITypography.fontSizeSM,
+    this.headerFontSize = UITypography.fontSizeSM,
+    this.cellPadding = const EdgeInsets.all(UISpacing.md / 1.33),
     this.showBorder = true,
   });
 
@@ -71,26 +72,27 @@ class _CustomTableState extends State<CustomTable> {
     return Container(
       decoration: BoxDecoration(
         border: widget.showBorder
-            ? Border.all(color: widget.borderColor ?? Colors.grey.shade300)
+            ? Border.all(color: widget.borderColor ?? UIColors.gray300)
             : null,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(UIRadius.md),
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(UIRadius.md),
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Table(
             defaultColumnWidth: const IntrinsicColumnWidth(),
             border: widget.showBorder
                 ? TableBorder.symmetric(
-                    inside: BorderSide(color: widget.borderColor ?? Colors.grey.shade300),
+                    inside: BorderSide(
+                        color: widget.borderColor ?? UIColors.gray300),
                   )
                 : null,
             children: [
               // Header
               TableRow(
                 decoration: BoxDecoration(
-                  color: widget.headerBackgroundColor ?? Colors.grey.shade100,
+                  color: widget.headerBackgroundColor ?? UIColors.gray100,
                 ),
                 children: widget.columns.asMap().entries.map((entry) {
                   final index = entry.key;
@@ -108,17 +110,20 @@ class _CustomTableState extends State<CustomTable> {
                               style: TextStyle(
                                 fontSize: widget.headerFontSize,
                                 fontWeight: FontWeight.w600,
-                                color: widget.headerTextColor ?? Colors.grey[800],
+                                color:
+                                    widget.headerTextColor ?? UIColors.gray800,
                               ),
                             ),
                             if (column.sortable) ...[
-                              const SizedBox(width: 4),
+                              const SizedBox(width: UISpacing.xs),
                               Icon(
                                 _sortColumnIndex == index
-                                    ? (_sortAscending ? Icons.arrow_upward : Icons.arrow_downward)
+                                    ? (_sortAscending
+                                        ? Icons.arrow_upward
+                                        : Icons.arrow_downward)
                                     : Icons.unfold_more,
                                 size: 16,
-                                color: Colors.grey[600],
+                                color: UIColors.gray600,
                               ),
                             ],
                           ],
@@ -135,8 +140,8 @@ class _CustomTableState extends State<CustomTable> {
                 return TableRow(
                   decoration: BoxDecoration(
                     color: rowIndex.isEven
-                        ? (widget.rowBackgroundColor ?? Colors.white)
-                        : (widget.alternateRowColor ?? Colors.grey.shade50),
+                        ? (widget.rowBackgroundColor ?? UIColors.white)
+                        : (widget.alternateRowColor ?? UIColors.gray50),
                   ),
                   children: row.map((cell) {
                     return TableCell(

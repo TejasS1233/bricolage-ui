@@ -101,29 +101,21 @@ Future<void> initProject() async {
     print('[INFO] lib/theme/ already exists');
   }
 
-  // Download theme files
-  print('\nDownloading theme files...');
-  final themeFiles = [
-    'colors.dart',
-    'typography.dart',
-    'radius.dart',
-    'spacing.dart',
-    'shadows.dart',
-    'effects.dart'
-  ];
-
-  for (final file in themeFiles) {
-    final url = '$githubRawUrl/theme/$file';
-    try {
-      final response = await http.get(Uri.parse(url));
-      if (response.statusCode == 200) {
-        final filePath = path.join('lib/theme', file);
-        await File(filePath).writeAsString(response.body);
-        print('[OK] Downloaded $file');
-      }
-    } catch (e) {
-      print('[ERROR] Failed to download $file: $e');
+  // Download theme file
+  print('\nDownloading theme file...');
+  final url = '$githubRawUrl/theme/theme.dart';
+  try {
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      final filePath = path.join('lib/theme', 'theme.dart');
+      await File(filePath).writeAsString(response.body);
+      print('[OK] Downloaded theme.dart');
+    } else {
+      print(
+          '[ERROR] Failed to download theme.dart: HTTP ${response.statusCode}');
     }
+  } catch (e) {
+    print('[ERROR] Failed to download theme.dart: $e');
   }
 
   print('\nFlutter Studio initialized successfully!');

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme/colors.dart';
+import '../theme/theme.dart';
 
 class CustomCheckbox extends StatelessWidget {
   final bool value;
@@ -33,10 +33,10 @@ class CustomCheckbox extends StatelessWidget {
         checkColor: checkColor ?? UIColors.white,
         side: BorderSide(
           color: borderColor ?? UIColors.border,
-          width: 2,
+          width: UIBorder.thick,
         ),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: BorderRadius.circular(UIRadius.sm),
         ),
       ),
     );
@@ -46,12 +46,12 @@ class CustomCheckbox extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           checkbox,
-          const SizedBox(width: 8),
+          const SizedBox(width: UISpacing.sm),
           Text(
             label!,
             style: TextStyle(
               color: UIColors.foreground,
-              fontSize: 14,
+              fontSize: UITypography.fontSizeSM,
             ),
           ),
         ],

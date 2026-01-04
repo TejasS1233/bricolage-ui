@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/theme.dart';
 
 class CustomFormField extends StatelessWidget {
   final String? label;
@@ -19,7 +20,7 @@ class CustomFormField extends StatelessWidget {
     required this.child,
     this.labelColor,
     this.errorColor,
-    this.fontSize = 14.0,
+    this.fontSize = UITypography.fontSizeSM,
   });
 
   @override
@@ -36,7 +37,7 @@ class CustomFormField extends StatelessWidget {
                 style: TextStyle(
                   fontSize: fontSize,
                   fontWeight: FontWeight.w500,
-                  color: labelColor ?? Colors.grey[700],
+                  color: labelColor ?? UIColors.gray700,
                 ),
               ),
               if (required)
@@ -44,38 +45,38 @@ class CustomFormField extends StatelessWidget {
                   ' *',
                   style: TextStyle(
                     fontSize: fontSize,
-                    color: errorColor ?? Colors.red,
+                    color: errorColor ?? UIColors.error,
                   ),
                 ),
             ],
           ),
-        if (label != null) const SizedBox(height: 8),
+        if (label != null) const SizedBox(height: UISpacing.sm),
         if (hint != null) ...[
           Text(
             hint!,
             style: TextStyle(
               fontSize: fontSize - 2,
-              color: Colors.grey[600],
+              color: UIColors.gray600,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: UISpacing.sm),
         ],
         child,
         if (errorText != null) ...[
-          const SizedBox(height: 6),
+          const SizedBox(height: UISpacing.xs * 1.5),
           Row(
             children: [
               Icon(
                 Icons.error_outline,
                 size: 14,
-                color: errorColor ?? Colors.red,
+                color: errorColor ?? UIColors.error,
               ),
-              const SizedBox(width: 6),
+              const SizedBox(width: UISpacing.xs * 1.5),
               Text(
                 errorText!,
                 style: TextStyle(
                   fontSize: fontSize - 2,
-                  color: errorColor ?? Colors.red,
+                  color: errorColor ?? UIColors.error,
                 ),
               ),
             ],

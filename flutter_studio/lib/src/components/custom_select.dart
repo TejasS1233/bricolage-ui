@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme/colors.dart';
-import '../theme/radius.dart';
+import '../theme/theme.dart';
 
 class CustomSelect<T> extends StatelessWidget {
   final T? value;
@@ -31,7 +30,7 @@ class CustomSelect<T> extends StatelessWidget {
         color: backgroundColor ?? UIColors.background,
         border: Border.all(
           color: borderColor ?? UIColors.border,
-          width: 1,
+          width: UIBorder.thin,
         ),
         borderRadius: BorderRadius.circular(borderRadius ?? UIRadius.md),
       ),
@@ -44,7 +43,7 @@ class CustomSelect<T> extends StatelessWidget {
             hint,
             style: const TextStyle(
               color: UIColors.mutedForeground,
-              fontSize: 14,
+              fontSize: UITypography.fontSizeSM,
             ),
           ),
           icon: const Icon(Icons.keyboard_arrow_down, size: 20),
@@ -55,7 +54,7 @@ class CustomSelect<T> extends StatelessWidget {
                 itemLabel != null ? itemLabel!(item) : item.toString(),
                 style: const TextStyle(
                   color: UIColors.foreground,
-                  fontSize: 14,
+                  fontSize: UITypography.fontSizeSM,
                 ),
               ),
             );

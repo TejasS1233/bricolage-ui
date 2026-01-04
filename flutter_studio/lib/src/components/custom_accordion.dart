@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme/colors.dart';
-import '../theme/typography.dart';
-import '../theme/radius.dart';
+import '../theme/theme.dart';
 
 class CustomAccordion extends StatefulWidget {
   final String title;
@@ -55,7 +53,7 @@ class _CustomAccordionState extends State<CustomAccordion> {
           },
           children: [
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(UISpacing.md),
               child: widget.content,
             ),
           ],

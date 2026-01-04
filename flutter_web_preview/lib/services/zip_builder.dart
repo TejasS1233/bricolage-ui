@@ -12,12 +12,14 @@ class ZipBuilder {
   ) async {
     final archive = Archive();
 
-    // 1. Theme configuration files
-    final themeFiles = ComponentCodeGenerator.generateAllThemeFiles(theme);
+    // 1. Theme configuration files (consolidated theme.dart)
+    final themeFiles = ComponentCodeGenerator.generateThemeFiles(
+      theme,
+      consolidated: true,
+    );
     for (final entry in themeFiles.entries) {
       archive.addFile(_createFile('lib/theme/${entry.key}', entry.value));
     }
-
 
     final exampleCode = _generateExampleFile(components, theme);
     archive.addFile(_createFile('example/main.dart', exampleCode));
@@ -45,9 +47,8 @@ class ZipBuilder {
     final buffer = StringBuffer();
     buffer.writeln("import 'package:flutter/material.dart';");
     buffer.writeln("import 'package:flutter_studio/flutter_studio.dart';");
-    buffer.writeln("// Import your customized theme files");
-    buffer.writeln("// import '../lib/theme/colors.dart';");
-    buffer.writeln("// import '../lib/theme/typography.dart';");
+    buffer.writeln("// Import your customized theme file");
+    buffer.writeln("import '../lib/theme/theme.dart';");
     buffer.writeln();
     buffer.writeln('void main() => runApp(const MyApp());');
     buffer.writeln();
@@ -58,21 +59,43 @@ class ZipBuilder {
     buffer.writeln('  Widget build(BuildContext context) {');
     buffer.writeln('    return MaterialApp(');
     buffer.writeln('      home: Scaffold(');
+    buffer.writeln('        backgroundColor: UIColors.background,');
     buffer.writeln('        body: Center(');
     buffer.writeln('          child: Column(');
     buffer.writeln('            mainAxisAlignment: MainAxisAlignment.center,');
-    buffer.writeln('            children: const [');
+    buffer.writeln('            children: [');
     buffer.writeln('              Text(');
     buffer.writeln("                'Your customized theme is ready!',");
     buffer.writeln(
-      '                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),',
+      '                style: UITypography.heading2.copyWith(color: UIColors.foreground),',
     );
     buffer.writeln('              ),');
-    buffer.writeln('              SizedBox(height: 16),');
+    buffer.writeln('              const SizedBox(height: UISpacing.md),');
     buffer.writeln('              Text(');
     buffer.writeln(
-      "                'Import the theme files and start building.',",
+      "                'All theme values are customized based on your selections.',",
     );
+    buffer.writeln(
+      '                style: UITypography.body.copyWith(color: UIColors.mutedForeground),',
+    );
+    buffer.writeln('              ),');
+    buffer.writeln('              const SizedBox(height: UISpacing.lg),');
+    buffer.writeln('              Container(');
+    buffer.writeln(
+      '                padding: const EdgeInsets.all(UISpacing.md),',
+    );
+    buffer.writeln('                decoration: BoxDecoration(');
+    buffer.writeln('                  color: UIColors.primary,');
+    buffer.writeln(
+      '                  borderRadius: BorderRadius.circular(UIRadius.md),',
+    );
+    buffer.writeln('                ),');
+    buffer.writeln('                child: Text(');
+    buffer.writeln("                  'Start building!',");
+    buffer.writeln(
+      '                  style: UITypography.body.copyWith(color: UIColors.primaryForeground),',
+    );
+    buffer.writeln('                ),');
     buffer.writeln('              ),');
     buffer.writeln('            ],');
     buffer.writeln('          ),');

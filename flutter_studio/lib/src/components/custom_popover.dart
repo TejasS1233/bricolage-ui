@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/theme.dart';
 
 enum PopoverPosition { top, bottom, left, right }
 
@@ -21,9 +22,9 @@ class CustomPopover extends StatefulWidget {
     this.position = PopoverPosition.top,
     this.backgroundColor,
     this.borderColor,
-    this.borderRadius = 8.0,
+    this.borderRadius = UIRadius.md,
     this.elevation = 4.0,
-    this.padding = const EdgeInsets.all(12),
+    this.padding = const EdgeInsets.all(UISpacing.md / 1.33),
     this.width,
     this.showArrow = true,
   });
@@ -51,7 +52,8 @@ class _CustomPopoverState extends State<CustomPopover> {
           Positioned.fill(
             child: GestureDetector(
               onTap: _hidePopover,
-              child: Container(color: Colors.transparent),
+              child:
+                  Container(color: UIColors.background.withValues(alpha: 0.0)),
             ),
           ),
           // Popover
@@ -97,14 +99,15 @@ class _CustomPopoverState extends State<CustomPopover> {
       width: widget.width ?? 200,
       child: Material(
         elevation: widget.elevation,
+        shadowColor: UIColors.black.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(widget.borderRadius),
-        color: widget.backgroundColor ?? Colors.white,
+        color: widget.backgroundColor ?? UIColors.background,
         child: Container(
           padding: widget.padding,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(widget.borderRadius),
             border: Border.all(
-              color: widget.borderColor ?? Colors.grey.shade300,
+              color: widget.borderColor ?? UIColors.gray300,
             ),
           ),
           child: widget.content,

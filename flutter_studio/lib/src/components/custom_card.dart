@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/theme.dart';
 
 enum CustomCardVariant { elevated, outlined, filled }
 
@@ -37,12 +38,8 @@ class CustomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
-    final defaultBgColor = backgroundColor ?? colorScheme.surface;
-    final defaultBorderColor =
-        borderColor ?? colorScheme.outline.withOpacity(0.2);
+    final defaultBgColor = backgroundColor ?? UIColors.white;
+    final defaultBorderColor = borderColor ?? UIColors.border;
     final defaultBorderRadius = borderRadius ?? 12.0;
     final defaultPadding = padding ?? const EdgeInsets.all(16.0);
     final defaultMargin = margin ?? EdgeInsets.zero;
@@ -63,13 +60,13 @@ class CustomCard extends StatelessWidget {
         decoration = BoxDecoration(
           color: defaultBgColor,
           borderRadius: BorderRadius.circular(defaultBorderRadius),
-          boxShadow: [
-            BoxShadow(
-              color: colorScheme.shadow.withOpacity(0.1),
-              blurRadius: defaultElevation * 2,
-              offset: Offset(0, defaultElevation),
-            ),
-          ],
+          boxShadow: defaultElevation <= 2.0
+              ? [UIShadows.sm]
+              : defaultElevation <= 4.0
+                  ? [UIShadows.md]
+                  : defaultElevation <= 8.0
+                      ? [UIShadows.lg]
+                      : [UIShadows.xl],
         );
         break;
 

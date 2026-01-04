@@ -108,7 +108,7 @@ packages:
       path: "../flutter_studio"
       relative: true
     source: path
-    version: "1.0.1"
+    version: "1.2.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter

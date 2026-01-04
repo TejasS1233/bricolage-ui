@@ -37,10 +37,10 @@ flutter run -d chrome
 - Real-time theme preview across all components
 
 ### Export Functionality
-- Download components as ZIP file
-- Includes theme configuration files
-- Example code and usage documentation
+- Download single consolidated `theme.dart` file
+- Includes all theme customizations (colors, typography, radius, spacing, shadows, effects)
 - Ready-to-integrate into Flutter projects
+- No need for multiple theme files
 
 ## Technology Stack
 

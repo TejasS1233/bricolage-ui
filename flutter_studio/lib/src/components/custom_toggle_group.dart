@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/theme.dart';
 
 enum ToggleMode { single, multiple }
 
@@ -28,10 +29,11 @@ class CustomToggleGroup extends StatefulWidget {
     this.selectedTextColor,
     this.unselectedTextColor,
     this.borderColor,
-    this.borderRadius = 8.0,
+    this.borderRadius = UIRadius.md,
     this.borderWidth = 1.5,
-    this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-    this.fontSize = 14.0,
+    this.padding = const EdgeInsets.symmetric(
+        horizontal: UISpacing.md, vertical: UISpacing.sm),
+    this.fontSize = UITypography.fontSizeSM,
   });
 
   @override
@@ -67,7 +69,7 @@ class _CustomToggleGroupState extends State<CustomToggleGroup> {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
-          color: widget.borderColor ?? Colors.grey[300]!,
+          color: widget.borderColor ?? UIColors.border,
           width: widget.borderWidth,
         ),
         borderRadius: BorderRadius.circular(widget.borderRadius),
@@ -88,21 +90,34 @@ class _CustomToggleGroupState extends State<CustomToggleGroup> {
                 padding: widget.padding,
                 decoration: BoxDecoration(
                   color: isSelected
-                      ? (widget.selectedColor ?? Colors.blue)
-                      : (widget.unselectedColor ?? Colors.transparent),
+                      ? (widget.selectedColor ?? UIColors.primary)
+                      : (widget.unselectedColor ??
+                          UIColors.background.withValues(alpha: 0.0)),
                   border: index < widget.items.length - 1
                       ? Border(
                           right: BorderSide(
-                            color: widget.borderColor ?? Colors.grey[300]!,
+                            color: widget.borderColor ?? UIColors.border,
                             width: widget.borderWidth,
                           ),
                         )
                       : null,
                   borderRadius: BorderRadius.only(
-                    topLeft: isFirst ? Radius.circular(widget.borderRadius - widget.borderWidth) : Radius.zero,
-                    bottomLeft: isFirst ? Radius.circular(widget.borderRadius - widget.borderWidth) : Radius.zero,
-                    topRight: isLast ? Radius.circular(widget.borderRadius - widget.borderWidth) : Radius.zero,
-                    bottomRight: isLast ? Radius.circular(widget.borderRadius - widget.borderWidth) : Radius.zero,
+                    topLeft: isFirst
+                        ? Radius.circular(
+                            widget.borderRadius - widget.borderWidth)
+                        : Radius.zero,
+                    bottomLeft: isFirst
+                        ? Radius.circular(
+                            widget.borderRadius - widget.borderWidth)
+                        : Radius.zero,
+                    topRight: isLast
+                        ? Radius.circular(
+                            widget.borderRadius - widget.borderWidth)
+                        : Radius.zero,
+                    bottomRight: isLast
+                        ? Radius.circular(
+                            widget.borderRadius - widget.borderWidth)
+                        : Radius.zero,
                   ),
                 ),
                 child: Center(
@@ -111,9 +126,11 @@ class _CustomToggleGroupState extends State<CustomToggleGroup> {
                     style: TextStyle(
                       fontSize: widget.fontSize,
                       color: isSelected
-                          ? (widget.selectedTextColor ?? Colors.white)
-                          : (widget.unselectedTextColor ?? Colors.black87),
-                      fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                          ? (widget.selectedTextColor ??
+                              UIColors.primaryForeground)
+                          : (widget.unselectedTextColor ?? UIColors.foreground),
+                      fontWeight:
+                          isSelected ? FontWeight.w600 : FontWeight.normal,
                     ),
                   ),
                 ),

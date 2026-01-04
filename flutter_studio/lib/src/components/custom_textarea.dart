@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/theme.dart';
 
 class CustomTextarea extends StatelessWidget {
   final String? label;
@@ -33,9 +34,9 @@ class CustomTextarea extends StatelessWidget {
     this.focusedBorderColor,
     this.textColor,
     this.labelColor,
-    this.borderRadius = 8.0,
+    this.borderRadius = UIRadius.md,
     this.borderWidth = 1.5,
-    this.fontSize = 14.0,
+    this.fontSize = UITypography.fontSizeSM,
     this.padding,
     this.enabled = true,
   });
@@ -52,10 +53,10 @@ class CustomTextarea extends StatelessWidget {
             style: TextStyle(
               fontSize: fontSize,
               fontWeight: FontWeight.w500,
-              color: labelColor ?? Colors.grey[700],
+              color: labelColor ?? UIColors.mutedForeground,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: UISpacing.sm),
         ],
         TextField(
           controller: controller,
@@ -65,38 +66,39 @@ class CustomTextarea extends StatelessWidget {
           maxLength: maxLength,
           style: TextStyle(
             fontSize: fontSize,
-            color: textColor ?? Colors.black87,
+            color: textColor ?? UIColors.foreground,
           ),
           decoration: InputDecoration(
             hintText: placeholder,
             filled: true,
-            fillColor: backgroundColor ?? Colors.white,
-            contentPadding: padding ?? const EdgeInsets.all(12),
+            fillColor: backgroundColor ?? UIColors.background,
+            contentPadding:
+                padding ?? const EdgeInsets.all(UISpacing.md / 1.33),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(borderRadius),
               borderSide: BorderSide(
-                color: borderColor ?? Colors.grey[300]!,
+                color: borderColor ?? UIColors.border,
                 width: borderWidth,
               ),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(borderRadius),
               borderSide: BorderSide(
-                color: borderColor ?? Colors.grey[300]!,
+                color: borderColor ?? UIColors.border,
                 width: borderWidth,
               ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(borderRadius),
               borderSide: BorderSide(
-                color: focusedBorderColor ?? Colors.blue,
+                color: focusedBorderColor ?? UIColors.primary,
                 width: borderWidth,
               ),
             ),
             disabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(borderRadius),
               borderSide: BorderSide(
-                color: Colors.grey[200]!,
+                color: UIColors.gray200,
                 width: borderWidth,
               ),
             ),

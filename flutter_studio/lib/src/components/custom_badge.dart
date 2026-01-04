@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme/colors.dart';
-import '../theme/typography.dart';
-import '../theme/radius.dart';
+import '../theme/theme.dart';
 
 enum CustomBadgeVariant { default_, secondary, destructive, outline, success }
 
@@ -63,7 +61,9 @@ class CustomBadge extends StatelessWidget {
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: BorderRadius.circular(borderRadius ?? UIRadius.full),
-        border: bColor != null ? Border.all(color: bColor, width: 1) : null,
+        border: bColor != null
+            ? Border.all(color: bColor, width: UIBorder.thin)
+            : null,
       ),
       child: Text(
         text,

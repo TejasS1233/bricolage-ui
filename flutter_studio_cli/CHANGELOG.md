@@ -1,3 +1,8 @@
+## 0.3.0
+
+- **Consolidated theme file**: Now downloads single `theme.dart` file instead of 6 separate theme files
+- Simplified theme management and imports
+
 ## 0.2.0
 
 - Added `add-all` command to install all 40+ components at once

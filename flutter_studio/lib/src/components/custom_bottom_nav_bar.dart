@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme/colors.dart';
-import '../theme/typography.dart';
+import '../theme/theme.dart';
 
 class CustomBottomNavItem {
   final IconData icon;
@@ -100,7 +99,7 @@ class CustomBottomNavBar extends StatelessWidget {
         boxShadow: defaultElevation > 0
             ? [
                 BoxShadow(
-                  color: UIColors.gray900.withOpacity(0.1),
+                  color: UIColors.gray900.withValues(alpha: 0.1),
                   blurRadius: defaultElevation * 2,
                   offset: Offset(0, -defaultElevation / 2),
                 ),

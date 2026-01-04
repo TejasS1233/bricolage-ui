@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme/typography.dart';
+import '../theme/theme.dart';
 
 enum CustomButtonVariant { filled, outlined, text, icon }
 
@@ -103,12 +103,9 @@ class _CustomButtonState extends State<CustomButton>
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
-    final defaultBgColor = widget.backgroundColor ?? colorScheme.primary;
-    final defaultTextColor = widget.textColor ?? colorScheme.onPrimary;
-    final defaultBorderColor = widget.borderColor ?? colorScheme.primary;
+    final defaultBgColor = widget.backgroundColor ?? UIColors.primary;
+    final defaultTextColor = widget.textColor ?? UIColors.white;
+    final defaultBorderColor = widget.borderColor ?? UIColors.primary;
     final defaultBorderRadius = widget.borderRadius ?? 8.0;
     final defaultPadding = widget.padding ?? _getDefaultPadding();
     final defaultFontSize = widget.fontSize ?? _getDefaultFontSize();
@@ -126,7 +123,7 @@ class _CustomButtonState extends State<CustomButton>
                 : defaultBgColor,
             size: defaultFontSize * 1.2,
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: UISpacing.sm),
         ],
         Text(
           widget.text,
@@ -203,7 +200,8 @@ class _CustomButtonState extends State<CustomButton>
             onPressed: widget.onPressed,
             style: OutlinedButton.styleFrom(
               padding: defaultPadding,
-              side: BorderSide(color: defaultBorderColor, width: 1.5),
+              side:
+                  BorderSide(color: defaultBorderColor, width: UIBorder.medium),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(defaultBorderRadius),
               ),

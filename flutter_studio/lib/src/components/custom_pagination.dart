@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/theme.dart';
 
 class CustomPagination extends StatelessWidget {
   final int currentPage;
@@ -22,7 +23,7 @@ class CustomPagination extends StatelessWidget {
     this.textColor,
     this.activeTextColor,
     this.CustomButtonVariant = 40.0,
-    this.fontSize = 14.0,
+    this.fontSize = UITypography.fontSizeSM,
     this.showFirstLast = true,
   });
 
@@ -38,19 +39,25 @@ class CustomPagination extends StatelessWidget {
           ),
         _buildButton(
           child: const Icon(Icons.chevron_left, size: 18),
-          onTap: currentPage > 1 ? () => onPageChanged?.call(currentPage - 1) : null,
+          onTap: currentPage > 1
+              ? () => onPageChanged?.call(currentPage - 1)
+              : null,
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: UISpacing.sm),
         ..._buildPageNumbers(),
-        const SizedBox(width: 8),
+        const SizedBox(width: UISpacing.sm),
         _buildButton(
           child: const Icon(Icons.chevron_right, size: 18),
-          onTap: currentPage < totalPages ? () => onPageChanged?.call(currentPage + 1) : null,
+          onTap: currentPage < totalPages
+              ? () => onPageChanged?.call(currentPage + 1)
+              : null,
         ),
         if (showFirstLast)
           _buildButton(
             child: const Icon(Icons.last_page, size: 18),
-            onTap: currentPage < totalPages ? () => onPageChanged?.call(totalPages) : null,
+            onTap: currentPage < totalPages
+                ? () => onPageChanged?.call(totalPages)
+                : null,
           ),
       ],
     );
@@ -87,11 +94,14 @@ class CustomPagination extends StatelessWidget {
         height: CustomButtonVariant,
         margin: const EdgeInsets.symmetric(horizontal: 2),
         decoration: BoxDecoration(
-          color: isActive ? (activeColor ?? Colors.blue) : (inactiveColor ?? Colors.transparent),
-          borderRadius: BorderRadius.circular(8),
+          color: isActive
+              ? (activeColor ?? UIColors.primary)
+              : (inactiveColor ?? UIColors.background.withValues(alpha: 0.0)),
+          borderRadius: BorderRadius.circular(UIRadius.md),
           border: Border.all(
-            color: isActive ? (activeColor ?? Colors.blue) : Colors.grey[300]!,
-            width: 1,
+            color:
+                isActive ? (activeColor ?? UIColors.primary) : UIColors.border,
+            width: UIBorder.thin,
           ),
         ),
         child: Center(
@@ -100,7 +110,9 @@ class CustomPagination extends StatelessWidget {
             style: TextStyle(
               fontSize: fontSize,
               fontWeight: isActive ? FontWeight.w600 : FontWeight.normal,
-              color: isActive ? (activeTextColor ?? Colors.white) : (textColor ?? Colors.black87),
+              color: isActive
+                  ? (activeTextColor ?? UIColors.primaryForeground)
+                  : (textColor ?? UIColors.foreground),
             ),
           ),
         ),
@@ -116,9 +128,11 @@ class CustomPagination extends StatelessWidget {
         height: CustomButtonVariant,
         margin: const EdgeInsets.symmetric(horizontal: 2),
         decoration: BoxDecoration(
-          color: onTap != null ? (inactiveColor ?? Colors.transparent) : Colors.grey[100],
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Colors.grey[300]!, width: 1),
+          color: onTap != null
+              ? (inactiveColor ?? UIColors.background.withValues(alpha: 0.0))
+              : UIColors.gray100,
+          borderRadius: BorderRadius.circular(UIRadius.md),
+          border: Border.all(color: UIColors.border, width: UIBorder.thin),
         ),
         child: Center(child: child),
       ),
@@ -131,7 +145,7 @@ class CustomPagination extends StatelessWidget {
       height: CustomButtonVariant,
       margin: const EdgeInsets.symmetric(horizontal: 2),
       child: const Center(
-        child: Text('...', style: TextStyle(fontSize: 14)),
+        child: Text('...', style: TextStyle(fontSize: UITypography.fontSizeSM)),
       ),
     );
   }

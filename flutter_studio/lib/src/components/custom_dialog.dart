@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme/typography.dart';
-import '../theme/radius.dart';
+import '../theme/theme.dart';
 
 /// A customizable dialog component with smooth fade and slide animations
 class CustomDialog {
@@ -83,9 +82,6 @@ class _AnimatedDialogState extends State<_AnimatedDialog>
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
     return FadeTransition(
       opacity: _fadeAnimation,
       child: SlideTransition(
@@ -98,8 +94,10 @@ class _AnimatedDialogState extends State<_AnimatedDialog>
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(UIRadius.lg),
             ),
+            elevation: 8,
+            shadowColor: UIColors.black.withValues(alpha: 0.15),
             child: Padding(
-              padding: const EdgeInsets.all(24),
+              padding: const EdgeInsets.all(UISpacing.lg),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,21 +107,21 @@ class _AnimatedDialogState extends State<_AnimatedDialog>
                     child: Text(
                       widget.title,
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: UITypography.fontSizeLG,
                         fontWeight: UITypography.fontWeightSemiBold,
-                        color: colorScheme.onSurface,
+                        color: UIColors.foreground,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: UISpacing.md / 1.33),
                   Text(
                     widget.description,
                     style: TextStyle(
-                      fontSize: 14,
-                      color: colorScheme.onSurface.withOpacity(0.7),
+                      fontSize: UITypography.fontSizeSM,
+                      color: UIColors.mutedForeground,
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: UISpacing.lg),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -134,13 +132,13 @@ class _AnimatedDialogState extends State<_AnimatedDialog>
                           child: TextButton(
                             onPressed: () => Navigator.of(context).pop(),
                             style: TextButton.styleFrom(
-                              foregroundColor:
-                                  colorScheme.onSurface.withOpacity(0.7),
+                              foregroundColor: UIColors.mutedForeground,
                             ),
                             child: Text(widget.cancelText!),
                           ),
                         ),
-                      if (widget.cancelText != null) const SizedBox(width: 8),
+                      if (widget.cancelText != null)
+                        const SizedBox(width: UISpacing.sm),
                       Semantics(
                         button: true,
                         label: '${widget.confirmText ?? 'OK'}, button',
@@ -150,8 +148,8 @@ class _AnimatedDialogState extends State<_AnimatedDialog>
                             Navigator.of(context).pop(true);
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: colorScheme.primary,
-                            foregroundColor: colorScheme.onPrimary,
+                            backgroundColor: UIColors.primary,
+                            foregroundColor: UIColors.primaryForeground,
                           ),
                           child: Text(widget.confirmText ?? 'OK'),
                         ),

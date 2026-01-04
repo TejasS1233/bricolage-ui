@@ -68,8 +68,20 @@ class ComponentSelector extends StatelessWidget {
                     final component = appState.components[index];
                     return CheckboxListTile(
                       value: component.isSelected,
-                      onChanged: (value) =>
-                          appState.toggleComponent(component.id),
+                      onChanged: (value) {
+                        final wasPresetMode = appState.currentPreset != null;
+                        appState.toggleComponent(component.id);
+                        if (wasPresetMode) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: const Text('Switched to manual component mode'),
+                              duration: const Duration(seconds: 2),
+                              behavior: SnackBarBehavior.floating,
+                              backgroundColor: Colors.blue.shade600,
+                            ),
+                          );
+                        }
+                      },
                       title: Text(
                         component.displayName,
                         style: const TextStyle(fontSize: 14),

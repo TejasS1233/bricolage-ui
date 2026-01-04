@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme/colors.dart';
-import '../theme/typography.dart';
-import '../theme/radius.dart';
+import '../theme/theme.dart';
 
 enum CustomAlertVariant { default_, destructive, success, warning, info }
 
@@ -44,25 +42,25 @@ class CustomAlert extends StatelessWidget {
         defaultIcon = Icons.info_outline;
         break;
       case CustomAlertVariant.destructive:
-        bgColor = backgroundColor ?? UIColors.error.withOpacity(0.1);
+        bgColor = backgroundColor ?? UIColors.error.withValues(alpha: 0.1);
         fgColor = foregroundColor ?? UIColors.error;
         bColor = borderColor ?? UIColors.error;
         defaultIcon = Icons.error_outline;
         break;
       case CustomAlertVariant.success:
-        bgColor = backgroundColor ?? UIColors.success.withOpacity(0.1);
+        bgColor = backgroundColor ?? UIColors.success.withValues(alpha: 0.1);
         fgColor = foregroundColor ?? UIColors.success;
         bColor = borderColor ?? UIColors.success;
         defaultIcon = Icons.check_circle_outline;
         break;
       case CustomAlertVariant.warning:
-        bgColor = backgroundColor ?? UIColors.warning.withOpacity(0.1);
+        bgColor = backgroundColor ?? UIColors.warning.withValues(alpha: 0.1);
         fgColor = foregroundColor ?? UIColors.warning;
         bColor = borderColor ?? UIColors.warning;
         defaultIcon = Icons.warning_amber_outlined;
         break;
       case CustomAlertVariant.info:
-        bgColor = backgroundColor ?? UIColors.info.withOpacity(0.1);
+        bgColor = backgroundColor ?? UIColors.info.withValues(alpha: 0.1);
         fgColor = foregroundColor ?? UIColors.info;
         bColor = borderColor ?? UIColors.info;
         defaultIcon = Icons.info_outline;
@@ -70,10 +68,10 @@ class CustomAlert extends StatelessWidget {
     }
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(UISpacing.md),
       decoration: BoxDecoration(
         color: bgColor,
-        border: Border.all(color: bColor, width: 1),
+        border: Border.all(color: bColor, width: UIBorder.thin),
         borderRadius: BorderRadius.circular(borderRadius ?? UIRadius.lg),
       ),
       child: Row(
@@ -84,7 +82,7 @@ class CustomAlert extends StatelessWidget {
             color: fgColor,
             size: 20,
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: UISpacing.md / 1.33),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,18 +92,17 @@ class CustomAlert extends StatelessWidget {
                   title,
                   style: TextStyle(
                     color: fgColor,
-                    fontSize: 14,
+                    fontSize: UITypography.fontSizeSM,
                     fontWeight: UITypography.fontWeightMedium,
                   ),
                 ),
                 if (description != null) ...[
-                  const SizedBox(height: 4),
+                  const SizedBox(height: UISpacing.xs),
                   Text(
                     description!,
                     style: TextStyle(
-                      color: Color.fromRGBO(
-                          fgColor.red, fgColor.green, fgColor.blue, 0.9),
-                      fontSize: 13,
+                      color: fgColor.withValues(alpha: 0.9),
+                      fontSize: UITypography.fontSizeXS + 1,
                     ),
                   ),
                 ],
@@ -113,7 +110,7 @@ class CustomAlert extends StatelessWidget {
             ),
           ),
           if (onClose != null) ...[
-            const SizedBox(width: 12),
+            const SizedBox(width: UISpacing.md / 1.33),
             InkWell(
               onTap: onClose,
               borderRadius: BorderRadius.circular(4),
