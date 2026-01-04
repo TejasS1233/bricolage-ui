@@ -1,0 +1,20 @@
+name: bricolage_ui
+description: Bricolage UI - A modern, customizable Flutter UI component library with 40+ components. Includes buttons, cards, forms, dialogs, and more with a flexible theme system.
+version: 1.2.0
+repository: https://github.com/TejasS1233/bricolage-ui/tree/main/bricolage_ui
+homepage: https://github.com/TejasS1233/bricolage-ui
+documentation: https://github.com/TejasS1233/bricolage-ui/tree/main/bricolage_ui#readme
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:

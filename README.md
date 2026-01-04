@@ -1,17 +1,17 @@
 <div align="center">
   
-# Flutter Studio
+# Bricolage UI
 
 ### Production-ready Flutter components that **you own**
 
 **Stop fighting with boilerplate. Build your Design System in minutes, not months.**
 
-[![Pub Version](https://img.shields.io/pub/v/flutter_studio_cli)](https://pub.dev/packages/flutter_studio_cli)
+[![Pub Version](https://img.shields.io/pub/v/bricolage_ui_cli)](https://pub.dev/packages/bricolage_ui_cli)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Live Demo](https://img.shields.io/badge/demo-live-success)](https://flutterstudio.vercel.app)
-[![GitHub Stars](https://img.shields.io/github/stars/TejasS1233/flutter-studio?style=social)](https://github.com/TejasS1233/flutter-studio)
+[![Live Demo](https://img.shields.io/badge/demo-live-success)](https://bricolage-ui.vercel.app)
+[![GitHub Stars](https://img.shields.io/github/stars/TejasS1233/bricolage-ui?style=social)](https://github.com/TejasS1233/bricolage-ui)
 
-[Live Demo](https://flutterstudio.vercel.app) • [Documentation](https://docs-flutterstudio.vercel.app) • [CLI Tool](https://pub.dev/packages/flutter_studio_cli)
+[Live Demo](https://bricolage-ui.vercel.app) • [Documentation](https://docs-bricolage-ui.vercel.app) • [CLI Tool](https://pub.dev/packages/bricolage_ui_cli)
 
 **The shadcn/ui philosophy, adapted for Flutter.**
 
@@ -38,9 +38,9 @@
 
 ## Stop Writing Boilerplate
 
-Compare raw Flutter to Flutter Studio. Same result, 90% less code.
+Compare raw Flutter to Bricolage UI. Same result, 90% less code.
 
-| Raw Flutter (40+ lines)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | Flutter Studio (4 lines)                                                                                     |
+| Raw Flutter (40+ lines)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | Bricolage UI (4 lines)                                                                                       |
 | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------- |
 | `Container(`<br>&nbsp;&nbsp;`decoration: BoxDecoration(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`borderRadius: BorderRadius.circular(8),`<br>&nbsp;&nbsp;&nbsp;&nbsp;`border: Border.all(color: Colors.grey),`<br>&nbsp;&nbsp;`),`<br>&nbsp;&nbsp;`child: TextField(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`decoration: InputDecoration(`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`labelText: 'Email',`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`hintText: 'user@example.com',`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`border: InputBorder.none,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`contentPadding: EdgeInsets.all(16),`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`// ... 30 more lines`<br>&nbsp;&nbsp;&nbsp;&nbsp;`),`<br>&nbsp;&nbsp;`),`<br>`)` | `CustomTextField(`<br>&nbsp;&nbsp;`label: 'Email',`<br>&nbsp;&nbsp;`placeholder: 'user@example.com',`<br>`)` |
 
@@ -50,14 +50,14 @@ Compare raw Flutter to Flutter Studio. Same result, 90% less code.
 
 ```bash
 # 1. Install CLI
-dart pub global activate flutter_studio_cli
+dart pub global activate bricolage_ui_cli
 
 # 2. Initialize in your project
 cd your_flutter_app
-flutter_studio init
+bricolage_ui init
 
 # 3. Add components
-flutter_studio add button textfield card
+bricolage_ui add button textfield card
 
 # 4. Start building
 # Components are now in lib/components/ - they're yours to customize!
@@ -71,7 +71,7 @@ You can even uninstall the CLI after generating components - the code is **yours
 
 ## Why CLI-First?
 
-Unlike traditional packages, Flutter Studio copies source code directly into your project. This gives you complete control and zero runtime overhead.
+Unlike traditional packages, Bricolage UI copies source code directly into your project. This gives you complete control and zero runtime overhead.
 
 | Feature             | CLI (Production)           | Package (Prototype)      |
 | ------------------- | -------------------------- | ------------------------ |
@@ -88,16 +88,16 @@ Unlike traditional packages, Flutter Studio copies source code directly into you
 
 ## Architecture: The Missing Layer
 
-Flutter Studio acts as a semantic bridge between your business logic and Flutter's rendering layer, letting you focus on features instead of styling boilerplate.
+Bricolage UI acts as a semantic bridge between your business logic and Flutter's rendering layer, letting you focus on features instead of styling boilerplate.
 
 <div align="center">
-  <img src="assets/architecture.png" alt="Flutter Studio Architecture" width="800">
+  <img src="assets/architecture.png" alt="Bricolage UI Architecture" width="800">
 </div>
 
 **How it works:**
 
 - **Your Client App** handles business logic, validation, and state management
-- **Flutter Studio Interface** provides the design system (components, tokens, themes, layouts)
+- **Bricolage UI Interface** provides the design system (components, tokens, themes, layouts)
 - **Flutter Framework** renders everything using Material/Cupertino widgets
 - **CLI Tool** injects component code directly into your project
 
@@ -163,7 +163,7 @@ class LoginView extends StatelessWidget {
 
 ## 10-Second Theming
 
-Don't settle for Material Blue. Flutter Studio comes with **12+ professional presets**, or build your own.
+Don't settle for Material Blue. Bricolage UI comes with **12+ professional presets**, or build your own.
 
 |                    **Default**                     |                    **Neo-Brutalism**                     |                  **Cyberpunk**                   |                 **Bento/iOS**                  |
 | :------------------------------------------------: | :------------------------------------------------------: | :----------------------------------------------: | :--------------------------------------------: |
@@ -174,7 +174,7 @@ Don't settle for Material Blue. Flutter Studio comes with **12+ professional pre
 
 ### How it works:
 
-1. **Pick a preset** in the [web preview](https://flutterstudio.vercel.app) dropdown
+1. **Pick a preset** in the [web preview](https://bricolage-ui.vercel.app) dropdown
 2. **Customize** colors, typography, spacing, and visual effects
 3. **Export** → Theme is generated as a single unified `theme.dart` file
 4. **Copy-paste** the generated file into your project's `lib/theme/` folder
@@ -204,20 +204,21 @@ class UIRadius {
 
 ## Recommended: CLI Tool (Production Mode)
 
-The Flutter Studio CLI is the recommended approach for production applications. It copies component source code directly into your project.
+The Bricolage UI CLI is the recommended approach for production applications. It copies component source code directly into your project.
 
 **Installation:**
 
 ```bash
-dart pub global activate flutter_studio_cli
+dart pub global activate bricolage_ui_cli
 ```
 
 **Usage:**
 
 ```bash
-flutter_studio init                    # Setup your project
-flutter_studio add button card dialog  # Copy components you need
-flutter_studio list                    # View all 40+ components
+bricolage_ui init                    # Setup your project
+bricolage_ui add button card dialog  # Copy specific components
+bricolage_ui add-all                 # Or get all 40+ components
+bricolage_ui list                    # View all 40+ components
 ```
 
 ### Available Components (40+)
@@ -298,7 +299,7 @@ flutter_studio list                    # View all 40+ components
 </tr>
 </table>
 
-**[→ View full component gallery](https://docs-flutterstudio.vercel.app)**
+**[→ View full component gallery](https://docs-bricolage-ui.vercel.app)**
 
 ---
 
@@ -309,13 +310,13 @@ Use the traditional package for quick mockups and demos where customization isn'
 **Installation:**
 
 ```bash
-flutter pub add flutter_studio
+flutter pub add bricolage_ui
 ```
 
 **Usage:**
 
 ```dart
-import 'package:flutter_studio/flutter_studio.dart';
+import 'package:bricolage_ui/bricolage_ui.dart';
 
 // Use components directly
 CustomButton(
@@ -335,22 +336,22 @@ CustomButton(
 
 ## Repository Structure
 
-| Project         | Description                                     | Links                                                                                  |
-| --------------- | ----------------------------------------------- | -------------------------------------------------------------------------------------- |
-| **CLI Tool**    | Production-ready component generator            | [README](flutter_studio_cli/) • [pub.dev](https://pub.dev/packages/flutter_studio_cli) |
-| **Package**     | Rapid prototyping library                       | [pub.dev](https://pub.dev/packages/flutter_studio)                                     |
-| **Web Preview** | Interactive component customizer & theme editor | [Demo](https://flutterstudio.vercel.app) • [README](flutter_web_preview/)              |
-| **Docs**        | Full documentation site                         | [Docs](https://docs-flutterstudio.vercel.app) • [README](flutter_studio_docs/)         |
+| Project         | Description                                     | Links                                                                              |
+| --------------- | ----------------------------------------------- | ---------------------------------------------------------------------------------- |
+| **CLI Tool**    | Production-ready component generator            | [README](bricolage_ui_cli/) • [pub.dev](https://pub.dev/packages/bricolage_ui_cli) |
+| **Package**     | Rapid prototyping library                       | [pub.dev](https://pub.dev/packages/bricolage_ui)                                   |
+| **Web Preview** | Interactive component customizer & theme editor | [Demo](https://bricolage-ui.vercel.app) • [README](bricolage_ui_preview/)          |
+| **Docs**        | Full documentation site                         | [Docs](https://docs-bricolage-ui.vercel.app) • [README](bricolage_ui_docs/)        |
 
-### `flutter_studio_cli/`
+### `bricolage_ui_cli/`
 
 CLI tool for production development. Copy components into your project with full customization control.
 
-### `flutter_studio/`
+### `bricolage_ui/`
 
 Component library package for rapid prototyping and demos.
 
-### `flutter_web_preview/`
+### `bricolage_ui_preview/`
 
 Interactive web application for customizing and previewing components in real-time.
 
@@ -362,11 +363,11 @@ Interactive web application for customizing and previewing components in real-ti
 - Popular app theme presets (Netflix, Spotify, Amazon, etc.)
 - Export customized theme files as ZIP
 
-**Live Demo:** [https://flutterstudio.vercel.app](https://flutterstudio.vercel.app)
+**Live Demo:** [https://bricolage-ui.vercel.app](https://bricolage-ui.vercel.app)
 
 > **Note:** The live demo is a static Flutter web build optimized for component preview functionality. The UI is currently non-responsive and best viewed on desktop. A fully responsive web experience is under development.
 
-### `flutter_studio_docs/`
+### `bricolage_ui_docs/`
 
 Complete documentation website built with VitePress, featuring detailed component documentation, installation guides, and theming instructions.
 
@@ -393,7 +394,7 @@ Check out our [Contributing Guide](CONTRIBUTING.md) to get started.
 
 **Ways to contribute:**
 
-- Report issues on [GitHub](https://github.com/TejasS1233/flutter-studio/issues)
+- Report issues on [GitHub](https://github.com/TejasS1233/bricolage-ui/issues)
 - Submit pull requests for new components
 - Improve documentation
 - Share feedback and feature requests
@@ -402,11 +403,11 @@ Check out our [Contributing Guide](CONTRIBUTING.md) to get started.
 
 ## Links
 
-- **Documentation:** [https://docs-flutterstudio.vercel.app](https://docs-flutterstudio.vercel.app)
-- **CLI Tool:** [pub.dev/packages/flutter_studio_cli](https://pub.dev/packages/flutter_studio_cli)
-- **Package:** [pub.dev/packages/flutter_studio](https://pub.dev/packages/flutter_studio)
-- **Live Demo:** [flutterstudio.vercel.app](https://flutterstudio.vercel.app)
-- **GitHub:** [github.com/TejasS1233/flutter-studio](https://github.com/TejasS1233/flutter-studio)
+- **Documentation:** [https://docs-bricolage-ui.vercel.app](https://docs-bricolage-ui.vercel.app)
+- **CLI Tool:** [pub.dev/packages/bricolage_ui_cli](https://pub.dev/packages/bricolage_ui_cli)
+- **Package:** [pub.dev/packages/bricolage_ui](https://pub.dev/packages/bricolage_ui)
+- **Live Demo:** [bricolage-ui.vercel.app](https://bricolage-ui.vercel.app)
+- **GitHub:** [github.com/TejasS1233/bricolage-ui](https://github.com/TejasS1233/bricolage-ui)
 
 ---
 
@@ -414,7 +415,7 @@ Check out our [Contributing Guide](CONTRIBUTING.md) to get started.
 
 **Ready to build faster?**
 
-[Get Started](https://docs-flutterstudio.vercel.app/docs/installation) • [View Demo](https://flutterstudio.vercel.app) • [Star on GitHub](https://github.com/TejasS1233/flutter-studio)
+[Get Started](https://docs-bricolage-ui.vercel.app/docs/installation) • [View Demo](https://bricolage-ui.vercel.app) • [Star on GitHub](https://github.com/TejasS1233/bricolage-ui)
 
 For Flutter developers who value their time
 

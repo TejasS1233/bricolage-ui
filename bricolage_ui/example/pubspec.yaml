@@ -1,0 +1,15 @@
+name: bricolage_ui_example
+description: Example app demonstrating Bricolage UI components
+publish_to: "none"
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  bricolage_ui:
+    path: ../
+
+flutter:
+  uses-material-design: true

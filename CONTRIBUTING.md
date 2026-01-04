@@ -1,6 +1,6 @@
-# Contributing to Flutter Studio
+# Contributing to Bricolage UI
 
-Thank you for your interest in contributing to Flutter Studio! This document provides guidelines and instructions for contributing.
+Thank you for your interest in contributing to Bricolage UI! This document provides guidelines and instructions for contributing.
 
 ## Table of Contents
 
@@ -14,7 +14,7 @@ Thank you for your interest in contributing to Flutter Studio! This document pro
 
 ## Ways to Contribute
 
-There are many ways to contribute to Flutter Studio:
+There are many ways to contribute to Bricolage UI:
 
 - **Add new components** - Create new UI components following our design system
 - **Improve existing components** - Enhance functionality, accessibility, or performance
@@ -38,33 +38,33 @@ There are many ways to contribute to Flutter Studio:
 2. Clone your fork locally:
 
    ```bash
-   git clone https://github.com/YOUR_USERNAME/flutter-studio.git
-   cd flutter-studio
+   git clone https://github.com/YOUR_USERNAME/bricolage-ui.git
+   cd bricolage-ui
    ```
 
 3. Add the upstream repository:
 
    ```bash
-   git remote add upstream https://github.com/TejasS1233/flutter-studio.git
+   git remote add upstream https://github.com/TejasS1233/bricolage-ui.git
    ```
 
 4. Install dependencies for each package:
 
    ```bash
    # Core package
-   cd flutter_studio
+   cd bricolage_ui
    flutter pub get
 
    # CLI tool
-   cd ../flutter_studio_cli
+   cd ../bricolage_ui_cli
    dart pub get
 
    # Web preview
-   cd ../flutter_web_preview
+   cd ../bricolage_ui_playground
    flutter pub get
 
    # Documentation site
-   cd ../flutter_studio_docs
+   cd ../bricolage_ui_docs_website
    npm install
    ```
 
@@ -77,7 +77,7 @@ There are many ways to contribute to Flutter Studio:
 
 ### Component Structure
 
-All components should be added to `flutter_studio/lib/src/components/`.
+All components should be added to `bricolage_ui/lib/src/components/`.
 
 ### Component Template
 
@@ -143,9 +143,9 @@ class CustomComponent extends StatelessWidget {
 
 After creating a component, add it to the CLI's component list:
 
-1. Update `flutter_studio_cli/lib/src/templates/component_templates.dart`
-2. Add component metadata to `flutter_studio_cli/lib/src/models/component_info.dart`
-3. Add usage documentation to `flutter_studio_docs/docs/components/`
+1. Update `bricolage_ui_cli/lib/src/templates/component_templates.dart`
+2. Add component metadata to `bricolage_ui_cli/lib/src/models/component_info.dart`
+3. Add usage documentation to `bricolage_ui_docs_website/docs/components/`
 
 ## Coding Standards
 
@@ -165,7 +165,7 @@ After creating a component, add it to the CLI's component list:
 ### File Organization
 
 ```
-flutter_studio/
+bricolage_ui/
 ├── lib/
 │   ├── src/
 │   │   ├── components/      # UI components
@@ -173,7 +173,7 @@ flutter_studio/
 │   │   │   └── custom_card.dart
 │   │   └── theme/           # Theme constants
 │   │       └── theme.dart
-│   └── flutter_studio.dart  # Public exports
+│   └── bricolage_ui.dart  # Public exports
 └── test/                    # Widget tests
 ```
 
@@ -307,10 +307,10 @@ Report violations to the project maintainers.
 
 ## Questions?
 
-- Open a [discussion](https://github.com/TejasS1233/flutter-studio/discussions) for questions
-- Check existing [issues](https://github.com/TejasS1233/flutter-studio/issues) and [pull requests](https://github.com/TejasS1233/flutter-studio/pulls)
-- Review the [documentation](https://docs-flutterstudio.vercel.app)
+- Open a [discussion](https://github.com/TejasS1233/bricolage-ui/discussions) for questions
+- Check existing [issues](https://github.com/TejasS1233/bricolage-ui/issues) and [pull requests](https://github.com/TejasS1233/bricolage-ui/pulls)
+- Review the [documentation](https://docs-bricolage-ui.vercel.app)
 
 ---
 
-Thank you for contributing to Flutter Studio! Your efforts help make Flutter development better for everyone.
+Thank you for contributing to Bricolage UI! Your efforts help make Flutter development better for everyone.
