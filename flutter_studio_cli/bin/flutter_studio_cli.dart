@@ -3,7 +3,7 @@ import 'package:args/args.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
 
-const String version = '0.1.0';
+const String version = '0.2.0';
 const String githubRawUrl =
     'https://raw.githubusercontent.com/TejasS1233/flutter-studio/main/flutter_studio/lib/src';
 
@@ -36,6 +36,9 @@ void main(List<String> arguments) async {
         }
         await addComponents(arguments.sublist(1));
         break;
+      case 'add-all':
+        await addAllComponents();
+        break;
       case 'list':
         listAvailableComponents();
         break;
@@ -63,12 +66,14 @@ void printHelp(ArgParser parser) {
   print(
       '  init              Initialize Flutter Studio in your project (creates lib/components/)');
   print('  add <components>  Add components to your project');
+  print('  add-all           Add all 40+ components to your project');
   print('  list              List all available components');
   print('');
   print('Examples:');
   print('  flutter_studio init');
   print('  flutter_studio add button card');
   print('  flutter_studio add button card textfield');
+  print('  flutter_studio add-all');
   print('  flutter_studio list');
   print('');
   print('Options:');
@@ -103,7 +108,8 @@ Future<void> initProject() async {
     'typography.dart',
     'radius.dart',
     'spacing.dart',
-    'shadows.dart'
+    'shadows.dart',
+    'effects.dart'
   ];
 
   for (final file in themeFiles) {
@@ -125,8 +131,6 @@ Future<void> initProject() async {
 }
 
 Future<void> addComponents(List<String> components) async {
-  print('Adding components...\n');
-
   final componentsDir = Directory('lib/components');
   if (!await componentsDir.exists()) {
     print('[WARNING] lib/components/ not found. Run: flutter_studio init');
@@ -137,31 +141,50 @@ Future<void> addComponents(List<String> components) async {
     await downloadComponent(component);
   }
 
-  print('\nComponents added successfully!');
-  print(
-      'Import them in your Dart files: import \'package:your_app/components/custom_button.dart\';');
+  print('');
 }
 
-Future<void> downloadComponent(String component) async {
+Future<bool> downloadComponent(String component) async {
   final fileName = 'custom_${component.toLowerCase()}.dart';
   final url = '$githubRawUrl/components/$fileName';
 
   try {
-    print('Downloading $component...');
+    print('Adding $component...');
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
       final filePath = path.join('lib/components', fileName);
       await File(filePath).writeAsString(response.body);
-      print('[OK] Added $component -> $fileName');
+      print('✓ $component');
+      return true;
     } else if (response.statusCode == 404) {
-      print('[ERROR] Component "$component" not found');
+      print('✗ $component (not found)');
+      return false;
     } else {
-      print(
-          '[ERROR] Failed to download $component (Status: ${response.statusCode})');
+      print('✗ $component (error)');
+      return false;
     }
   } catch (e) {
-    print('[ERROR] Error downloading $component: $e');
+    print('✗ $component (error)');
+    return false;
+  }
+}
+
+Future<bool> downloadComponentQuiet(String component) async {
+  final fileName = 'custom_${component.toLowerCase()}.dart';
+  final url = '$githubRawUrl/components/$fileName';
+
+  try {
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      final filePath = path.join('lib/components', fileName);
+      await File(filePath).writeAsString(response.body);
+      return true;
+    }
+    return false;
+  } catch (e) {
+    return false;
   }
 }
 
@@ -203,4 +226,76 @@ void listAvailableComponents() {
   });
 
   print('Usage: flutter_studio add button card textfield');
+  print('Or add all: flutter_studio add-all');
+}
+
+Future<void> addAllComponents() async {
+  print('Adding all components...');
+
+  final componentsDir = Directory('lib/components');
+  if (!await componentsDir.exists()) {
+    print('[WARNING] lib/components/ not found. Run: flutter_studio init');
+    exit(1);
+  }
+
+  final allComponents = [
+    // Buttons & Inputs
+    'button',
+    'text_field',
+    'textarea',
+    'checkbox',
+    'radio',
+    'switch',
+    'slider',
+    'select',
+    'dropdown',
+    // Layout
+    'card',
+    'app_bar',
+    'bottom_nav_bar',
+    'tabs',
+    'divider',
+    // Navigation
+    'breadcrumb',
+    'pagination',
+    // Feedback
+    'alert',
+    'toast',
+    'dialog',
+    'spinner',
+    'progress',
+    'skeleton',
+    // Display
+    'badge',
+    'chip',
+    'avatar',
+    'tooltip',
+    'empty',
+    // Advanced
+    'table',
+    'accordion',
+    'bottom_sheet',
+    'popover',
+    'form_field',
+    'toggle_group',
+  ];
+
+  int successCount = 0;
+  int failCount = 0;
+
+  for (final component in allComponents) {
+    final success = await downloadComponentQuiet(component);
+    if (success) {
+      successCount++;
+    } else {
+      failCount++;
+    }
+  }
+
+  print('');
+  if (failCount == 0) {
+    print('✓ Successfully installed $successCount components');
+  } else {
+    print('✓ Installed $successCount components, $failCount failed');
+  }
 }
