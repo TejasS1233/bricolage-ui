@@ -7,11 +7,13 @@ import '../models/component_config.dart';
 class MobilePhoneFrame extends StatelessWidget {
   final List<Widget> components;
   final DeviceFrame deviceFrame;
+  final bool fillAvailableSpace;
 
   const MobilePhoneFrame({
     super.key,
     required this.components,
     this.deviceFrame = DeviceFrame.iphone14,
+    this.fillAvailableSpace = false,
   });
 
   Map<String, double> get _dimensions {
@@ -30,7 +32,8 @@ class MobilePhoneFrame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dims = _dimensions;
-    return Container(
+    
+    Widget phoneFrame = Container(
       width: dims['width'],
       height: dims['height'],
       decoration: BoxDecoration(
@@ -143,6 +146,16 @@ class MobilePhoneFrame extends StatelessWidget {
         ],
       ),
     );
+    
+    // When fillAvailableSpace is true, use FittedBox to scale the frame
+    if (fillAvailableSpace) {
+      return FittedBox(
+        fit: BoxFit.contain,
+        child: phoneFrame,
+      );
+    }
+    
+    return phoneFrame;
   }
 
   Widget _buildStatusBar() {
