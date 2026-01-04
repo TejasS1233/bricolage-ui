@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../theme/colors.dart';
 
 enum CustomCardVariant { elevated, outlined, filled }
 
