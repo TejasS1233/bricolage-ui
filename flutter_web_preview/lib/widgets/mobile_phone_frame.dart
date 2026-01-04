@@ -32,7 +32,7 @@ class MobilePhoneFrame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dims = _dimensions;
-    
+
     Widget phoneFrame = Container(
       width: dims['width'],
       height: dims['height'],
@@ -146,15 +146,12 @@ class MobilePhoneFrame extends StatelessWidget {
         ],
       ),
     );
-    
+
     // When fillAvailableSpace is true, use FittedBox to scale the frame
     if (fillAvailableSpace) {
-      return FittedBox(
-        fit: BoxFit.contain,
-        child: phoneFrame,
-      );
+      return FittedBox(fit: BoxFit.contain, child: phoneFrame);
     }
-    
+
     return phoneFrame;
   }
 
@@ -241,7 +238,7 @@ class MobilePhoneFrame extends StatelessWidget {
               fontSizeFactor: theme.fontSizeScale,
             ),
           ),
-            child: DefaultTextStyle(
+          child: DefaultTextStyle(
             style: GoogleFonts.getFont(
               _getFontFamilyName(theme.fontFamily),
               color: theme.foreground,
@@ -258,7 +255,9 @@ class MobilePhoneFrame extends StatelessWidget {
                     )
                   : null,
               child: Scaffold(
-                backgroundColor: theme.enableGradients ? Colors.transparent : theme.background,
+                backgroundColor: theme.enableGradients
+                    ? Colors.transparent
+                    : theme.background,
                 appBar: appBar != null
                     ? PreferredSize(
                         preferredSize: const Size.fromHeight(56),
@@ -289,7 +288,9 @@ class MobilePhoneFrame extends StatelessWidget {
                               ? _buildLayoutForPreset(
                                   appState.selectedComponents
                                       .where(
-                                        (c) => c.id != 'appbar' && c.id != 'bottomnav',
+                                        (c) =>
+                                            c.id != 'appbar' &&
+                                            c.id != 'bottomnav',
                                       )
                                       .toList(),
                                   theme,
@@ -298,7 +299,9 @@ class MobilePhoneFrame extends StatelessWidget {
                               : _buildSimpleLayout(
                                   appState.selectedComponents
                                       .where(
-                                        (c) => c.id != 'appbar' && c.id != 'bottomnav',
+                                        (c) =>
+                                            c.id != 'appbar' &&
+                                            c.id != 'bottomnav',
                                       )
                                       .toList(),
                                   theme,
@@ -342,36 +345,50 @@ class MobilePhoneFrame extends StatelessWidget {
     dynamic theme,
   ) {
     final List<Widget> layout = [];
-    
+
     for (var component in components) {
       layout.add(component.buildWidget(theme: theme));
       layout.add(const SizedBox(height: 16));
     }
-    
+
     return layout;
   }
 
-  Widget _buildStatCard(dynamic theme, String title, String value, String change, IconData icon, bool isPositive) {
+  Widget _buildStatCard(
+    dynamic theme,
+    String title,
+    String value,
+    String change,
+    IconData icon,
+    bool isPositive,
+  ) {
     // Safe access with defaults - old theme instances may not have these properties
     double borderWidth = 1.0;
     bool enableHardShadow = false;
     double hardShadowOffsetX = 4.0;
     double hardShadowOffsetY = 4.0;
-    
-    try { borderWidth = theme.borderWidth ?? 1.0; } catch (_) {}
-    try { enableHardShadow = theme.enableHardShadow ?? false; } catch (_) {}
-    try { hardShadowOffsetX = theme.hardShadowOffsetX ?? 4.0; } catch (_) {}
-    try { hardShadowOffsetY = theme.hardShadowOffsetY ?? 4.0; } catch (_) {}
-    
+
+    try {
+      borderWidth = theme.borderWidth ?? 1.0;
+    } catch (_) {}
+    try {
+      enableHardShadow = theme.enableHardShadow ?? false;
+    } catch (_) {}
+    try {
+      hardShadowOffsetX = theme.hardShadowOffsetX ?? 4.0;
+    } catch (_) {}
+    try {
+      hardShadowOffsetY = theme.hardShadowOffsetY ?? 4.0;
+    } catch (_) {}
+
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: theme.card,
-        borderRadius: BorderRadius.circular(12.0 * (theme.radiusScale as double)),
-        border: Border.all(
-          color: theme.border,
-          width: borderWidth,
+        borderRadius: BorderRadius.circular(
+          12.0 * (theme.radiusScale as double),
         ),
+        border: Border.all(color: theme.border, width: borderWidth),
         // Hard offset shadow for brutalism
         boxShadow: enableHardShadow
             ? [
@@ -392,10 +409,7 @@ class MobilePhoneFrame extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: TextStyle(
-                  fontSize: 11,
-                  color: theme.mutedForeground,
-                ),
+                style: TextStyle(fontSize: 11, color: theme.mutedForeground),
               ),
               Icon(icon, size: 16, color: theme.mutedForeground),
             ],
@@ -413,7 +427,9 @@ class MobilePhoneFrame extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                 decoration: BoxDecoration(
-                  color: (isPositive ? Colors.green : Colors.red).withOpacity(0.1),
+                  color: (isPositive ? Colors.green : Colors.red).withOpacity(
+                    0.1,
+                  ),
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Text(
@@ -428,10 +444,7 @@ class MobilePhoneFrame extends StatelessWidget {
               const SizedBox(width: 4),
               Text(
                 'vs last week',
-                style: TextStyle(
-                  fontSize: 9,
-                  color: theme.mutedForeground,
-                ),
+                style: TextStyle(fontSize: 9, color: theme.mutedForeground),
               ),
             ],
           ),
@@ -440,7 +453,14 @@ class MobilePhoneFrame extends StatelessWidget {
     );
   }
 
-  Widget _buildActivityItem(dynamic theme, String title, String subtitle, String amount, IconData icon, bool isIncome) {
+  Widget _buildActivityItem(
+    dynamic theme,
+    String title,
+    String subtitle,
+    String amount,
+    IconData icon,
+    bool isIncome,
+  ) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
@@ -450,7 +470,9 @@ class MobilePhoneFrame extends StatelessWidget {
             height: 40,
             decoration: BoxDecoration(
               color: theme.muted,
-              borderRadius: BorderRadius.circular(8.0 * (theme.radiusScale as double)),
+              borderRadius: BorderRadius.circular(
+                8.0 * (theme.radiusScale as double),
+              ),
             ),
             child: Icon(icon, size: 20, color: theme.foreground),
           ),
@@ -469,10 +491,7 @@ class MobilePhoneFrame extends StatelessWidget {
                 ),
                 Text(
                   subtitle,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: theme.mutedForeground,
-                  ),
+                  style: TextStyle(fontSize: 12, color: theme.mutedForeground),
                 ),
               ],
             ),
@@ -608,10 +627,7 @@ class MobilePhoneFrame extends StatelessWidget {
               ),
               Text(
                 'This week',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: theme.mutedForeground,
-                ),
+                style: TextStyle(fontSize: 12, color: theme.mutedForeground),
               ),
             ],
           ),
@@ -628,10 +644,38 @@ class MobilePhoneFrame extends StatelessWidget {
           crossAxisSpacing: 10,
           childAspectRatio: 1.4,
           children: [
-            _buildStatCard(theme, 'Total Revenue', '\$24,780', '+12.5%', Icons.trending_up, true),
-            _buildStatCard(theme, 'Active Users', '1,429', '+8.2%', Icons.people_outline, true),
-            _buildStatCard(theme, 'Orders', '356', '-3.1%', Icons.shopping_bag_outlined, false),
-            _buildStatCard(theme, 'Conversion', '4.3%', '+0.8%', Icons.auto_graph, true),
+            _buildStatCard(
+              theme,
+              'Total Revenue',
+              '\$24,780',
+              '+12.5%',
+              Icons.trending_up,
+              true,
+            ),
+            _buildStatCard(
+              theme,
+              'Active Users',
+              '1,429',
+              '+8.2%',
+              Icons.people_outline,
+              true,
+            ),
+            _buildStatCard(
+              theme,
+              'Orders',
+              '356',
+              '-3.1%',
+              Icons.shopping_bag_outlined,
+              false,
+            ),
+            _buildStatCard(
+              theme,
+              'Conversion',
+              '4.3%',
+              '+0.8%',
+              Icons.auto_graph,
+              true,
+            ),
           ],
         ),
       );
@@ -655,23 +699,41 @@ class MobilePhoneFrame extends StatelessWidget {
             ),
             Text(
               'See all',
-              style: TextStyle(
-                fontSize: 12,
-                color: theme.primary,
-              ),
+              style: TextStyle(fontSize: 12, color: theme.primary),
             ),
           ],
         ),
       ),
     );
-    
+
     // Recent activity items
     layout.add(
       Column(
         children: [
-          _buildActivityItem(theme, 'Payment Received', 'From John Doe', '+\$450.00', Icons.arrow_downward, true),
-          _buildActivityItem(theme, 'Subscription', 'Netflix Monthly', '-\$15.99', Icons.subscriptions_outlined, false),
-          _buildActivityItem(theme, 'Transfer', 'To Savings Account', '-\$200.00', Icons.swap_horiz, false),
+          _buildActivityItem(
+            theme,
+            'Payment Received',
+            'From John Doe',
+            '+\$450.00',
+            Icons.arrow_downward,
+            true,
+          ),
+          _buildActivityItem(
+            theme,
+            'Subscription',
+            'Netflix Monthly',
+            '-\$15.99',
+            Icons.subscriptions_outlined,
+            false,
+          ),
+          _buildActivityItem(
+            theme,
+            'Transfer',
+            'To Savings Account',
+            '-\$200.00',
+            Icons.swap_horiz,
+            false,
+          ),
         ],
       ),
     );

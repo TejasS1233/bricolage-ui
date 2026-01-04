@@ -74,7 +74,9 @@ class ComponentSelector extends StatelessWidget {
                         if (wasPresetMode) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: const Text('Switched to manual component mode'),
+                              content: const Text(
+                                'Switched to manual component mode',
+                              ),
                               duration: const Duration(seconds: 2),
                               behavior: SnackBarBehavior.floating,
                               backgroundColor: Colors.blue.shade600,
