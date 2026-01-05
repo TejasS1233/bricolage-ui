@@ -22,6 +22,17 @@
 
 ---
 
+---
+
+## See It In Action
+
+**Build a polished login page in under 2 minutes** — from `flutter create` to production-ready UI.
+
+https://github.com/user-attachments/assets/5e41003e-165f-4b9f-b4c6-c719c2de2f7a
+
+*Install CLI → Add components → Build your page → Done!*
+
+
 ## Table of Contents
 
 - [Stop Writing Boilerplate](#stop-writing-boilerplate)
