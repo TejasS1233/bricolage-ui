@@ -15,7 +15,10 @@
 
 **The shadcn/ui philosophy, adapted for Flutter.**
 
+<img src="assets/Components.png" alt="Bricolage UI Components" width="100%">
+
 </div>
+
 
 ---
 

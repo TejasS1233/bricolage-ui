@@ -44,3 +44,6 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 .vercel
+
+# Personal files
+lib/screens/showcase_screen.dart

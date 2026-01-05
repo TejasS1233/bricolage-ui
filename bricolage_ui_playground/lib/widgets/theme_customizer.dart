@@ -273,33 +273,7 @@ class ThemeCustomizer extends StatelessWidget {
             ),
           ),
         ]),
-        _buildColorSection(context, appState, 'Secondary Colors', [
-          (
-            'Secondary',
-            theme.secondary,
-            (c) => appState.updateGlobalTheme(theme.copyWith(secondary: c)),
-          ),
-          (
-            'Secondary Foreground',
-            theme.secondaryForeground,
-            (c) => appState.updateGlobalTheme(
-              theme.copyWith(secondaryForeground: c),
-            ),
-          ),
-        ]),
-        _buildColorSection(context, appState, 'Accent Colors', [
-          (
-            'Accent',
-            theme.accent,
-            (c) => appState.updateGlobalTheme(theme.copyWith(accent: c)),
-          ),
-          (
-            'Accent Foreground',
-            theme.accentForeground,
-            (c) =>
-                appState.updateGlobalTheme(theme.copyWith(accentForeground: c)),
-          ),
-        ]),
+
         _buildColorSection(context, appState, 'Base Colors', [
           (
             'Background',
@@ -325,20 +299,7 @@ class ThemeCustomizer extends StatelessWidget {
                 appState.updateGlobalTheme(theme.copyWith(cardForeground: c)),
           ),
         ]),
-        _buildColorSection(context, appState, 'Popover Colors', [
-          (
-            'Popover',
-            theme.popover,
-            (c) => appState.updateGlobalTheme(theme.copyWith(popover: c)),
-          ),
-          (
-            'Popover Foreground',
-            theme.popoverForeground,
-            (c) => appState.updateGlobalTheme(
-              theme.copyWith(popoverForeground: c),
-            ),
-          ),
-        ]),
+
         _buildColorSection(context, appState, 'Muted Colors', [
           (
             'Muted',
@@ -383,33 +344,7 @@ class ThemeCustomizer extends StatelessWidget {
             (c) => appState.updateGlobalTheme(theme.copyWith(ring: c)),
           ),
         ]),
-        _buildColorSection(context, appState, 'Chart Colors', [
-          (
-            'Chart 1',
-            theme.chart1,
-            (c) => appState.updateGlobalTheme(theme.copyWith(chart1: c)),
-          ),
-          (
-            'Chart 2',
-            theme.chart2,
-            (c) => appState.updateGlobalTheme(theme.copyWith(chart2: c)),
-          ),
-          (
-            'Chart 3',
-            theme.chart3,
-            (c) => appState.updateGlobalTheme(theme.copyWith(chart3: c)),
-          ),
-          (
-            'Chart 4',
-            theme.chart4,
-            (c) => appState.updateGlobalTheme(theme.copyWith(chart4: c)),
-          ),
-          (
-            'Chart 5',
-            theme.chart5,
-            (c) => appState.updateGlobalTheme(theme.copyWith(chart5: c)),
-          ),
-        ]),
+
       ],
     );
   }

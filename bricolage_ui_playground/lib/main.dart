@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'models/app_state.dart';
 import 'models/components_data.dart';
 import 'screens/preview_screen.dart';
+import 'screens/showcase_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,7 +39,11 @@ class MyApp extends StatelessWidget {
                 ),
               ),
             ),
-            home: const PreviewScreen(),
+            initialRoute: '/',
+            routes: {
+              '/': (context) => const PreviewScreen(),
+              '/showcase': (context) => const ShowcaseScreen(),
+            },
           );
         },
       ),
