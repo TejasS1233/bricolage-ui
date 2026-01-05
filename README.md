@@ -378,7 +378,6 @@ Interactive web application for customizing and previewing components in real-ti
 
 **Live Demo:** [https://bricolage-ui.vercel.app](https://bricolage-ui.vercel.app)
 
-> **Note:** The live demo is a static Flutter web build optimized for component preview functionality. The UI is currently non-responsive and best viewed on desktop. A fully responsive web experience is under development.
 
 ### `bricolage_ui_docs/`
 

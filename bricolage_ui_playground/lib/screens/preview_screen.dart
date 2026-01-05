@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'dart:html' as html;
 import '../models/app_state.dart';
@@ -24,7 +25,6 @@ class _PreviewScreenState extends State<PreviewScreen> {
 
   Future<void> _handleDownload(BuildContext context, AppState appState) async {
     try {
-      // Generate the consolidated theme.dart file with user's customizations
       final themeContent = ComponentCodeGenerator.generateConsolidatedThemeFile(
         appState.globalTheme,
       );
@@ -41,12 +41,38 @@ class _PreviewScreenState extends State<PreviewScreen> {
       }
     } catch (e) {
       if (context.mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Export failed: $e')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Download failed: $e')),
+        );
       }
     }
   }
+
+  Future<void> _handleCopy(BuildContext context, AppState appState) async {
+    try {
+      final themeContent = ComponentCodeGenerator.generateConsolidatedThemeFile(
+        appState.globalTheme,
+      );
+
+      await Clipboard.setData(ClipboardData(text: themeContent));
+
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Theme code copied to clipboard!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Copy failed: $e')),
+        );
+      }
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -224,6 +250,38 @@ class _PreviewScreenState extends State<PreviewScreen> {
                   ),
                 ],
                 SizedBox(width: isMobile ? 4 : 12),
+                // Copy button
+                Consumer<AppState>(
+                  builder: (context, appState, _) {
+                    if (isMobile) {
+                      return IconButton(
+                        onPressed: () => _handleCopy(context, appState),
+                        icon: const Icon(Icons.copy_rounded),
+                        tooltip: 'Copy Theme',
+                        iconSize: 24,
+                        color: Colors.grey.shade700,
+                      );
+                    }
+                    return OutlinedButton.icon(
+                      onPressed: () => _handleCopy(context, appState),
+                      icon: const Icon(Icons.copy_rounded, size: 18),
+                      label: const Text('Copy'),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: const Color(0xFF1a1a1a),
+                        side: const BorderSide(color: Color(0xFFE0E0E0)),
+                        elevation: 0,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(width: 8),
                 // Download button
                 Consumer<AppState>(
                   builder: (context, appState, _) {
@@ -231,7 +289,7 @@ class _PreviewScreenState extends State<PreviewScreen> {
                       return IconButton(
                         onPressed: () => _handleDownload(context, appState),
                         icon: const Icon(Icons.download_rounded),
-                        tooltip: 'Download ZIP',
+                        tooltip: 'Download Theme',
                         iconSize: 24,
                         color: const Color(0xFF1a1a1a),
                       );
@@ -239,7 +297,7 @@ class _PreviewScreenState extends State<PreviewScreen> {
                     return ElevatedButton.icon(
                       onPressed: () => _handleDownload(context, appState),
                       icon: const Icon(Icons.download_rounded, size: 18),
-                      label: const Text('Download ZIP'),
+                      label: const Text('Download'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF1a1a1a),
                         foregroundColor: Colors.white,
