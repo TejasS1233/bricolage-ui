@@ -344,24 +344,30 @@ class CustomizationPanel extends StatelessWidget {
     String key,
     Color currentColor,
   ) {
+    Color pickerColor = currentColor;
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Pick ${_formatPropertyName(key)}'),
-        content: SingleChildScrollView(
-          child: ColorPicker(
-            pickerColor: currentColor,
-            onColorChanged: (color) {
-              appState.updateProperty(component.id, key, color);
-            },
+      builder: (context) => StatefulBuilder(
+        builder: (context, setDialogState) => AlertDialog(
+          title: Text('Pick ${_formatPropertyName(key)}'),
+          content: SingleChildScrollView(
+            child: ColorPicker(
+              pickerColor: pickerColor,
+              onColorChanged: (color) {
+                setDialogState(() {
+                  pickerColor = color;
+                });
+                appState.updateProperty(component.id, key, color);
+              },
+            ),
           ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Done'),
+            ),
+          ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Done'),
-          ),
-        ],
       ),
     );
   }

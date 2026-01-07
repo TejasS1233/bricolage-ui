@@ -1074,22 +1074,30 @@ class ThemeCustomizer extends StatelessWidget {
     Color currentColor,
     ValueChanged<Color> onColorChanged,
   ) {
+    Color pickerColor = currentColor;
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Pick $label'),
-        content: SingleChildScrollView(
-          child: ColorPicker(
-            pickerColor: currentColor,
-            onColorChanged: onColorChanged,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setDialogState) => AlertDialog(
+          title: Text('Pick $label'),
+          content: SingleChildScrollView(
+            child: ColorPicker(
+              pickerColor: pickerColor,
+              onColorChanged: (color) {
+                setDialogState(() {
+                  pickerColor = color;
+                });
+                onColorChanged(color);
+              },
+            ),
           ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Done'),
+            ),
+          ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Done'),
-          ),
-        ],
       ),
     );
   }
