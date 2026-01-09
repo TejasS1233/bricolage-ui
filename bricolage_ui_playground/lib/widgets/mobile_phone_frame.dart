@@ -364,58 +364,59 @@ class MobilePhoneFrame extends StatelessWidget {
     bool isPositive,
   ) {
     final content = Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                title,
-                style: TextStyle(fontSize: 11, color: theme.mutedForeground),
-              ),
-              Icon(icon, size: 16, color: theme.mutedForeground),
-            ],
-          ),
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-              color: theme.foreground,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: TextStyle(fontSize: 11, color: theme.mutedForeground),
             ),
+            Icon(icon, size: 16, color: theme.mutedForeground),
+          ],
+        ),
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+            color: theme.foreground,
           ),
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-                decoration: BoxDecoration(
-                  color: (isPositive ? Colors.green : Colors.red).withOpacity(
-                    0.1,
-                  ),
-                  borderRadius: BorderRadius.circular(4),
+        ),
+        Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+              decoration: BoxDecoration(
+                color: (isPositive ? Colors.green : Colors.red).withOpacity(
+                  0.1,
                 ),
-                child: Text(
-                  change,
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w500,
-                    color: isPositive ? Colors.green : Colors.red,
-                  ),
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Text(
+                change,
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w500,
+                  color: isPositive ? Colors.green : Colors.red,
                 ),
               ),
-              const SizedBox(width: 4),
-              Text(
-                'vs last week',
-                style: TextStyle(fontSize: 9, color: theme.mutedForeground),
-              ),
-            ],
-          ),
-        ],
-      );
+            ),
+            const SizedBox(width: 4),
+            Text(
+              'vs last week',
+              style: TextStyle(fontSize: 9, color: theme.mutedForeground),
+            ),
+          ],
+        ),
+      ],
+    );
 
     // Check if any effects are enabled
-    final hasEffects = theme.enableGlassmorphism ||
+    final hasEffects =
+        theme.enableGlassmorphism ||
         theme.enableNeumorphism ||
         theme.enableBorderGlow ||
         theme.enableHardShadow ||
@@ -439,7 +440,10 @@ class MobilePhoneFrame extends StatelessWidget {
       decoration: BoxDecoration(
         color: theme.card,
         borderRadius: BorderRadius.circular(12.0 * theme.radiusScale),
-        border: Border.all(color: theme.border, width: theme.borderWidth ?? 1.0),
+        border: Border.all(
+          color: theme.border,
+          width: theme.borderWidth ?? 1.0,
+        ),
       ),
       child: content,
     );
@@ -454,7 +458,8 @@ class MobilePhoneFrame extends StatelessWidget {
     bool isIncome,
   ) {
     // Check if any effects are enabled
-    final hasEffects = theme.enableGlassmorphism ||
+    final hasEffects =
+        theme.enableGlassmorphism ||
         theme.enableNeumorphism ||
         theme.enableBorderGlow ||
         theme.enableHardShadow ||

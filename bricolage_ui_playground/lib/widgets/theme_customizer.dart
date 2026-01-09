@@ -53,23 +53,29 @@ class ThemeCustomizer extends StatelessWidget {
     );
   }
 
-  DropdownMenuItem<String> _buildThemeDropdownItem(String value, String label, List<Color> colors) {
+  DropdownMenuItem<String> _buildThemeDropdownItem(
+    String value,
+    String label,
+    List<Color> colors,
+  ) {
     return DropdownMenuItem(
       value: value,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           // Color palette circles
-          ...colors.map((color) => Container(
-            width: 12,
-            height: 12,
-            margin: const EdgeInsets.only(right: 3),
-            decoration: BoxDecoration(
-              color: color,
-              shape: BoxShape.circle,
-              border: Border.all(color: Colors.grey.shade300, width: 0.5),
+          ...colors.map(
+            (color) => Container(
+              width: 12,
+              height: 12,
+              margin: const EdgeInsets.only(right: 3),
+              decoration: BoxDecoration(
+                color: color,
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.grey.shade300, width: 0.5),
+              ),
             ),
-          )),
+          ),
           const SizedBox(width: 6),
           Text(label, style: const TextStyle(fontSize: 12)),
         ],
@@ -110,16 +116,60 @@ class ThemeCustomizer extends StatelessWidget {
                   icon: const Icon(Icons.arrow_drop_down, size: 18),
                   style: const TextStyle(fontSize: 12, color: Colors.black87),
                   items: [
-                    _buildThemeDropdownItem('default', 'Default', const [Color(0xFF6366F1), Color(0xFFF4F4F5), Color(0xFF000000)]),
-                    _buildThemeDropdownItem('cyberpunk', 'Cyberpunk', const [Color(0xFF00FF41), Color(0xFFFF00FF), Color(0xFF0D0D0D)]),
-                    _buildThemeDropdownItem('vintage', 'Vintage', const [Color(0xFF8B7355), Color(0xFFD9CFC2), Color(0xFFF5EFE6)]),
-                    _buildThemeDropdownItem('neobrutalism', 'Neo-Brutalism', const [Color(0xFFFFE600), Color(0xFF000000), Color(0xFFFFFBEB)]),
-                    _buildThemeDropdownItem('bubblegum', 'Bubblegum', const [Color(0xFFD4578C), Color(0xFF8FD4D2), Color(0xFFF5E6EB)]),
-                    _buildThemeDropdownItem('amethyst', 'Amethyst', const [Color(0xFF9B5DE5), Color(0xFF7CD4CC), Color(0xFFF8F7FC)]),
-                    _buildThemeDropdownItem('spring', 'Spring', const [Color(0xFF4D9E6B), Color(0xFF9E6B7B), Color(0xFFFAFAFA)]),
-                    _buildThemeDropdownItem('monochrome', 'Monochrome', const [Color(0xFF000000), Color(0xFFFFFFFF), Color(0xFF666666)]),
-                    _buildThemeDropdownItem('retro', 'Retro Seaside', const [Color(0xFFD33F6A), Color(0xFF5DBCB8), Color(0xFFF5EDDC)]),
-                    _buildThemeDropdownItem('bento', 'Bento/iOS', const [Color(0xFF007AFF), Color(0xFFF2F2F7), Color(0xFF34C759)]),
+                    _buildThemeDropdownItem('default', 'Default', const [
+                      Color(0xFF6366F1),
+                      Color(0xFFF4F4F5),
+                      Color(0xFF000000),
+                    ]),
+                    _buildThemeDropdownItem('cyberpunk', 'Cyberpunk', const [
+                      Color(0xFF00FF41),
+                      Color(0xFFFF00FF),
+                      Color(0xFF0D0D0D),
+                    ]),
+                    _buildThemeDropdownItem('vintage', 'Vintage', const [
+                      Color(0xFF8B7355),
+                      Color(0xFFD9CFC2),
+                      Color(0xFFF5EFE6),
+                    ]),
+                    _buildThemeDropdownItem(
+                      'neobrutalism',
+                      'Neo-Brutalism',
+                      const [
+                        Color(0xFFFFE600),
+                        Color(0xFF000000),
+                        Color(0xFFFFFBEB),
+                      ],
+                    ),
+                    _buildThemeDropdownItem('bubblegum', 'Bubblegum', const [
+                      Color(0xFFD4578C),
+                      Color(0xFF8FD4D2),
+                      Color(0xFFF5E6EB),
+                    ]),
+                    _buildThemeDropdownItem('amethyst', 'Amethyst', const [
+                      Color(0xFF9B5DE5),
+                      Color(0xFF7CD4CC),
+                      Color(0xFFF8F7FC),
+                    ]),
+                    _buildThemeDropdownItem('spring', 'Spring', const [
+                      Color(0xFF4D9E6B),
+                      Color(0xFF9E6B7B),
+                      Color(0xFFFAFAFA),
+                    ]),
+                    _buildThemeDropdownItem('monochrome', 'Monochrome', const [
+                      Color(0xFF000000),
+                      Color(0xFFFFFFFF),
+                      Color(0xFF666666),
+                    ]),
+                    _buildThemeDropdownItem('retro', 'Retro Seaside', const [
+                      Color(0xFFD33F6A),
+                      Color(0xFF5DBCB8),
+                      Color(0xFFF5EDDC),
+                    ]),
+                    _buildThemeDropdownItem('bento', 'Bento/iOS', const [
+                      Color(0xFF007AFF),
+                      Color(0xFFF2F2F7),
+                      Color(0xFF34C759),
+                    ]),
                   ],
                   onChanged: (String? value) {
                     if (value != null) {
@@ -157,7 +207,7 @@ class ThemeCustomizer extends StatelessWidget {
                         default:
                           newTheme = GlobalTheme();
                       }
-                      
+
                       // Preserve user's effect preferences
                       newTheme = newTheme.copyWith(
                         enableGlassmorphism: currentTheme.enableGlassmorphism,
@@ -173,9 +223,10 @@ class ThemeCustomizer extends StatelessWidget {
                         glowColor: currentTheme.glowColor,
                         glowIntensity: currentTheme.glowIntensity,
                         glowSpread: currentTheme.glowSpread,
-                        enableHoverAnimations: currentTheme.enableHoverAnimations,
+                        enableHoverAnimations:
+                            currentTheme.enableHoverAnimations,
                       );
-                      
+
                       appState.updateGlobalTheme(newTheme);
                     }
                   },
@@ -357,7 +408,6 @@ class ThemeCustomizer extends StatelessWidget {
             (c) => appState.updateGlobalTheme(theme.copyWith(ring: c)),
           ),
         ]),
-
       ],
     );
   }
@@ -438,46 +488,90 @@ class ThemeCustomizer extends StatelessWidget {
             builder: (context) {
               // Fallback to Inter if font not in list
               const fontList = [
-                'Inter', 'Roboto', 'Poppins', 'Open Sans', 'Lato', 'Montserrat',
-                'Raleway', 'Source Sans Pro', 'Ubuntu', 'Nunito',
-                'Courier New', 'MS Sans Serif', 'SF Pro',
-                'DM Sans', 'Libre Baskerville', 'Lora', 'Space Mono', 'Fira Code', 'IBM Plex Mono', 'Outfit',
+                'Inter',
+                'Roboto',
+                'Poppins',
+                'Open Sans',
+                'Lato',
+                'Montserrat',
+                'Raleway',
+                'Source Sans Pro',
+                'Ubuntu',
+                'Nunito',
+                'Courier New',
+                'MS Sans Serif',
+                'SF Pro',
+                'DM Sans',
+                'Libre Baskerville',
+                'Lora',
+                'Space Mono',
+                'Fira Code',
+                'IBM Plex Mono',
+                'Outfit',
               ];
-              final currentFont = fontList.contains(theme.fontFamily) ? theme.fontFamily : 'Inter';
+              final currentFont = fontList.contains(theme.fontFamily)
+                  ? theme.fontFamily
+                  : 'Inter';
               return DropdownButton<String>(
                 value: currentFont,
                 isExpanded: true,
                 underline: const SizedBox(),
                 items: const [
-              DropdownMenuItem(value: 'Inter', child: Text('Inter')),
-              DropdownMenuItem(value: 'Roboto', child: Text('Roboto')),
-              DropdownMenuItem(value: 'Poppins', child: Text('Poppins')),
-              DropdownMenuItem(value: 'Open Sans', child: Text('Open Sans')),
-              DropdownMenuItem(value: 'Lato', child: Text('Lato')),
-              DropdownMenuItem(value: 'Montserrat', child: Text('Montserrat')),
-              DropdownMenuItem(value: 'Raleway', child: Text('Raleway')),
-              DropdownMenuItem(
-                value: 'Source Sans Pro',
-                child: Text('Source Sans Pro'),
-              ),
-              DropdownMenuItem(value: 'Ubuntu', child: Text('Ubuntu')),
-              DropdownMenuItem(value: 'Nunito', child: Text('Nunito')),
-              // Fonts for new themes
-              DropdownMenuItem(value: 'Courier New', child: Text('Courier New')),
-              DropdownMenuItem(value: 'MS Sans Serif', child: Text('MS Sans Serif')),
-              DropdownMenuItem(value: 'SF Pro', child: Text('SF Pro')),
-              // TweakCN fonts
-              DropdownMenuItem(value: 'DM Sans', child: Text('DM Sans')),
-              DropdownMenuItem(value: 'Libre Baskerville', child: Text('Libre Baskerville')),
-              DropdownMenuItem(value: 'Lora', child: Text('Lora')),
-              DropdownMenuItem(value: 'Space Mono', child: Text('Space Mono')),
-              DropdownMenuItem(value: 'Fira Code', child: Text('Fira Code')),
-              DropdownMenuItem(value: 'IBM Plex Mono', child: Text('IBM Plex Mono')),
-              DropdownMenuItem(value: 'Outfit', child: Text('Outfit')),
-            ],
+                  DropdownMenuItem(value: 'Inter', child: Text('Inter')),
+                  DropdownMenuItem(value: 'Roboto', child: Text('Roboto')),
+                  DropdownMenuItem(value: 'Poppins', child: Text('Poppins')),
+                  DropdownMenuItem(
+                    value: 'Open Sans',
+                    child: Text('Open Sans'),
+                  ),
+                  DropdownMenuItem(value: 'Lato', child: Text('Lato')),
+                  DropdownMenuItem(
+                    value: 'Montserrat',
+                    child: Text('Montserrat'),
+                  ),
+                  DropdownMenuItem(value: 'Raleway', child: Text('Raleway')),
+                  DropdownMenuItem(
+                    value: 'Source Sans Pro',
+                    child: Text('Source Sans Pro'),
+                  ),
+                  DropdownMenuItem(value: 'Ubuntu', child: Text('Ubuntu')),
+                  DropdownMenuItem(value: 'Nunito', child: Text('Nunito')),
+                  // Fonts for new themes
+                  DropdownMenuItem(
+                    value: 'Courier New',
+                    child: Text('Courier New'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'MS Sans Serif',
+                    child: Text('MS Sans Serif'),
+                  ),
+                  DropdownMenuItem(value: 'SF Pro', child: Text('SF Pro')),
+                  // TweakCN fonts
+                  DropdownMenuItem(value: 'DM Sans', child: Text('DM Sans')),
+                  DropdownMenuItem(
+                    value: 'Libre Baskerville',
+                    child: Text('Libre Baskerville'),
+                  ),
+                  DropdownMenuItem(value: 'Lora', child: Text('Lora')),
+                  DropdownMenuItem(
+                    value: 'Space Mono',
+                    child: Text('Space Mono'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'Fira Code',
+                    child: Text('Fira Code'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'IBM Plex Mono',
+                    child: Text('IBM Plex Mono'),
+                  ),
+                  DropdownMenuItem(value: 'Outfit', child: Text('Outfit')),
+                ],
                 onChanged: (value) {
                   if (value != null) {
-                    appState.updateGlobalTheme(theme.copyWith(fontFamily: value));
+                    appState.updateGlobalTheme(
+                      theme.copyWith(fontFamily: value),
+                    );
                   }
                 },
               );
@@ -682,7 +776,7 @@ class ThemeCustomizer extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           margin: const EdgeInsets.only(bottom: 16),
           decoration: BoxDecoration(
-            color: theme.enableGlassmorphism 
+            color: theme.enableGlassmorphism
                 ? const Color(0xFF667eea).withOpacity(0.1)
                 : Colors.grey.shade50,
             borderRadius: BorderRadius.circular(12),
@@ -702,7 +796,10 @@ class ThemeCustomizer extends StatelessWidget {
                   const Expanded(
                     child: Text(
                       'Glassmorphism',
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                   Switch(
@@ -723,7 +820,8 @@ class ThemeCustomizer extends StatelessWidget {
                   theme.glassBlur,
                   1.0,
                   30.0,
-                  (v) => appState.updateGlobalTheme(theme.copyWith(glassBlur: v)),
+                  (v) =>
+                      appState.updateGlobalTheme(theme.copyWith(glassBlur: v)),
                 ),
                 const SizedBox(height: 8),
                 _buildSliderRow(
@@ -731,7 +829,9 @@ class ThemeCustomizer extends StatelessWidget {
                   theme.glassOpacity,
                   0.05,
                   0.5,
-                  (v) => appState.updateGlobalTheme(theme.copyWith(glassOpacity: v)),
+                  (v) => appState.updateGlobalTheme(
+                    theme.copyWith(glassOpacity: v),
+                  ),
                 ),
               ],
             ],
@@ -743,7 +843,7 @@ class ThemeCustomizer extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           margin: const EdgeInsets.only(bottom: 16),
           decoration: BoxDecoration(
-            color: theme.enableNeumorphism 
+            color: theme.enableNeumorphism
                 ? const Color(0xFF667eea).withOpacity(0.1)
                 : Colors.grey.shade50,
             borderRadius: BorderRadius.circular(12),
@@ -763,7 +863,10 @@ class ThemeCustomizer extends StatelessWidget {
                   const Expanded(
                     child: Text(
                       'Neumorphism',
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                   Switch(
@@ -784,7 +887,9 @@ class ThemeCustomizer extends StatelessWidget {
                   theme.neumorphismIntensity,
                   0.1,
                   1.0,
-                  (v) => appState.updateGlobalTheme(theme.copyWith(neumorphismIntensity: v)),
+                  (v) => appState.updateGlobalTheme(
+                    theme.copyWith(neumorphismIntensity: v),
+                  ),
                 ),
               ],
             ],
@@ -796,7 +901,7 @@ class ThemeCustomizer extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           margin: const EdgeInsets.only(bottom: 16),
           decoration: BoxDecoration(
-            color: theme.enableGradients 
+            color: theme.enableGradients
                 ? const Color(0xFF667eea).withOpacity(0.1)
                 : Colors.grey.shade50,
             borderRadius: BorderRadius.circular(12),
@@ -811,12 +916,19 @@ class ThemeCustomizer extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.gradient, size: 20, color: Color(0xFF667eea)),
+                  const Icon(
+                    Icons.gradient,
+                    size: 20,
+                    color: Color(0xFF667eea),
+                  ),
                   const SizedBox(width: 8),
                   const Expanded(
                     child: Text(
                       'Gradient Backgrounds',
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                   Switch(
@@ -837,8 +949,12 @@ class ThemeCustomizer extends StatelessWidget {
                     Expanded(
                       child: GestureDetector(
                         onTap: () => _showColorPicker(
-                          context, 'Gradient Start', theme.gradientStart,
-                          (c) => appState.updateGlobalTheme(theme.copyWith(gradientStart: c)),
+                          context,
+                          'Gradient Start',
+                          theme.gradientStart,
+                          (c) => appState.updateGlobalTheme(
+                            theme.copyWith(gradientStart: c),
+                          ),
                         ),
                         child: Container(
                           height: 36,
@@ -852,7 +968,8 @@ class ThemeCustomizer extends StatelessWidget {
                               'Start',
                               style: TextStyle(
                                 fontSize: 11,
-                                color: theme.gradientStart.computeLuminance() > 0.5
+                                color:
+                                    theme.gradientStart.computeLuminance() > 0.5
                                     ? Colors.black
                                     : Colors.white,
                               ),
@@ -865,8 +982,12 @@ class ThemeCustomizer extends StatelessWidget {
                     Expanded(
                       child: GestureDetector(
                         onTap: () => _showColorPicker(
-                          context, 'Gradient End', theme.gradientEnd,
-                          (c) => appState.updateGlobalTheme(theme.copyWith(gradientEnd: c)),
+                          context,
+                          'Gradient End',
+                          theme.gradientEnd,
+                          (c) => appState.updateGlobalTheme(
+                            theme.copyWith(gradientEnd: c),
+                          ),
                         ),
                         child: Container(
                           height: 36,
@@ -880,7 +1001,8 @@ class ThemeCustomizer extends StatelessWidget {
                               'End',
                               style: TextStyle(
                                 fontSize: 11,
-                                color: theme.gradientEnd.computeLuminance() > 0.5
+                                color:
+                                    theme.gradientEnd.computeLuminance() > 0.5
                                     ? Colors.black
                                     : Colors.white,
                               ),
@@ -897,7 +1019,9 @@ class ThemeCustomizer extends StatelessWidget {
                   theme.gradientAngle,
                   0.0,
                   360.0,
-                  (v) => appState.updateGlobalTheme(theme.copyWith(gradientAngle: v)),
+                  (v) => appState.updateGlobalTheme(
+                    theme.copyWith(gradientAngle: v),
+                  ),
                   suffix: '°',
                 ),
               ],
@@ -910,7 +1034,7 @@ class ThemeCustomizer extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           margin: const EdgeInsets.only(bottom: 16),
           decoration: BoxDecoration(
-            color: theme.enableBorderGlow 
+            color: theme.enableBorderGlow
                 ? const Color(0xFF667eea).withOpacity(0.1)
                 : Colors.grey.shade50,
             borderRadius: BorderRadius.circular(12),
@@ -930,7 +1054,10 @@ class ThemeCustomizer extends StatelessWidget {
                   const Expanded(
                     child: Text(
                       'Border Glow',
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                   Switch(
@@ -948,8 +1075,12 @@ class ThemeCustomizer extends StatelessWidget {
                 const SizedBox(height: 12),
                 GestureDetector(
                   onTap: () => _showColorPicker(
-                    context, 'Glow Color', theme.glowColor,
-                    (c) => appState.updateGlobalTheme(theme.copyWith(glowColor: c)),
+                    context,
+                    'Glow Color',
+                    theme.glowColor,
+                    (c) => appState.updateGlobalTheme(
+                      theme.copyWith(glowColor: c),
+                    ),
                   ),
                   child: Container(
                     height: 36,
@@ -977,7 +1108,9 @@ class ThemeCustomizer extends StatelessWidget {
                   theme.glowIntensity,
                   0.1,
                   1.0,
-                  (v) => appState.updateGlobalTheme(theme.copyWith(glowIntensity: v)),
+                  (v) => appState.updateGlobalTheme(
+                    theme.copyWith(glowIntensity: v),
+                  ),
                 ),
                 const SizedBox(height: 8),
                 _buildSliderRow(
@@ -985,7 +1118,8 @@ class ThemeCustomizer extends StatelessWidget {
                   theme.glowSpread,
                   1.0,
                   20.0,
-                  (v) => appState.updateGlobalTheme(theme.copyWith(glowSpread: v)),
+                  (v) =>
+                      appState.updateGlobalTheme(theme.copyWith(glowSpread: v)),
                 ),
               ],
             ],
@@ -997,7 +1131,7 @@ class ThemeCustomizer extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           margin: const EdgeInsets.only(bottom: 16),
           decoration: BoxDecoration(
-            color: theme.enableHoverAnimations 
+            color: theme.enableHoverAnimations
                 ? const Color(0xFF667eea).withOpacity(0.1)
                 : Colors.grey.shade50,
             borderRadius: BorderRadius.circular(12),
@@ -1017,7 +1151,10 @@ class ThemeCustomizer extends StatelessWidget {
                   children: [
                     Text(
                       'Hover Animations',
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                     Text(
                       'Scale effect on hover/tap',
@@ -1060,12 +1197,19 @@ class ThemeCustomizer extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.auto_awesome, size: 20, color: Color(0xFF667eea)),
+                  const Icon(
+                    Icons.auto_awesome,
+                    size: 20,
+                    color: Color(0xFF667eea),
+                  ),
                   const SizedBox(width: 8),
                   const Expanded(
                     child: Text(
                       'Shimmer',
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                   Switch(
@@ -1086,7 +1230,9 @@ class ThemeCustomizer extends StatelessWidget {
                   theme.shimmerSpeed ?? 1.0,
                   0.5,
                   3.0,
-                  (v) => appState.updateGlobalTheme(theme.copyWith(shimmerSpeed: v)),
+                  (v) => appState.updateGlobalTheme(
+                    theme.copyWith(shimmerSpeed: v),
+                  ),
                 ),
               ],
             ],
@@ -1113,12 +1259,19 @@ class ThemeCustomizer extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.favorite, size: 20, color: Color(0xFF667eea)),
+                  const Icon(
+                    Icons.favorite,
+                    size: 20,
+                    color: Color(0xFF667eea),
+                  ),
                   const SizedBox(width: 8),
                   const Expanded(
                     child: Text(
                       'Pulse',
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                   Switch(
@@ -1139,7 +1292,8 @@ class ThemeCustomizer extends StatelessWidget {
                   theme.pulseScale ?? 1.05,
                   1.0,
                   1.2,
-                  (v) => appState.updateGlobalTheme(theme.copyWith(pulseScale: v)),
+                  (v) =>
+                      appState.updateGlobalTheme(theme.copyWith(pulseScale: v)),
                 ),
               ],
             ],
@@ -1171,7 +1325,10 @@ class ThemeCustomizer extends StatelessWidget {
                   const Expanded(
                     child: Text(
                       'Floating',
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                   Switch(
@@ -1192,7 +1349,9 @@ class ThemeCustomizer extends StatelessWidget {
                   theme.floatingDistance ?? 10.0,
                   5.0,
                   20.0,
-                  (v) => appState.updateGlobalTheme(theme.copyWith(floatingDistance: v)),
+                  (v) => appState.updateGlobalTheme(
+                    theme.copyWith(floatingDistance: v),
+                  ),
                 ),
               ],
             ],
@@ -1219,12 +1378,19 @@ class ThemeCustomizer extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.threed_rotation, size: 20, color: Color(0xFF667eea)),
+                  const Icon(
+                    Icons.threed_rotation,
+                    size: 20,
+                    color: Color(0xFF667eea),
+                  ),
                   const SizedBox(width: 8),
                   const Expanded(
                     child: Text(
                       'Tilt on Hover',
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                   Switch(
@@ -1245,7 +1411,9 @@ class ThemeCustomizer extends StatelessWidget {
                   theme.tiltIntensity ?? 0.05,
                   0.01,
                   0.15,
-                  (v) => appState.updateGlobalTheme(theme.copyWith(tiltIntensity: v)),
+                  (v) => appState.updateGlobalTheme(
+                    theme.copyWith(tiltIntensity: v),
+                  ),
                 ),
               ],
             ],
@@ -1255,17 +1423,19 @@ class ThemeCustomizer extends StatelessWidget {
         // Reset Effects Button
         ElevatedButton.icon(
           onPressed: () {
-            appState.updateGlobalTheme(theme.copyWith(
-              enableGlassmorphism: false,
-              enableNeumorphism: false,
-              enableGradients: false,
-              enableBorderGlow: false,
-              enableHoverAnimations: false,
-              enableShimmer: false,
-              enablePulse: false,
-              enableFloating: false,
-              enableTiltHover: false,
-            ));
+            appState.updateGlobalTheme(
+              theme.copyWith(
+                enableGlassmorphism: false,
+                enableNeumorphism: false,
+                enableGradients: false,
+                enableBorderGlow: false,
+                enableHoverAnimations: false,
+                enableShimmer: false,
+                enablePulse: false,
+                enableFloating: false,
+                enableTiltHover: false,
+              ),
+            );
           },
           icon: const Icon(Icons.refresh, size: 18),
           label: const Text('Reset Effects'),

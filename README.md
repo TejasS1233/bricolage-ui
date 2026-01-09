@@ -19,8 +19,6 @@
 
 </div>
 
-
-
 ---
 
 ## See It In Action
@@ -29,8 +27,7 @@
 
 https://github.com/user-attachments/assets/5e41003e-165f-4b9f-b4c6-c719c2de2f7a
 
-*Install CLI → Add components → Build your page → Done!*
-
+_Install CLI → Add components → Build your page → Done!_
 
 ## Table of Contents
 
@@ -219,10 +216,10 @@ class UIRadius {
 
 Apply professional visual effects to any component. All effects are customizable and work seamlessly with any theme.
 
-|                   **Glassmorphism**                    |                   **Neumorphism**                    |                  **Gradient**                   |                 **Border Glow**                 |
-| :----------------------------------------------------: | :--------------------------------------------------: | :---------------------------------------------: | :---------------------------------------------: |
+|                 **Glassmorphism**                  |                 **Neumorphism**                  |                 **Gradient**                  |                 **Border Glow**                  |
+| :------------------------------------------------: | :----------------------------------------------: | :-------------------------------------------: | :----------------------------------------------: |
 | <img src="assets/glassmorphism.png" width="180" /> | <img src="assets/neomorphism.png" width="180" /> | <img src="assets/gradient.png" width="180" /> | <img src="assets/border_glow.png" width="180" /> |
-|           _Frosted glass with backdrop blur_           |           _Soft shadows and highlights_            |         _Smooth color transitions_          |        _Glowing animated borders_         |
+|         _Frosted glass with backdrop blur_         |          _Soft shadows and highlights_           |          _Smooth color transitions_           |            _Glowing animated borders_            |
 
 **Also available:** Pulse, Floating, Tilt Hover, Hard Shadows, and Hover Animations
 
@@ -399,7 +396,6 @@ Interactive web application for customizing and previewing components in real-ti
 - Export customized theme files as ZIP
 
 **Live Demo:** [https://bricolage-ui.vercel.app](https://bricolage-ui.vercel.app)
-
 
 ### `bricolage_ui_docs/`
 

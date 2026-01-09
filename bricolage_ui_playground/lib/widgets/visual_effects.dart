@@ -17,10 +17,7 @@ class VisualEffects {
     return BoxDecoration(
       color: theme.card.withOpacity(theme.glassOpacity),
       borderRadius: BorderRadius.circular(12 * theme.radiusScale),
-      border: Border.all(
-        color: theme.border.withOpacity(0.2),
-        width: 1.5,
-      ),
+      border: Border.all(color: theme.border.withOpacity(0.2), width: 1.5),
     );
   }
 
@@ -35,8 +32,8 @@ class VisualEffects {
 
     final intensity = theme.neumorphismIntensity;
     final isDark = theme.background.computeLuminance() < 0.5;
-    
-    final lightColor = isDark 
+
+    final lightColor = isDark
         ? Colors.white.withOpacity(0.1 * intensity)
         : Colors.white.withOpacity(0.7 * intensity);
     final darkColor = isDark
@@ -92,14 +89,8 @@ class VisualEffects {
     final angleRad = theme.gradientAngle * (math.pi / 180);
     return BoxDecoration(
       gradient: LinearGradient(
-        begin: Alignment(
-          -math.cos(angleRad),
-          -math.sin(angleRad),
-        ),
-        end: Alignment(
-          math.cos(angleRad),
-          math.sin(angleRad),
-        ),
+        begin: Alignment(-math.cos(angleRad), -math.sin(angleRad)),
+        end: Alignment(math.cos(angleRad), math.sin(angleRad)),
         colors: [theme.gradientStart, theme.gradientEnd],
       ),
       borderRadius: BorderRadius.circular(12 * theme.radiusScale),
@@ -140,9 +131,10 @@ class VisualEffects {
     BorderRadius? borderRadius,
     bool isPressed = false,
   }) {
-    final radius = borderRadius ?? BorderRadius.circular(12 * theme.radiusScale);
+    final radius =
+        borderRadius ?? BorderRadius.circular(12 * theme.radiusScale);
     final bgColor = backgroundColor ?? theme.card;
-    
+
     List<BoxShadow> shadows = [];
     Gradient? gradient;
     Color? finalColor = bgColor;
@@ -175,21 +167,12 @@ class VisualEffects {
     Border? border;
     if (theme.enableHardShadow) {
       // Neo-brutalism: thick solid border
-      border = Border.all(
-        color: theme.border,
-        width: theme.borderWidth,
-      );
+      border = Border.all(color: theme.border, width: theme.borderWidth);
     } else if (theme.enableGlassmorphism) {
-      border = Border.all(
-        color: theme.border.withOpacity(0.3),
-        width: 1.5,
-      );
+      border = Border.all(color: theme.border.withOpacity(0.3), width: 1.5);
     } else if (theme.enableNeumorphism || theme.enableBorderGlow) {
       // Add subtle border for neumorphism and glow effects
-      border = Border.all(
-        color: theme.border.withOpacity(0.2),
-        width: 1.0,
-      );
+      border = Border.all(color: theme.border.withOpacity(0.2), width: 1.0);
     }
 
     return BoxDecoration(
@@ -224,13 +207,15 @@ class GlassContainer extends StatelessWidget {
         padding: padding,
         decoration: BoxDecoration(
           color: theme.card,
-          borderRadius: borderRadius ?? BorderRadius.circular(12 * theme.radiusScale),
+          borderRadius:
+              borderRadius ?? BorderRadius.circular(12 * theme.radiusScale),
         ),
         child: child,
       );
     }
 
-    final radius = borderRadius ?? BorderRadius.circular(12 * theme.radiusScale);
+    final radius =
+        borderRadius ?? BorderRadius.circular(12 * theme.radiusScale);
 
     return ClipRRect(
       borderRadius: radius,
@@ -279,7 +264,8 @@ class EffectContainer extends StatefulWidget {
   State<EffectContainer> createState() => _EffectContainerState();
 }
 
-class _EffectContainerState extends State<EffectContainer> with SingleTickerProviderStateMixin {
+class _EffectContainerState extends State<EffectContainer>
+    with SingleTickerProviderStateMixin {
   bool _isPressed = false;
   bool _isHovered = false;
   late AnimationController _controller;
@@ -295,19 +281,24 @@ class _EffectContainerState extends State<EffectContainer> with SingleTickerProv
       duration: const Duration(seconds: 2),
     );
 
-    _floatingAnimation = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _floatingAnimation = Tween<double>(
+      begin: 0,
+      end: 1,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
-    _pulseAnimation = Tween<double>(begin: 1.0, end: 1.05).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _pulseAnimation = Tween<double>(
+      begin: 1.0,
+      end: 1.05,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
-    _shimmerAnimation = Tween<double>(begin: -1.0, end: 2.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.linear),
-    );
+    _shimmerAnimation = Tween<double>(
+      begin: -1.0,
+      end: 2.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.linear));
 
-    if (widget.theme.enableFloating == true || widget.theme.enablePulse == true || widget.theme.enableShimmer == true) {
+    if (widget.theme.enableFloating == true ||
+        widget.theme.enablePulse == true ||
+        widget.theme.enableShimmer == true) {
       _controller.repeat(reverse: true);
     }
   }
@@ -321,7 +312,9 @@ class _EffectContainerState extends State<EffectContainer> with SingleTickerProv
   @override
   void didUpdateWidget(EffectContainer oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.theme.enableFloating == true || widget.theme.enablePulse == true || widget.theme.enableShimmer == true) {
+    if (widget.theme.enableFloating == true ||
+        widget.theme.enablePulse == true ||
+        widget.theme.enableShimmer == true) {
       if (!_controller.isAnimating) {
         _controller.repeat(reverse: true);
       }
@@ -333,7 +326,8 @@ class _EffectContainerState extends State<EffectContainer> with SingleTickerProv
   @override
   Widget build(BuildContext context) {
     final effects = VisualEffects(widget.theme);
-    final radius = widget.borderRadius ?? 
+    final radius =
+        widget.borderRadius ??
         BorderRadius.circular(12 * widget.theme.radiusScale);
 
     Widget container;
@@ -350,29 +344,32 @@ class _EffectContainerState extends State<EffectContainer> with SingleTickerProv
               sigmaY: widget.theme.glassBlur,
             ),
             child: AnimatedContainer(
-              duration: widget.theme.enableHoverAnimations 
+              duration: widget.theme.enableHoverAnimations
                   ? const Duration(milliseconds: 200)
                   : Duration.zero,
               transform: widget.theme.enableHoverAnimations && _isHovered
                   ? (Matrix4.identity()..scale(1.02))
                   : Matrix4.identity(),
               padding: widget.padding,
-              decoration: effects.getCombinedDecoration(
-                backgroundColor: widget.backgroundColor ?? widget.theme.card,
-                borderRadius: radius,
-                isPressed: _isPressed,
-              ).copyWith(
-                // Use semi-transparent background for glass effect but keep content visible
-                color: Colors.white.withOpacity(widget.theme.glassOpacity),
-                backgroundBlendMode: BlendMode.lighten,
-              ),
+              decoration: effects
+                  .getCombinedDecoration(
+                    backgroundColor:
+                        widget.backgroundColor ?? widget.theme.card,
+                    borderRadius: radius,
+                    isPressed: _isPressed,
+                  )
+                  .copyWith(
+                    // Use semi-transparent background for glass effect but keep content visible
+                    color: Colors.white.withOpacity(widget.theme.glassOpacity),
+                    backgroundBlendMode: BlendMode.lighten,
+                  ),
               child: widget.child,
             ),
           ),
         );
       } else {
         return AnimatedContainer(
-          duration: widget.theme.enableHoverAnimations 
+          duration: widget.theme.enableHoverAnimations
               ? const Duration(milliseconds: 200)
               : Duration.zero,
           transform: widget.theme.enableHoverAnimations && _isHovered
@@ -433,10 +430,7 @@ class _EffectContainerState extends State<EffectContainer> with SingleTickerProv
       container = AnimatedBuilder(
         animation: _pulseAnimation,
         builder: (context, child) {
-          return Transform.scale(
-            scale: _pulseAnimation.value,
-            child: child,
-          );
+          return Transform.scale(scale: _pulseAnimation.value, child: child);
         },
         child: container,
       );
@@ -448,7 +442,11 @@ class _EffectContainerState extends State<EffectContainer> with SingleTickerProv
         animation: _floatingAnimation,
         builder: (context, child) {
           return Transform.translate(
-            offset: Offset(0, math.sin(_floatingAnimation.value * math.pi * 2) * (widget.theme.floatingDistance ?? 10.0)),
+            offset: Offset(
+              0,
+              math.sin(_floatingAnimation.value * math.pi * 2) *
+                  (widget.theme.floatingDistance ?? 10.0),
+            ),
             child: child,
           );
         },
@@ -468,7 +466,9 @@ class _EffectContainerState extends State<EffectContainer> with SingleTickerProv
       );
     }
 
-    if (widget.onTap != null || widget.theme.enableHoverAnimations || widget.theme.enableTiltHover == true) {
+    if (widget.onTap != null ||
+        widget.theme.enableHoverAnimations ||
+        widget.theme.enableTiltHover == true) {
       return MouseRegion(
         onEnter: (_) => setState(() => _isHovered = true),
         onExit: (_) => setState(() => _isHovered = false),

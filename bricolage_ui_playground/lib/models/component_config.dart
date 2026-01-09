@@ -25,16 +25,31 @@ class ComponentConfig {
     final t = theme ?? GlobalTheme(); // Fallback to defaults
 
     // Helper to wrap container-like widgets with visual effects
-    Widget wrapWithEffects(Widget child, {double? width, double? height, EdgeInsets? padding, double? borderRadius}) {
+    Widget wrapWithEffects(
+      Widget child, {
+      double? width,
+      double? height,
+      EdgeInsets? padding,
+      double? borderRadius,
+    }) {
       // Check for any visual effects - glass, neum, glow, neo-brutalism hard shadow, or new effects
-      final hasEffects = t.enableGlassmorphism || t.enableNeumorphism || t.enableBorderGlow || t.enableHardShadow ||
-          (t.enablePulse == true) || (t.enableFloating == true) || (t.enableTiltHover == true);
+      final hasEffects =
+          t.enableGlassmorphism ||
+          t.enableNeumorphism ||
+          t.enableBorderGlow ||
+          t.enableHardShadow ||
+          (t.enablePulse == true) ||
+          (t.enableFloating == true) ||
+          (t.enableTiltHover == true);
       if (!hasEffects) return child;
-      
+
       return EffectContainer(
         theme: t,
-        backgroundColor: t.card, // Use card background for effects to be visible
-        borderRadius: BorderRadius.circular((borderRadius ?? 12.0) * t.radiusScale),
+        backgroundColor:
+            t.card, // Use card background for effects to be visible
+        borderRadius: BorderRadius.circular(
+          (borderRadius ?? 12.0) * t.radiusScale,
+        ),
         padding: padding,
         child: SizedBox(
           width: width != null ? width - (padding?.horizontal ?? 0) : null,
@@ -46,19 +61,33 @@ class ComponentConfig {
 
     switch (id) {
       case 'button':
-        final hasEffects = t.enableGlassmorphism || t.enableNeumorphism || t.enableBorderGlow || t.enableHardShadow ||
-            (t.enableShimmer == true) || (t.enablePulse == true) || (t.enableFloating == true) || (t.enableTiltHover == true);
+        final hasEffects =
+            t.enableGlassmorphism ||
+            t.enableNeumorphism ||
+            t.enableBorderGlow ||
+            t.enableHardShadow ||
+            (t.enableShimmer == true) ||
+            (t.enablePulse == true) ||
+            (t.enableFloating == true) ||
+            (t.enableTiltHover == true);
         return wrapWithEffects(
           CustomButton(
             text: properties['text'] ?? 'Click Me',
             variant: _getButtonVariant(properties['variant']),
             size: _getButtonSize(properties['size']),
-            backgroundColor: hasEffects ? Colors.transparent : (properties['backgroundColor'] ?? t.primary),
+            backgroundColor: hasEffects
+                ? Colors.transparent
+                : (properties['backgroundColor'] ?? t.primary),
             textColor: properties['textColor'] ?? t.primaryForeground,
-            borderColor: hasEffects ? Colors.transparent : (properties['borderColor'] ?? t.border),
+            borderColor: hasEffects
+                ? Colors.transparent
+                : (properties['borderColor'] ?? t.border),
             borderRadius:
                 (properties['borderRadius']?.toDouble() ?? 8.0) * t.radiusScale,
-            elevation: hasEffects ? 0 : (properties['elevation']?.toDouble() ?? 2.0) * t.shadowIntensity,
+            elevation: hasEffects
+                ? 0
+                : (properties['elevation']?.toDouble() ?? 2.0) *
+                      t.shadowIntensity,
             fullWidth: properties['fullWidth'] ?? false,
             fontSize:
                 (properties['fontSize']?.toDouble() ?? 16.0) * t.fontSizeScale,
@@ -73,15 +102,19 @@ class ComponentConfig {
       case 'card':
         final cardWidget = CustomCard(
           variant: _getCardVariant(properties['variant']),
-          backgroundColor: t.enableGlassmorphism ? t.card.withOpacity(t.glassOpacity) : (properties['backgroundColor'] ?? t.card),
+          backgroundColor: t.enableGlassmorphism
+              ? t.card.withOpacity(t.glassOpacity)
+              : (properties['backgroundColor'] ?? t.card),
           borderColor: properties['borderColor'] ?? t.border,
           borderRadius:
               (properties['borderRadius']?.toDouble() ?? 12.0) * t.radiusScale,
           padding: EdgeInsets.all(
             (properties['padding']?.toDouble() ?? 16.0) * t.spacingScale,
           ),
-          elevation: t.enableNeumorphism ? 0 : 
-              (properties['elevation']?.toDouble() ?? 2.0) * t.shadowIntensity,
+          elevation: t.enableNeumorphism
+              ? 0
+              : (properties['elevation']?.toDouble() ?? 2.0) *
+                    t.shadowIntensity,
           borderWidth: properties['borderWidth']?.toDouble() ?? 1.0,
           width: properties['width']?.toDouble() ?? 300.0,
           height: properties['height']?.toDouble() ?? 200.0,
@@ -92,9 +125,12 @@ class ComponentConfig {
             ),
           ),
         );
-        
+
         // Apply visual effects if any are enabled (gradients are app-level only)
-        if (t.enableGlassmorphism || t.enableNeumorphism || t.enableBorderGlow || t.enableHardShadow) {
+        if (t.enableGlassmorphism ||
+            t.enableNeumorphism ||
+            t.enableBorderGlow ||
+            t.enableHardShadow) {
           return EffectContainer(
             theme: t,
             backgroundColor: properties['backgroundColor'] ?? t.card,
@@ -119,21 +155,34 @@ class ComponentConfig {
         return cardWidget;
 
       case 'textfield':
-        final hasEffects = t.enableGlassmorphism || t.enableNeumorphism || t.enableBorderGlow || t.enableHardShadow ||
-            (t.enableShimmer == true) || (t.enablePulse == true) || (t.enableFloating == true) || (t.enableTiltHover == true);
+        final hasEffects =
+            t.enableGlassmorphism ||
+            t.enableNeumorphism ||
+            t.enableBorderGlow ||
+            t.enableHardShadow ||
+            (t.enableShimmer == true) ||
+            (t.enablePulse == true) ||
+            (t.enableFloating == true) ||
+            (t.enableTiltHover == true);
         return wrapWithEffects(
           CustomTextField(
             label: properties['label'] ?? 'Email',
             placeholder: properties['placeholder'] ?? 'Enter your email',
             size: _getTextFieldSize(properties['size']),
-            backgroundColor: hasEffects ? Colors.transparent : (properties['backgroundColor'] ?? t.background),
-            borderColor: hasEffects ? Colors.transparent : (properties['borderColor'] ?? t.input),
+            backgroundColor: hasEffects
+                ? Colors.transparent
+                : (properties['backgroundColor'] ?? t.background),
+            borderColor: hasEffects
+                ? Colors.transparent
+                : (properties['borderColor'] ?? t.input),
             focusedBorderColor: properties['focusedBorderColor'] ?? t.ring,
             textColor: properties['textColor'] ?? t.foreground,
             labelColor: properties['labelColor'] ?? t.mutedForeground,
             borderRadius:
                 (properties['borderRadius']?.toDouble() ?? 8.0) * t.radiusScale,
-            borderWidth: hasEffects ? 0 : (properties['borderWidth']?.toDouble() ?? 1.5),
+            borderWidth: hasEffects
+                ? 0
+                : (properties['borderWidth']?.toDouble() ?? 1.5),
             fontSize:
                 (properties['fontSize']?.toDouble() ?? 16.0) * t.fontSizeScale,
             prefixIcon: properties['prefixIcon'] != 'none'
@@ -162,7 +211,9 @@ class ComponentConfig {
                   properties['title'] ?? 'Dashboard',
                   style: TextStyle(
                     color: properties['textColor'] ?? t.primaryForeground,
-                    fontSize: (properties['fontSize']?.toDouble() ?? 18.0) * t.fontSizeScale,
+                    fontSize:
+                        (properties['fontSize']?.toDouble() ?? 18.0) *
+                        t.fontSizeScale,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -230,7 +281,7 @@ class ComponentConfig {
           foregroundColor: t.primaryForeground,
           borderRadius: badgeRadius,
         );
-        
+
         // Apply neo-brutalism styling
         if (t.enableHardShadow) {
           return Container(
@@ -284,13 +335,15 @@ class ComponentConfig {
 
       case 'avatar':
         // Respect theme radiusScale - low values = more square, high values = circular
-        final avatarRadius = t.radiusScale < 0.5 ? 8.0 * t.radiusScale + 4 : null;
+        final avatarRadius = t.radiusScale < 0.5
+            ? 8.0 * t.radiusScale + 4
+            : null;
         final avatarWidget = CustomAvatar(
           initials: properties['initials'] ?? 'JD',
           size: _getAvatarSize(properties['size']),
           borderRadius: avatarRadius,
         );
-        
+
         // Apply neo-brutalism styling directly (like cards do)
         if (t.enableHardShadow) {
           final size = _getAvatarSizeValue(properties['size']);
@@ -317,9 +370,15 @@ class ComponentConfig {
 
       case 'alert':
         final alertRadius = 8.0 * t.radiusScale;
-        final hasEffects = t.enableGlassmorphism || t.enableNeumorphism || t.enableBorderGlow || t.enableHardShadow ||
-            (t.enablePulse == true) || (t.enableFloating == true) || (t.enableTiltHover == true);
-        
+        final hasEffects =
+            t.enableGlassmorphism ||
+            t.enableNeumorphism ||
+            t.enableBorderGlow ||
+            t.enableHardShadow ||
+            (t.enablePulse == true) ||
+            (t.enableFloating == true) ||
+            (t.enableTiltHover == true);
+
         final alertWidget = CustomAlert(
           title: properties['title'] ?? 'Alert',
           description: properties['description'],
@@ -327,7 +386,7 @@ class ComponentConfig {
           borderRadius: alertRadius,
           backgroundColor: hasEffects ? Colors.transparent : null,
         );
-        
+
         if (hasEffects) {
           return EffectContainer(
             theme: t,
@@ -344,8 +403,14 @@ class ComponentConfig {
 
       case 'chip':
         final chipRadius = 16.0 * t.radiusScale + 2;
-        final hasEffects = t.enableGlassmorphism || t.enableNeumorphism || t.enableBorderGlow || t.enableHardShadow ||
-            (t.enablePulse == true) || (t.enableFloating == true) || (t.enableTiltHover == true);
+        final hasEffects =
+            t.enableGlassmorphism ||
+            t.enableNeumorphism ||
+            t.enableBorderGlow ||
+            t.enableHardShadow ||
+            (t.enablePulse == true) ||
+            (t.enableFloating == true) ||
+            (t.enableTiltHover == true);
         return wrapWithEffects(
           CustomChip(
             label: properties['label'] ?? 'Chip',
@@ -372,8 +437,15 @@ class ComponentConfig {
         );
 
       case 'textarea':
-        final hasEffects = t.enableGlassmorphism || t.enableNeumorphism || t.enableBorderGlow || t.enableHardShadow ||
-            (t.enableShimmer == true) || (t.enablePulse == true) || (t.enableFloating == true) || (t.enableTiltHover == true);
+        final hasEffects =
+            t.enableGlassmorphism ||
+            t.enableNeumorphism ||
+            t.enableBorderGlow ||
+            t.enableHardShadow ||
+            (t.enableShimmer == true) ||
+            (t.enablePulse == true) ||
+            (t.enableFloating == true) ||
+            (t.enableTiltHover == true);
         return wrapWithEffects(
           CustomTextarea(
             label: properties['label'] ?? 'Description',
@@ -417,7 +489,7 @@ class ComponentConfig {
           borderRadius: toggleRadius,
           fontSize: 14.0 * t.fontSizeScale,
         );
-        
+
         // Apply neo-brutalism styling
         if (t.enableHardShadow) {
           return Container(
@@ -565,7 +637,7 @@ class ComponentConfig {
           borderColor: t.border,
           fontSize: 13.0 * t.fontSizeScale,
         );
-        
+
         // Apply neo-brutalism styling
         if (t.enableHardShadow) {
           return Container(

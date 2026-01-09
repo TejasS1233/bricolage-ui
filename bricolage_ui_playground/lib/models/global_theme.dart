@@ -316,11 +316,13 @@ class GlobalTheme {
       glowColor: glowColor ?? this.glowColor,
       glowIntensity: glowIntensity ?? this.glowIntensity,
       glowSpread: glowSpread ?? this.glowSpread,
-      enableHoverAnimations: enableHoverAnimations ?? this.enableHoverAnimations,
+      enableHoverAnimations:
+          enableHoverAnimations ?? this.enableHoverAnimations,
       // Additional Visual Effects
       enableShimmer: enableShimmer ?? this.enableShimmer,
       shimmerBaseColor: shimmerBaseColor ?? this.shimmerBaseColor,
-      shimmerHighlightColor: shimmerHighlightColor ?? this.shimmerHighlightColor,
+      shimmerHighlightColor:
+          shimmerHighlightColor ?? this.shimmerHighlightColor,
       shimmerSpeed: shimmerSpeed ?? this.shimmerSpeed,
       enablePulse: enablePulse ?? this.enablePulse,
       pulseSpeed: pulseSpeed ?? this.pulseSpeed,
@@ -330,8 +332,10 @@ class GlobalTheme {
       floatingSpeed: floatingSpeed ?? this.floatingSpeed,
       enableTiltHover: enableTiltHover ?? this.enableTiltHover,
       tiltIntensity: tiltIntensity ?? this.tiltIntensity,
-      enableAnimatedGradient: enableAnimatedGradient ?? this.enableAnimatedGradient,
-      gradientAnimationSpeed: gradientAnimationSpeed ?? this.gradientAnimationSpeed,
+      enableAnimatedGradient:
+          enableAnimatedGradient ?? this.enableAnimatedGradient,
+      gradientAnimationSpeed:
+          gradientAnimationSpeed ?? this.gradientAnimationSpeed,
       // Neo-Brutalism
       borderWidth: borderWidth ?? this.borderWidth,
       enableHardShadow: enableHardShadow ?? this.enableHardShadow,
