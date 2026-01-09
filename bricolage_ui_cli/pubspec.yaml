@@ -1,6 +1,6 @@
 name: bricolage_ui_cli
 description: CLI tool for Bricolage UI - Add beautiful, copy-pasteable UI components to your Flutter project
-version: 0.3.0
+version: 0.5.0
 repository: https://github.com/TejasS1233/bricolage-ui/tree/main/bricolage_ui_cli
 homepage: https://github.com/TejasS1233/bricolage-ui
 
