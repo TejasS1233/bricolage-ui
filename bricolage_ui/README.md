@@ -36,7 +36,7 @@ Choose the right approach for your project:
 
 **💡 Recommendation**: Use **CLI for production apps** (like shadcn/ui), use **package for demos and MVPs**.
 
-###  Fluid Micro-Animations
+### Fluid Micro-Animations
 
 - **ScaleTransition** on button presses for tactile feedback
 - **FadeTransition** on dialogs for smooth appearance
@@ -70,6 +70,8 @@ dependencies:
 
 ## Usage
 
+### Basic Components
+
 ```dart
 import 'package:bricolage_ui/bricolage_ui.dart';
 
@@ -79,6 +81,72 @@ CustomButton(
   onPressed: () {},
 )
 ```
+
+### Using Visual Effects
+
+Wrap any component in `EffectContainer` to apply visual effects:
+
+```dart
+import 'package:bricolage_ui/bricolage_ui.dart';
+
+// Glassmorphism effect
+EffectContainer(
+  enableGlassmorphism: true,
+  glassBlur: 10.0,
+  glassOpacity: 0.2,
+  child: CustomCard(
+    child: Text('Frosted glass card'),
+  ),
+)
+
+// Neumorphism effect
+EffectContainer(
+  enableNeumorphism: true,
+  neumorphismIntensity: 0.5,
+  child: CustomButton(
+    text: 'Soft 3D Button',
+    onPressed: () {},
+  ),
+)
+
+// Multiple effects combined
+EffectContainer(
+  enableGradients: true,
+  gradientStart: Color(0xFF6366F1),
+  gradientEnd: Color(0xFF8B5CF6),
+  enableBorderGlow: true,
+  glowColor: Color(0xFF6366F1),
+  glowIntensity: 0.5,
+  enablePulse: true,
+  child: CustomCard(
+    child: Text('Glowing gradient card'),
+  ),
+)
+
+// Use theme defaults from UIEffects
+EffectContainer(
+  enableGlassmorphism: UIEffects.enableGlassmorphism,
+  glassBlur: UIEffects.glassBlur,
+  glassOpacity: UIEffects.glassOpacity,
+  child: CustomCard(
+    child: Text('Uses theme defaults'),
+  ),
+)
+```
+
+**Available effects:**
+
+- `enableGlassmorphism` - Frosted glass with backdrop blur
+- `enableNeumorphism` - Soft shadows (3D raised/pressed effect)
+- `enableGradients` - Linear gradient backgrounds
+- `enableBorderGlow` - Animated glowing borders
+- `enableHardShadow` - Hard offset shadows (neo-brutalism)
+- `enablePulse` - Pulsing scale animation
+- `enableFloating` - Floating up/down animation
+- `enableTiltHover` - 3D tilt effect on hover
+- `enableHoverAnimations` - Scale on hover
+
+**Tip:** Customize effect defaults in `theme.dart` (CLI mode) or export from the [web preview](https://bricolage-ui.vercel.app) to get your theme file with effect settings.
 
 ## Components
 

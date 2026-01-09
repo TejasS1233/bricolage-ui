@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:bricolage_ui/bricolage_ui.dart';
+import 'package:bricolage_ui/bricolage_ui.dart'
+    hide EffectContainer, GlassContainer;
 import '../models/global_theme.dart';
 import '../widgets/visual_effects.dart';
 

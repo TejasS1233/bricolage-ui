@@ -1,3 +1,32 @@
+## 1.5.0
+
+### New Features
+
+- **Visual Effects System:**
+
+  - Added `EffectContainer` widget for applying visual effects
+  - Glassmorphism, neumorphism, gradients, border glow
+  - Pulse, floating, and tilt hover animations
+  - All effects configurable via component props
+
+- **Enhanced Components:**
+  - 40+ production-ready components
+  - Better accessibility (WCAG compliant)
+  - Comprehensive example code in `example/main.dart`
+  - Improved type safety and null handling
+
+### Improvements
+
+- Added `visual_effects.dart` with helper classes and widgets
+- Optimized component rendering
+- Better documentation and examples
+
+### Note
+
+The web preview ([bricolage-ui.vercel.app](https://bricolage-ui.vercel.app)) uses its own theme system for customization. The package maintains static theme classes (UIColors, UITypography, etc.) for simplicity and zero dependencies.
+
+---
+
 ## 1.3.0 - Bricolage UI Rebrand
 
 ### BREAKING CHANGES

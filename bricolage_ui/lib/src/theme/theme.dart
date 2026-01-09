@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
@@ -57,7 +56,6 @@ class UIColors {
   static const Color primaryForeground = Color(0xFFFAFAFA);
   static const Color secondaryForeground = Color(0xFF18181B);
 }
-
 
 /// Typography constants for the UI library
 class UITypography {
@@ -172,6 +170,52 @@ class UIShadows {
 class UIEffects {
   UIEffects._();
 
+  // Visual Effects Configuration
+  static const bool enableGlassmorphism = false;
+  static const double glassBlur = 10.0;
+  static const double glassOpacity = 0.2;
+
+  static const bool enableNeumorphism = false;
+  static const double neumorphismIntensity = 0.5;
+
+  static const bool enableGradients = false;
+  static const Color gradientStart = Color(0xFF6366F1);
+  static const Color gradientEnd = Color(0xFF8B5CF6);
+  static const double gradientAngle = 135.0;
+
+  static const bool enableBorderGlow = false;
+  static const Color glowColor = Color(0xFF6366F1);
+  static const double glowIntensity = 0.5;
+  static const double glowSpread = 4.0;
+
+  static const bool enableHoverAnimations = false;
+
+  // Additional Visual Effects
+  static const bool enableShimmer = false;
+  static const Color shimmerBaseColor = Color(0xFFE0E0E0);
+  static const Color shimmerHighlightColor = Color(0xFFF5F5F5);
+  static const double shimmerSpeed = 1.0;
+
+  static const bool enablePulse = false;
+  static const double pulseSpeed = 1.0;
+  static const double pulseScale = 1.05;
+
+  static const bool enableFloating = false;
+  static const double floatingDistance = 10.0;
+  static const double floatingSpeed = 1.0;
+
+  static const bool enableTiltHover = false;
+  static const double tiltIntensity = 0.05;
+
+  static const bool enableAnimatedGradient = false;
+  static const double gradientAnimationSpeed = 1.0;
+
+  // Neo-Brutalism style
+  static const double borderWidth = 1.0;
+  static const bool enableHardShadow = false;
+  static const double hardShadowOffsetX = 4.0;
+  static const double hardShadowOffsetY = 4.0;
+
   /// Apply glassmorphism decoration to a container
   static BoxDecoration glassDecoration({
     required Color baseColor,
@@ -257,51 +301,6 @@ class UIEffects {
         spreadRadius: spread / 2,
       ),
     ];
-  }
-}
-
-/// Glass Container - A widget that applies glassmorphism effect
-class GlassContainer extends StatelessWidget {
-  final Widget child;
-  final EdgeInsetsGeometry? padding;
-  final BorderRadius? borderRadius;
-  final Color? backgroundColor;
-  final double blur;
-  final double opacity;
-
-  const GlassContainer({
-    super.key,
-    required this.child,
-    this.padding,
-    this.borderRadius,
-    this.backgroundColor,
-    this.blur = 10.0,
-    this.opacity = 0.2,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final bgColor = backgroundColor ?? Theme.of(context).cardColor;
-    final radius = borderRadius ?? BorderRadius.circular(12);
-
-    return ClipRRect(
-      borderRadius: radius,
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
-        child: Container(
-          padding: padding,
-          decoration: BoxDecoration(
-            color: bgColor.withValues(alpha: opacity),
-            borderRadius: radius,
-            border: Border.all(
-              color: UIColors.white.withValues(alpha: 0.3),
-              width: UIBorder.medium,
-            ),
-          ),
-          child: child,
-        ),
-      ),
-    );
   }
 }
 

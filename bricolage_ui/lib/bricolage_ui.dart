@@ -26,6 +26,7 @@ export 'src/components/custom_skeleton.dart';
 export 'src/components/custom_tooltip.dart';
 export 'src/components/custom_accordion.dart';
 export 'src/components/custom_bottom_sheet.dart';
+export 'src/components/visual_effects.dart';
 
 // New components (Batch 1-3)
 export 'src/components/custom_textarea.dart';
@@ -39,4 +40,5 @@ export 'src/components/custom_dropdown.dart';
 export 'src/components/custom_popover.dart';
 export 'src/components/custom_table.dart';
 
+// Theme
 export 'src/theme/theme.dart';
