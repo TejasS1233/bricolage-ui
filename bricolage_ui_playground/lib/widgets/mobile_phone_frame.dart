@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../models/app_state.dart';
 import '../models/component_config.dart';
+import 'visual_effects.dart';
 
 class MobilePhoneFrame extends StatelessWidget {
   final List<Widget> components;
@@ -362,45 +363,7 @@ class MobilePhoneFrame extends StatelessWidget {
     IconData icon,
     bool isPositive,
   ) {
-    // Safe access with defaults - old theme instances may not have these properties
-    double borderWidth = 1.0;
-    bool enableHardShadow = false;
-    double hardShadowOffsetX = 4.0;
-    double hardShadowOffsetY = 4.0;
-
-    try {
-      borderWidth = theme.borderWidth ?? 1.0;
-    } catch (_) {}
-    try {
-      enableHardShadow = theme.enableHardShadow ?? false;
-    } catch (_) {}
-    try {
-      hardShadowOffsetX = theme.hardShadowOffsetX ?? 4.0;
-    } catch (_) {}
-    try {
-      hardShadowOffsetY = theme.hardShadowOffsetY ?? 4.0;
-    } catch (_) {}
-
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: theme.card,
-        borderRadius: BorderRadius.circular(
-          12.0 * (theme.radiusScale as double),
-        ),
-        border: Border.all(color: theme.border, width: borderWidth),
-        // Hard offset shadow for brutalism
-        boxShadow: enableHardShadow
-            ? [
-                BoxShadow(
-                  color: theme.border,
-                  offset: Offset(hardShadowOffsetX, hardShadowOffsetY),
-                  blurRadius: 0, // No blur - hard shadow
-                ),
-              ]
-            : null,
-      ),
-      child: Column(
+    final content = Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -449,7 +412,36 @@ class MobilePhoneFrame extends StatelessWidget {
             ],
           ),
         ],
+      );
+
+    // Check if any effects are enabled
+    final hasEffects = theme.enableGlassmorphism ||
+        theme.enableNeumorphism ||
+        theme.enableBorderGlow ||
+        theme.enableHardShadow ||
+        (theme.enablePulse == true) ||
+        (theme.enableFloating == true) ||
+        (theme.enableTiltHover == true);
+
+    if (hasEffects) {
+      return EffectContainer(
+        theme: theme,
+        backgroundColor: theme.card,
+        borderRadius: BorderRadius.circular(12.0 * theme.radiusScale),
+        padding: const EdgeInsets.all(12),
+        child: content,
+      );
+    }
+
+    // Fallback to basic container if no effects
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: theme.card,
+        borderRadius: BorderRadius.circular(12.0 * theme.radiusScale),
+        border: Border.all(color: theme.border, width: theme.borderWidth ?? 1.0),
       ),
+      child: content,
     );
   }
 
@@ -461,21 +453,44 @@ class MobilePhoneFrame extends StatelessWidget {
     IconData icon,
     bool isIncome,
   ) {
+    // Check if any effects are enabled
+    final hasEffects = theme.enableGlassmorphism ||
+        theme.enableNeumorphism ||
+        theme.enableBorderGlow ||
+        theme.enableHardShadow ||
+        (theme.enablePulse == true) ||
+        (theme.enableFloating == true) ||
+        (theme.enableTiltHover == true);
+
+    Widget iconContainer;
+    if (hasEffects) {
+      iconContainer = EffectContainer(
+        theme: theme,
+        backgroundColor: theme.muted,
+        borderRadius: BorderRadius.circular(8.0 * theme.radiusScale),
+        child: SizedBox(
+          width: 40,
+          height: 40,
+          child: Icon(icon, size: 20, color: theme.foreground),
+        ),
+      );
+    } else {
+      iconContainer = Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          color: theme.muted,
+          borderRadius: BorderRadius.circular(8.0 * theme.radiusScale),
+        ),
+        child: Icon(icon, size: 20, color: theme.foreground),
+      );
+    }
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
         children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: theme.muted,
-              borderRadius: BorderRadius.circular(
-                8.0 * (theme.radiusScale as double),
-              ),
-            ),
-            child: Icon(icon, size: 20, color: theme.foreground),
-          ),
+          iconContainer,
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -1505,6 +1520,14 @@ class MobilePhoneFrame extends StatelessWidget {
       'Source Sans Pro': 'Source Sans 3',
       'Ubuntu': 'Ubuntu',
       'Nunito': 'Nunito',
+      'Libre Baskerville': 'Libre Baskerville',
+      'DynaPuff': 'DynaPuff',
+      'DM Sans': 'DM Sans',
+      'Lora': 'Lora',
+      'Space Mono': 'Space Mono',
+      'Fira Code': 'Fira Code',
+      'IBM Plex Mono': 'IBM Plex Mono',
+      'Outfit': 'Outfit',
     };
     return fontMap[fontFamily] ?? 'Inter';
   }

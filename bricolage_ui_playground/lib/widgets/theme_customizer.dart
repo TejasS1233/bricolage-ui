@@ -112,49 +112,43 @@ class ThemeCustomizer extends StatelessWidget {
                   items: [
                     _buildThemeDropdownItem('default', 'Default', const [Color(0xFF6366F1), Color(0xFFF4F4F5), Color(0xFF000000)]),
                     _buildThemeDropdownItem('cyberpunk', 'Cyberpunk', const [Color(0xFF00FF41), Color(0xFFFF00FF), Color(0xFF0D0D0D)]),
-                    _buildThemeDropdownItem('netflix', 'Netflix', const [Color(0xFFE50914), Color(0xFF141414), Color(0xFF000000)]),
-                    _buildThemeDropdownItem('amazon', 'Amazon', const [Color(0xFFFF9900), Color(0xFF232F3E), Color(0xFFFFFFFF)]),
-                    _buildThemeDropdownItem('flipkart', 'Flipkart', const [Color(0xFF2874F0), Color(0xFFFFC107), Color(0xFFF1F3F6)]),
-                    _buildThemeDropdownItem('spotify', 'Spotify', const [Color(0xFF1DB954), Color(0xFF191414), Color(0xFF121212)]),
-                    _buildThemeDropdownItem('youtube', 'YouTube', const [Color(0xFFFF0000), Color(0xFF0F0F0F), Color(0xFF272727)]),
-                    _buildThemeDropdownItem('instagram', 'Instagram', const [Color(0xFFE4405F), Color(0xFF833AB4), Color(0xFFFAFAFA)]),
-                    _buildThemeDropdownItem('neobrutalism', 'Neo-Brutalism', const [Color(0xFFFFE600), Color(0xFFFF6B6B), Color(0xFF000000)]),
+                    _buildThemeDropdownItem('vintage', 'Vintage', const [Color(0xFF8B7355), Color(0xFFD9CFC2), Color(0xFFF5EFE6)]),
+                    _buildThemeDropdownItem('neobrutalism', 'Neo-Brutalism', const [Color(0xFFFFE600), Color(0xFF000000), Color(0xFFFFFBEB)]),
+                    _buildThemeDropdownItem('bubblegum', 'Bubblegum', const [Color(0xFFD4578C), Color(0xFF8FD4D2), Color(0xFFF5E6EB)]),
+                    _buildThemeDropdownItem('amethyst', 'Amethyst', const [Color(0xFF9B5DE5), Color(0xFF7CD4CC), Color(0xFFF8F7FC)]),
+                    _buildThemeDropdownItem('spring', 'Spring', const [Color(0xFF4D9E6B), Color(0xFF9E6B7B), Color(0xFFFAFAFA)]),
                     _buildThemeDropdownItem('monochrome', 'Monochrome', const [Color(0xFF000000), Color(0xFFFFFFFF), Color(0xFF666666)]),
-                    _buildThemeDropdownItem('retrowindows', 'Retro Win95', const [Color(0xFF000080), Color(0xFFC0C0C0), Color(0xFF008080)]),
+                    _buildThemeDropdownItem('retro', 'Retro Seaside', const [Color(0xFFD33F6A), Color(0xFF5DBCB8), Color(0xFFF5EDDC)]),
                     _buildThemeDropdownItem('bento', 'Bento/iOS', const [Color(0xFF007AFF), Color(0xFFF2F2F7), Color(0xFF34C759)]),
                   ],
                   onChanged: (String? value) {
                     if (value != null) {
+                      // Preserve current effect settings when switching themes
+                      final currentTheme = theme;
                       GlobalTheme newTheme;
                       switch (value) {
                         case 'cyberpunk':
                           newTheme = GlobalTheme.cyberpunk();
                           break;
-                        case 'netflix':
-                          newTheme = GlobalTheme.netflix();
-                          break;
-                        case 'amazon':
-                          newTheme = GlobalTheme.amazon();
-                          break;
-                        case 'flipkart':
-                          newTheme = GlobalTheme.flipkart();
-                          break;
-                        case 'spotify':
-                          newTheme = GlobalTheme.spotify();
-                          break;
-                        case 'youtube':
-                          newTheme = GlobalTheme.youtube();
-                          break;
-                        case 'instagram':
-                          newTheme = GlobalTheme.instagram();
+                        case 'vintage':
+                          newTheme = GlobalTheme.vintage();
                           break;
                         case 'neobrutalism':
                           newTheme = GlobalTheme.neoBrutalism();
                           break;
+                        case 'bubblegum':
+                          newTheme = GlobalTheme.bubblegum();
+                          break;
+                        case 'amethyst':
+                          newTheme = GlobalTheme.amethyst();
+                          break;
+                        case 'spring':
+                          newTheme = GlobalTheme.spring();
+                          break;
                         case 'monochrome':
                           newTheme = GlobalTheme.monochrome();
                           break;
-                        case 'retrowindows':
+                        case 'retro':
                           newTheme = GlobalTheme.retroWindows();
                           break;
                         case 'bento':
@@ -163,6 +157,25 @@ class ThemeCustomizer extends StatelessWidget {
                         default:
                           newTheme = GlobalTheme();
                       }
+                      
+                      // Preserve user's effect preferences
+                      newTheme = newTheme.copyWith(
+                        enableGlassmorphism: currentTheme.enableGlassmorphism,
+                        glassBlur: currentTheme.glassBlur,
+                        glassOpacity: currentTheme.glassOpacity,
+                        enableNeumorphism: currentTheme.enableNeumorphism,
+                        neumorphismIntensity: currentTheme.neumorphismIntensity,
+                        enableGradients: currentTheme.enableGradients,
+                        gradientStart: currentTheme.gradientStart,
+                        gradientEnd: currentTheme.gradientEnd,
+                        gradientAngle: currentTheme.gradientAngle,
+                        enableBorderGlow: currentTheme.enableBorderGlow,
+                        glowColor: currentTheme.glowColor,
+                        glowIntensity: currentTheme.glowIntensity,
+                        glowSpread: currentTheme.glowSpread,
+                        enableHoverAnimations: currentTheme.enableHoverAnimations,
+                      );
+                      
                       appState.updateGlobalTheme(newTheme);
                     }
                   },
@@ -421,11 +434,21 @@ class ThemeCustomizer extends StatelessWidget {
             border: Border.all(color: Colors.grey.shade300),
             borderRadius: BorderRadius.circular(8),
           ),
-          child: DropdownButton<String>(
-            value: theme.fontFamily,
-            isExpanded: true,
-            underline: const SizedBox(),
-            items: const [
+          child: Builder(
+            builder: (context) {
+              // Fallback to Inter if font not in list
+              const fontList = [
+                'Inter', 'Roboto', 'Poppins', 'Open Sans', 'Lato', 'Montserrat',
+                'Raleway', 'Source Sans Pro', 'Ubuntu', 'Nunito',
+                'Courier New', 'MS Sans Serif', 'SF Pro',
+                'DM Sans', 'Libre Baskerville', 'Lora', 'Space Mono', 'Fira Code', 'IBM Plex Mono', 'Outfit',
+              ];
+              final currentFont = fontList.contains(theme.fontFamily) ? theme.fontFamily : 'Inter';
+              return DropdownButton<String>(
+                value: currentFont,
+                isExpanded: true,
+                underline: const SizedBox(),
+                items: const [
               DropdownMenuItem(value: 'Inter', child: Text('Inter')),
               DropdownMenuItem(value: 'Roboto', child: Text('Roboto')),
               DropdownMenuItem(value: 'Poppins', child: Text('Poppins')),
@@ -443,11 +466,21 @@ class ThemeCustomizer extends StatelessWidget {
               DropdownMenuItem(value: 'Courier New', child: Text('Courier New')),
               DropdownMenuItem(value: 'MS Sans Serif', child: Text('MS Sans Serif')),
               DropdownMenuItem(value: 'SF Pro', child: Text('SF Pro')),
+              // TweakCN fonts
+              DropdownMenuItem(value: 'DM Sans', child: Text('DM Sans')),
+              DropdownMenuItem(value: 'Libre Baskerville', child: Text('Libre Baskerville')),
+              DropdownMenuItem(value: 'Lora', child: Text('Lora')),
+              DropdownMenuItem(value: 'Space Mono', child: Text('Space Mono')),
+              DropdownMenuItem(value: 'Fira Code', child: Text('Fira Code')),
+              DropdownMenuItem(value: 'IBM Plex Mono', child: Text('IBM Plex Mono')),
+              DropdownMenuItem(value: 'Outfit', child: Text('Outfit')),
             ],
-            onChanged: (value) {
-              if (value != null) {
-                appState.updateGlobalTheme(theme.copyWith(fontFamily: value));
-              }
+                onChanged: (value) {
+                  if (value != null) {
+                    appState.updateGlobalTheme(theme.copyWith(fontFamily: value));
+                  }
+                },
+              );
             },
           ),
         ),
@@ -1006,6 +1039,219 @@ class ThemeCustomizer extends StatelessWidget {
           ),
         ),
 
+        // Shimmer Effect
+        const SizedBox(height: 16),
+        Container(
+          padding: const EdgeInsets.all(12),
+          margin: const EdgeInsets.only(bottom: 16),
+          decoration: BoxDecoration(
+            color: (theme.enableShimmer == true)
+                ? const Color(0xFF667eea).withOpacity(0.1)
+                : Colors.grey.shade50,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: (theme.enableShimmer == true)
+                  ? const Color(0xFF667eea).withOpacity(0.3)
+                  : Colors.grey.shade200,
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const Icon(Icons.auto_awesome, size: 20, color: Color(0xFF667eea)),
+                  const SizedBox(width: 8),
+                  const Expanded(
+                    child: Text(
+                      'Shimmer',
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                  Switch(
+                    value: theme.enableShimmer == true,
+                    onChanged: (value) {
+                      appState.updateGlobalTheme(
+                        theme.copyWith(enableShimmer: value),
+                      );
+                    },
+                    activeColor: const Color(0xFF667eea),
+                  ),
+                ],
+              ),
+              if (theme.enableShimmer == true) ...[
+                const SizedBox(height: 12),
+                _buildSliderRow(
+                  'Speed',
+                  theme.shimmerSpeed ?? 1.0,
+                  0.5,
+                  3.0,
+                  (v) => appState.updateGlobalTheme(theme.copyWith(shimmerSpeed: v)),
+                ),
+              ],
+            ],
+          ),
+        ),
+
+        // Pulse Effect
+        Container(
+          padding: const EdgeInsets.all(12),
+          margin: const EdgeInsets.only(bottom: 16),
+          decoration: BoxDecoration(
+            color: (theme.enablePulse == true)
+                ? const Color(0xFF667eea).withOpacity(0.1)
+                : Colors.grey.shade50,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: (theme.enablePulse == true)
+                  ? const Color(0xFF667eea).withOpacity(0.3)
+                  : Colors.grey.shade200,
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const Icon(Icons.favorite, size: 20, color: Color(0xFF667eea)),
+                  const SizedBox(width: 8),
+                  const Expanded(
+                    child: Text(
+                      'Pulse',
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                  Switch(
+                    value: theme.enablePulse == true,
+                    onChanged: (value) {
+                      appState.updateGlobalTheme(
+                        theme.copyWith(enablePulse: value),
+                      );
+                    },
+                    activeColor: const Color(0xFF667eea),
+                  ),
+                ],
+              ),
+              if (theme.enablePulse == true) ...[
+                const SizedBox(height: 12),
+                _buildSliderRow(
+                  'Scale',
+                  theme.pulseScale ?? 1.05,
+                  1.0,
+                  1.2,
+                  (v) => appState.updateGlobalTheme(theme.copyWith(pulseScale: v)),
+                ),
+              ],
+            ],
+          ),
+        ),
+
+        // Floating Effect
+        Container(
+          padding: const EdgeInsets.all(12),
+          margin: const EdgeInsets.only(bottom: 16),
+          decoration: BoxDecoration(
+            color: (theme.enableFloating == true)
+                ? const Color(0xFF667eea).withOpacity(0.1)
+                : Colors.grey.shade50,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: (theme.enableFloating == true)
+                  ? const Color(0xFF667eea).withOpacity(0.3)
+                  : Colors.grey.shade200,
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const Icon(Icons.waves, size: 20, color: Color(0xFF667eea)),
+                  const SizedBox(width: 8),
+                  const Expanded(
+                    child: Text(
+                      'Floating',
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                  Switch(
+                    value: theme.enableFloating == true,
+                    onChanged: (value) {
+                      appState.updateGlobalTheme(
+                        theme.copyWith(enableFloating: value),
+                      );
+                    },
+                    activeColor: const Color(0xFF667eea),
+                  ),
+                ],
+              ),
+              if (theme.enableFloating == true) ...[
+                const SizedBox(height: 12),
+                _buildSliderRow(
+                  'Distance',
+                  theme.floatingDistance ?? 10.0,
+                  5.0,
+                  20.0,
+                  (v) => appState.updateGlobalTheme(theme.copyWith(floatingDistance: v)),
+                ),
+              ],
+            ],
+          ),
+        ),
+
+        // Tilt Hover Effect
+        Container(
+          padding: const EdgeInsets.all(12),
+          margin: const EdgeInsets.only(bottom: 16),
+          decoration: BoxDecoration(
+            color: (theme.enableTiltHover == true)
+                ? const Color(0xFF667eea).withOpacity(0.1)
+                : Colors.grey.shade50,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: (theme.enableTiltHover == true)
+                  ? const Color(0xFF667eea).withOpacity(0.3)
+                  : Colors.grey.shade200,
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const Icon(Icons.threed_rotation, size: 20, color: Color(0xFF667eea)),
+                  const SizedBox(width: 8),
+                  const Expanded(
+                    child: Text(
+                      'Tilt on Hover',
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                  Switch(
+                    value: theme.enableTiltHover == true,
+                    onChanged: (value) {
+                      appState.updateGlobalTheme(
+                        theme.copyWith(enableTiltHover: value),
+                      );
+                    },
+                    activeColor: const Color(0xFF667eea),
+                  ),
+                ],
+              ),
+              if (theme.enableTiltHover == true) ...[
+                const SizedBox(height: 12),
+                _buildSliderRow(
+                  'Intensity',
+                  theme.tiltIntensity ?? 0.05,
+                  0.01,
+                  0.15,
+                  (v) => appState.updateGlobalTheme(theme.copyWith(tiltIntensity: v)),
+                ),
+              ],
+            ],
+          ),
+        ),
+
         // Reset Effects Button
         ElevatedButton.icon(
           onPressed: () {
@@ -1015,6 +1261,10 @@ class ThemeCustomizer extends StatelessWidget {
               enableGradients: false,
               enableBorderGlow: false,
               enableHoverAnimations: false,
+              enableShimmer: false,
+              enablePulse: false,
+              enableFloating: false,
+              enableTiltHover: false,
             ));
           },
           icon: const Icon(Icons.refresh, size: 18),

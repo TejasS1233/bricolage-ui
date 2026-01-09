@@ -75,6 +75,26 @@ class GlobalTheme {
 
   bool enableHoverAnimations;
 
+  // Additional Visual Effects
+  bool? enableShimmer;
+  Color? shimmerBaseColor;
+  Color? shimmerHighlightColor;
+  double? shimmerSpeed;
+
+  bool? enablePulse;
+  double? pulseSpeed;
+  double? pulseScale;
+
+  bool? enableFloating;
+  double? floatingDistance;
+  double? floatingSpeed;
+
+  bool? enableTiltHover;
+  double? tiltIntensity;
+
+  bool? enableAnimatedGradient;
+  double? gradientAnimationSpeed;
+
   // Neo-Brutalism style
   double borderWidth;
   bool enableHardShadow;
@@ -156,6 +176,26 @@ class GlobalTheme {
 
     this.enableHoverAnimations = false,
 
+    // Additional Visual Effects
+    this.enableShimmer,
+    this.shimmerBaseColor,
+    this.shimmerHighlightColor,
+    this.shimmerSpeed,
+
+    this.enablePulse,
+    this.pulseSpeed,
+    this.pulseScale,
+
+    this.enableFloating,
+    this.floatingDistance,
+    this.floatingSpeed,
+
+    this.enableTiltHover,
+    this.tiltIntensity,
+
+    this.enableAnimatedGradient,
+    this.gradientAnimationSpeed,
+
     // Neo-Brutalism defaults
     this.borderWidth = 1.0,
     this.enableHardShadow = false,
@@ -209,6 +249,21 @@ class GlobalTheme {
     double? glowIntensity,
     double? glowSpread,
     bool? enableHoverAnimations,
+    // Additional Visual Effects
+    bool? enableShimmer,
+    Color? shimmerBaseColor,
+    Color? shimmerHighlightColor,
+    double? shimmerSpeed,
+    bool? enablePulse,
+    double? pulseSpeed,
+    double? pulseScale,
+    bool? enableFloating,
+    double? floatingDistance,
+    double? floatingSpeed,
+    bool? enableTiltHover,
+    double? tiltIntensity,
+    bool? enableAnimatedGradient,
+    double? gradientAnimationSpeed,
     // Neo-Brutalism
     double? borderWidth,
     bool? enableHardShadow,
@@ -262,6 +317,21 @@ class GlobalTheme {
       glowIntensity: glowIntensity ?? this.glowIntensity,
       glowSpread: glowSpread ?? this.glowSpread,
       enableHoverAnimations: enableHoverAnimations ?? this.enableHoverAnimations,
+      // Additional Visual Effects
+      enableShimmer: enableShimmer ?? this.enableShimmer,
+      shimmerBaseColor: shimmerBaseColor ?? this.shimmerBaseColor,
+      shimmerHighlightColor: shimmerHighlightColor ?? this.shimmerHighlightColor,
+      shimmerSpeed: shimmerSpeed ?? this.shimmerSpeed,
+      enablePulse: enablePulse ?? this.enablePulse,
+      pulseSpeed: pulseSpeed ?? this.pulseSpeed,
+      pulseScale: pulseScale ?? this.pulseScale,
+      enableFloating: enableFloating ?? this.enableFloating,
+      floatingDistance: floatingDistance ?? this.floatingDistance,
+      floatingSpeed: floatingSpeed ?? this.floatingSpeed,
+      enableTiltHover: enableTiltHover ?? this.enableTiltHover,
+      tiltIntensity: tiltIntensity ?? this.tiltIntensity,
+      enableAnimatedGradient: enableAnimatedGradient ?? this.enableAnimatedGradient,
+      gradientAnimationSpeed: gradientAnimationSpeed ?? this.gradientAnimationSpeed,
       // Neo-Brutalism
       borderWidth: borderWidth ?? this.borderWidth,
       enableHardShadow: enableHardShadow ?? this.enableHardShadow,
@@ -270,157 +340,145 @@ class GlobalTheme {
     );
   }
 
-  // Popular App Theme Presets
-  static GlobalTheme netflix() {
+  /// Bubblegum theme - playful pink/teal with rounded neo-brutalism
+  /// Based on TweakCN style: --radius: 0.4rem, --shadow: 3px 3px
+  static GlobalTheme bubblegum() {
     return GlobalTheme(
-      primary: const Color(0xFFE50914), // Netflix red
+      primary: const Color(0xFFD4578C), // Pink/magenta
       primaryForeground: const Color(0xFFFFFFFF),
-      secondary: const Color(0xFF141414), // Dark gray
-      secondaryForeground: const Color(0xFFFFFFFF),
-      background: const Color(0xFF000000), // Pure black
-      foreground: const Color(0xFFFFFFFF),
-      card: const Color(0xFF1A1A1A),
-      cardForeground: const Color(0xFFFFFFFF),
-      muted: const Color(0xFF2D2D2D),
-      mutedForeground: const Color(0xFFB3B3B3),
-      border: const Color(0xFF333333),
-      input: const Color(0xFF2D2D2D),
-      ring: const Color(0xFFE50914),
-      destructive: const Color(0xFFE50914),
+      secondary: const Color(0xFF8FD4D2), // Teal
+      secondaryForeground: const Color(0xFF333333),
+      background: const Color(0xFFF5E6EB), // Pinkish white
+      foreground: const Color(0xFF4A4A4A),
+      card: const Color(0xFFF7EED1), // Cream/yellow tint
+      cardForeground: const Color(0xFF4A4A4A),
+      muted: const Color(0xFFE6D8DC),
+      mutedForeground: const Color(0xFF777777),
+      popover: const Color(0xFFFFFFFF),
+      popoverForeground: const Color(0xFF4A4A4A),
+      border: const Color(0xFFD4578C), // Pink border
+      input: const Color(0xFFEEEEEE),
+      ring: const Color(0xFFE07AA3),
+      destructive: const Color(0xFFE07474),
       destructiveForeground: const Color(0xFFFFFFFF),
-      accent: const Color(0xFFE50914),
-      accentForeground: const Color(0xFFFFFFFF),
-      radiusScale: 0.5,
-      fontFamily: 'Inter',
-      // Netflix has subtle neumorphism on cards
-      enableNeumorphism: true,
-      neumorphismIntensity: 0.3,
-    );
-  }
-
-  static GlobalTheme amazon() {
-    return GlobalTheme(
-      primary: const Color(0xFFFF9900), // Amazon orange
-      primaryForeground: const Color(0xFF000000),
-      secondary: const Color(0xFF232F3E), // Amazon dark blue
-      secondaryForeground: const Color(0xFFFFFFFF),
-      background: const Color(0xFFFFFFFF),
-      foreground: const Color(0xFF0F1111),
-      card: const Color(0xFFFFFFFF),
-      cardForeground: const Color(0xFF0F1111),
-      muted: const Color(0xFFF5F5F5),
-      mutedForeground: const Color(0xFF565959),
-      border: const Color(0xFFD5D9D9),
-      input: const Color(0xFFFFFFFF),
-      ring: const Color(0xFFFF9900),
-      destructive: const Color(0xFFC7511F),
-      destructiveForeground: const Color(0xFFFFFFFF),
-      accent: const Color(0xFF146EB4), // Amazon blue
-      accentForeground: const Color(0xFFFFFFFF),
-      radiusScale: 0.6,
-      fontFamily: 'Open Sans',
-    );
-  }
-
-  static GlobalTheme flipkart() {
-    return GlobalTheme(
-      primary: const Color(0xFF2874F0), // Flipkart blue
-      primaryForeground: const Color(0xFFFFFFFF),
-      secondary: const Color(0xFFFFC107), // Flipkart yellow
-      secondaryForeground: const Color(0xFF212121),
-      background: const Color(0xFFF1F3F6),
-      foreground: const Color(0xFF212121),
-      card: const Color(0xFFFFFFFF),
-      cardForeground: const Color(0xFF212121),
-      muted: const Color(0xFFF1F3F6),
-      mutedForeground: const Color(0xFF878787),
-      border: const Color(0xFFE0E0E0),
-      input: const Color(0xFFFFFFFF),
-      ring: const Color(0xFF2874F0),
-      destructive: const Color(0xFFFF6161),
-      destructiveForeground: const Color(0xFFFFFFFF),
-      accent: const Color(0xFFFB641B), // Flipkart orange
-      accentForeground: const Color(0xFFFFFFFF),
-      radiusScale: 0.3,
-      fontFamily: 'Roboto',
-    );
-  }
-
-  static GlobalTheme spotify() {
-    return GlobalTheme(
-      primary: const Color(0xFF1DB954), // Spotify green
-      primaryForeground: const Color(0xFFFFFFFF),
-      secondary: const Color(0xFF191414), // Spotify dark
-      secondaryForeground: const Color(0xFFFFFFFF),
-      background: const Color(0xFF121212),
-      foreground: const Color(0xFFFFFFFF),
-      card: const Color(0xFF181818),
-      cardForeground: const Color(0xFFFFFFFF),
-      muted: const Color(0xFF282828),
-      mutedForeground: const Color(0xFFB3B3B3),
-      border: const Color(0xFF282828),
-      input: const Color(0xFF2A2A2A),
-      ring: const Color(0xFF1DB954),
-      destructive: const Color(0xFFE22134),
-      destructiveForeground: const Color(0xFFFFFFFF),
-      accent: const Color(0xFF1DB954),
-      accentForeground: const Color(0xFFFFFFFF),
-      radiusScale: 1.5,
-      fontFamily: 'Montserrat',
-      // Spotify uses gradient backgrounds
-      enableGradients: true,
-      gradientStart: const Color(0xFF1DB954),
-      gradientEnd: const Color(0xFF121212),
-      gradientAngle: 180.0,
-    );
-  }
-
-
-  static GlobalTheme youtube() {
-    return GlobalTheme(
-      primary: const Color(0xFFFF0000), // YouTube red
-      primaryForeground: const Color(0xFFFFFFFF),
-      secondary: const Color(0xFF0F0F0F), // Dark background
-      secondaryForeground: const Color(0xFFFFFFFF),
-      background: const Color(0xFF0F0F0F),
-      foreground: const Color(0xFFFFFFFF),
-      card: const Color(0xFF1C1C1C),
-      cardForeground: const Color(0xFFFFFFFF),
-      muted: const Color(0xFF272727),
-      mutedForeground: const Color(0xFFAAAAAA),
-      border: const Color(0xFF303030),
-      input: const Color(0xFF121212),
-      ring: const Color(0xFFFF0000),
-      destructive: const Color(0xFFFF0000),
-      destructiveForeground: const Color(0xFFFFFFFF),
-      accent: const Color(0xFF3EA6FF), // YouTube blue
-      accentForeground: const Color(0xFFFFFFFF),
-      radiusScale: 0.2,
-      fontFamily: 'Roboto',
-    );
-  }
-
-  static GlobalTheme instagram() {
-    return GlobalTheme(
-      primary: const Color(0xFFE4405F), // Instagram pink
-      primaryForeground: const Color(0xFFFFFFFF),
-      secondary: const Color(0xFF262626), // Dark gray
-      secondaryForeground: const Color(0xFFFFFFFF),
-      background: const Color(0xFFFAFAFA),
-      foreground: const Color(0xFF262626),
-      card: const Color(0xFFFFFFFF),
-      cardForeground: const Color(0xFF262626),
-      muted: const Color(0xFFF5F5F5),
-      mutedForeground: const Color(0xFF8E8E8E),
-      border: const Color(0xFFDBDBDB),
-      input: const Color(0xFFFAFAFA),
-      ring: const Color(0xFFE4405F),
-      destructive: const Color(0xFFED4956),
-      destructiveForeground: const Color(0xFFFFFFFF),
-      accent: const Color(0xFF833AB4), // Instagram purple
-      accentForeground: const Color(0xFFFFFFFF),
-      radiusScale: 1.2,
+      accent: const Color(0xFFF2DB80), // Yellow accent
+      accentForeground: const Color(0xFF333333),
+      chart1: const Color(0xFFE07AA3),
+      chart2: const Color(0xFF8FD4D2),
+      chart3: const Color(0xFFF2DB80),
+      chart4: const Color(0xFFD4A0B8),
+      chart5: const Color(0xFF7AA3E0),
+      radiusScale: 0.8,
+      spacingScale: 1.0,
+      shadowIntensity: 1.0,
       fontFamily: 'Poppins',
+      borderWidth: 2.0,
+      enableHardShadow: true,
+      hardShadowOffsetX: 3.0,
+      hardShadowOffsetY: 3.0,
+    );
+  }
+
+  /// Vintage theme - warm tan/brown colors, serif fonts, soft shadows
+  static GlobalTheme vintage() {
+    return GlobalTheme(
+      primary: const Color(0xFF8B7355), // Warm brown
+      primaryForeground: const Color(0xFFFFFFFF),
+      secondary: const Color(0xFFD9CFC2), // Warm tan
+      secondaryForeground: const Color(0xFF5C5044),
+      background: const Color(0xFFF5EFE6), // Cream background
+      foreground: const Color(0xFF4A4137),
+      card: const Color(0xFFFDF9F3),
+      cardForeground: const Color(0xFF4A4137),
+      muted: const Color(0xFFE8E0D5),
+      mutedForeground: const Color(0xFF7A7164),
+      popover: const Color(0xFFFDF9F3),
+      popoverForeground: const Color(0xFF4A4137),
+      border: const Color(0xFFD0C6B8),
+      input: const Color(0xFFD0C6B8),
+      ring: const Color(0xFF8B7355),
+      destructive: const Color(0xFF9E5A5A),
+      destructiveForeground: const Color(0xFFFFFFFF),
+      accent: const Color(0xFFCBBFA8),
+      accentForeground: const Color(0xFF4A4137),
+      chart1: const Color(0xFF8B7355),
+      chart2: const Color(0xFF7A6A58),
+      chart3: const Color(0xFF6B5C4C),
+      chart4: const Color(0xFF9C8A74),
+      chart5: const Color(0xFFAD9A82),
+      radiusScale: 0.5,
+      spacingScale: 1.0,
+      shadowIntensity: 0.12,
+      fontFamily: 'Libre Baskerville',
+    );
+  }
+
+  /// Amethyst theme - purple/teal with extra rounded corners
+  /// Clean, modern look with generous radius
+  static GlobalTheme amethyst() {
+    return GlobalTheme(
+      primary: const Color(0xFF9B5DE5), // Purple-600
+      primaryForeground: const Color(0xFFFFFFFF),
+      secondary: const Color(0xFF7CD4CC), // Teal-400
+      secondaryForeground: const Color(0xFF000000),
+      background: const Color(0xFFF8F7FC), // Very light purple
+      foreground: const Color(0xFF3D3854), // Dark purple-gray
+      card: const Color(0xFFFFFFFF),
+      cardForeground: const Color(0xFF3D3854),
+      muted: const Color(0xFFF0EFF6),
+      mutedForeground: const Color(0xFF6B6580),
+      popover: const Color(0xFFFFFFFF),
+      popoverForeground: const Color(0xFF3D3854),
+      border: const Color(0xFFE5E3ED),
+      input: const Color(0xFFDAD7E6),
+      ring: const Color(0xFF9B5DE5),
+      destructive: const Color(0xFFE53E3E),
+      destructiveForeground: const Color(0xFFFFFFFF),
+      accent: const Color(0xFFF0EFF6),
+      accentForeground: const Color(0xFF3D3854),
+      chart1: const Color(0xFF9B5DE5),
+      chart2: const Color(0xFF7CD4CC),
+      chart3: const Color(0xFFB794F4),
+      chart4: const Color(0xFFA8DCD6),
+      chart5: const Color(0xFFD4BBF9),
+      radiusScale: 2.0, // Very rounded (1rem)
+      spacingScale: 1.0,
+      shadowIntensity: 0.1,
+      fontFamily: 'DynaPuff',
+    );
+  }
+
+  /// Spring theme - fresh green/pink with medium rounded corners
+  static GlobalTheme spring() {
+    return GlobalTheme(
+      primary: const Color(0xFF4D9E6B), // Green-700
+      primaryForeground: const Color(0xFFFFFFFF),
+      secondary: const Color(0xFF9E6B7B), // Pink-600
+      secondaryForeground: const Color(0xFFFFFFFF),
+      background: const Color(0xFFFAFAFA), // Near white
+      foreground: const Color(0xFF3D4D45),
+      card: const Color(0xFFFFFFFF),
+      cardForeground: const Color(0xFF3D4D45),
+      muted: const Color(0xFFF3F4F3),
+      mutedForeground: const Color(0xFF6B7770),
+      popover: const Color(0xFFFFFFFF),
+      popoverForeground: const Color(0xFF3D4D45),
+      border: const Color(0xFFE5E7E6),
+      input: const Color(0xFFDBDEDC),
+      ring: const Color(0xFF4D9E6B),
+      destructive: const Color(0xFFE53E3E),
+      destructiveForeground: const Color(0xFFFFFFFF),
+      accent: const Color(0xFFF3F4F3),
+      accentForeground: const Color(0xFF3D4D45),
+      chart1: const Color(0xFF4D9E6B),
+      chart2: const Color(0xFF9E6B7B),
+      chart3: const Color(0xFF7BC98F),
+      chart4: const Color(0xFFC99AAC),
+      chart5: const Color(0xFFA5D6B5),
+      radiusScale: 1.0, // Medium rounded (0.5rem)
+      spacingScale: 1.0,
+      shadowIntensity: 0.1,
+      fontFamily: 'Inter',
     );
   }
 
@@ -524,29 +582,38 @@ class GlobalTheme {
     );
   }
 
-  /// Retro Windows theme - Win95 beveled edges, grey backgrounds
+  /// Retro Seaside theme - warm cream, red/teal/orange accents
+  /// Based on TweakCN style with coastal palette
   static GlobalTheme retroWindows() {
     return GlobalTheme(
-      primary: const Color(0xFF000080), // Navy blue title bar
+      primary: const Color(0xFFD33F6A), // Rich pink/red
       primaryForeground: const Color(0xFFFFFFFF),
-      secondary: const Color(0xFFC0C0C0), // Silver/grey
-      secondaryForeground: const Color(0xFF000000),
-      background: const Color(0xFFC0C0C0), // Grey desktop
-      foreground: const Color(0xFF000000),
-      card: const Color(0xFFDFDFDF), // Window background
-      cardForeground: const Color(0xFF000000),
-      muted: const Color(0xFFBFBFBF),
-      mutedForeground: const Color(0xFF808080),
-      border: const Color(0xFF808080),
-      input: const Color(0xFFFFFFFF),
-      ring: const Color(0xFF000080),
-      destructive: const Color(0xFFFF0000),
+      secondary: const Color(0xFF5DBCB8), // Teal
+      secondaryForeground: const Color(0xFFFFFFFF),
+      background: const Color(0xFFF5EDDC), // Warm cream
+      foreground: const Color(0xFF2A4058),
+      card: const Color(0xFFE8DFC8), // Slightly darker cream
+      cardForeground: const Color(0xFF2A4058),
+      muted: const Color(0xFF8FB8B5),
+      mutedForeground: const Color(0xFF2A4058),
+      popover: const Color(0xFFE8DFC8),
+      popoverForeground: const Color(0xFF2A4058),
+      border: const Color(0xFF7AAAA8),
+      input: const Color(0xFF7AAAA8),
+      ring: const Color(0xFFD33F6A),
+      destructive: const Color(0xFFD64550),
       destructiveForeground: const Color(0xFFFFFFFF),
-      accent: const Color(0xFF008080), // Teal accent
+      accent: const Color(0xFFD07B42), // Orange accent
       accentForeground: const Color(0xFFFFFFFF),
-      radiusScale: 0.0, // Sharp corners
-      fontFamily: 'Inter', // Fallback to available font
-      borderWidth: 2.0,
+      chart1: const Color(0xFF4A7999),
+      chart2: const Color(0xFF5DBCB8),
+      chart3: const Color(0xFFD33F6A),
+      chart4: const Color(0xFFD07B42),
+      chart5: const Color(0xFFD64550),
+      radiusScale: 0.5, // Slightly rounded
+      spacingScale: 1.0,
+      shadowIntensity: 0.15,
+      fontFamily: 'Outfit',
     );
   }
 

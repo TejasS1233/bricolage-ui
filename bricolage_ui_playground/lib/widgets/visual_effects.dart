@@ -120,6 +120,20 @@ class VisualEffects {
     ];
   }
 
+  /// Get hard shadow for neo-brutalism style
+  List<BoxShadow> get hardShadow {
+    if (!theme.enableHardShadow) {
+      return [];
+    }
+    return [
+      BoxShadow(
+        color: theme.border,
+        offset: Offset(theme.hardShadowOffsetX, theme.hardShadowOffsetY),
+        blurRadius: 0, // No blur - hard shadow
+      ),
+    ];
+  }
+
   /// Get combined decoration with all enabled effects
   BoxDecoration getCombinedDecoration({
     Color? backgroundColor,
@@ -144,6 +158,11 @@ class VisualEffects {
       shadows.addAll(glowShadows);
     }
 
+    // Add hard shadow for neo-brutalism
+    if (theme.enableHardShadow) {
+      shadows.addAll(hardShadow);
+    }
+
     // Gradients are now applied to app background only, not individual components
     // So we skip gradient application here
 
@@ -152,16 +171,32 @@ class VisualEffects {
       finalColor = bgColor.withOpacity(theme.glassOpacity);
     }
 
+    // Determine border based on effect
+    Border? border;
+    if (theme.enableHardShadow) {
+      // Neo-brutalism: thick solid border
+      border = Border.all(
+        color: theme.border,
+        width: theme.borderWidth,
+      );
+    } else if (theme.enableGlassmorphism) {
+      border = Border.all(
+        color: theme.border.withOpacity(0.3),
+        width: 1.5,
+      );
+    } else if (theme.enableNeumorphism || theme.enableBorderGlow) {
+      // Add subtle border for neumorphism and glow effects
+      border = Border.all(
+        color: theme.border.withOpacity(0.2),
+        width: 1.0,
+      );
+    }
+
     return BoxDecoration(
       color: gradient == null ? finalColor : null,
       gradient: gradient,
       borderRadius: radius,
-      border: theme.enableGlassmorphism
-          ? Border.all(
-              color: theme.border.withOpacity(0.3),
-              width: 1.5,
-            )
-          : null,
+      border: border,
       boxShadow: shadows.isEmpty ? null : shadows,
     );
   }
@@ -244,9 +279,56 @@ class EffectContainer extends StatefulWidget {
   State<EffectContainer> createState() => _EffectContainerState();
 }
 
-class _EffectContainerState extends State<EffectContainer> {
+class _EffectContainerState extends State<EffectContainer> with SingleTickerProviderStateMixin {
   bool _isPressed = false;
   bool _isHovered = false;
+  late AnimationController _controller;
+  late Animation<double> _floatingAnimation;
+  late Animation<double> _pulseAnimation;
+  late Animation<double> _shimmerAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    );
+
+    _floatingAnimation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+    );
+
+    _pulseAnimation = Tween<double>(begin: 1.0, end: 1.05).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+    );
+
+    _shimmerAnimation = Tween<double>(begin: -1.0, end: 2.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.linear),
+    );
+
+    if (widget.theme.enableFloating == true || widget.theme.enablePulse == true || widget.theme.enableShimmer == true) {
+      _controller.repeat(reverse: true);
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(EffectContainer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.theme.enableFloating == true || widget.theme.enablePulse == true || widget.theme.enableShimmer == true) {
+      if (!_controller.isAnimating) {
+        _controller.repeat(reverse: true);
+      }
+    } else {
+      _controller.stop();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -256,51 +338,137 @@ class _EffectContainerState extends State<EffectContainer> {
 
     Widget container;
 
-    // If glassmorphism is enabled, use blur effect
-    if (widget.theme.enableGlassmorphism) {
-      container = ClipRRect(
-        borderRadius: radius,
-        child: BackdropFilter(
-          filter: ImageFilter.blur(
-            sigmaX: widget.theme.glassBlur,
-            sigmaY: widget.theme.glassBlur,
-          ),
-          child: AnimatedContainer(
-            duration: widget.theme.enableHoverAnimations 
-                ? const Duration(milliseconds: 200)
-                : Duration.zero,
-            transform: widget.theme.enableHoverAnimations && _isHovered
-                ? (Matrix4.identity()..scale(1.02))
-                : Matrix4.identity(),
-            padding: widget.padding,
-            decoration: effects.getCombinedDecoration(
-              backgroundColor: widget.backgroundColor,
-              borderRadius: radius,
-              isPressed: _isPressed,
-            ),
-            child: widget.child,
-          ),
-        ),
-      );
-    } else {
-      container = AnimatedContainer(
-        duration: widget.theme.enableHoverAnimations 
-            ? const Duration(milliseconds: 200)
-            : Duration.zero,
-        transform: widget.theme.enableHoverAnimations && _isHovered
-            ? (Matrix4.identity()..scale(1.02))
-            : Matrix4.identity(),
-        padding: widget.padding,
-        decoration: effects.getCombinedDecoration(
-          backgroundColor: widget.backgroundColor,
+    // Build base container content
+    Widget buildBaseContainer() {
+      // If glassmorphism is enabled, use blur effect
+      if (widget.theme.enableGlassmorphism) {
+        return ClipRRect(
           borderRadius: radius,
-          isPressed: _isPressed,
-        ),
-        child: widget.child,
+          child: BackdropFilter(
+            filter: ImageFilter.blur(
+              sigmaX: widget.theme.glassBlur,
+              sigmaY: widget.theme.glassBlur,
+            ),
+            child: AnimatedContainer(
+              duration: widget.theme.enableHoverAnimations 
+                  ? const Duration(milliseconds: 200)
+                  : Duration.zero,
+              transform: widget.theme.enableHoverAnimations && _isHovered
+                  ? (Matrix4.identity()..scale(1.02))
+                  : Matrix4.identity(),
+              padding: widget.padding,
+              decoration: effects.getCombinedDecoration(
+                backgroundColor: widget.backgroundColor ?? widget.theme.card,
+                borderRadius: radius,
+                isPressed: _isPressed,
+              ).copyWith(
+                // Use semi-transparent background for glass effect but keep content visible
+                color: Colors.white.withOpacity(widget.theme.glassOpacity),
+                backgroundBlendMode: BlendMode.lighten,
+              ),
+              child: widget.child,
+            ),
+          ),
+        );
+      } else {
+        return AnimatedContainer(
+          duration: widget.theme.enableHoverAnimations 
+              ? const Duration(milliseconds: 200)
+              : Duration.zero,
+          transform: widget.theme.enableHoverAnimations && _isHovered
+              ? (Matrix4.identity()..scale(1.02))
+              : Matrix4.identity(),
+          padding: widget.padding,
+          decoration: effects.getCombinedDecoration(
+            backgroundColor: widget.backgroundColor,
+            borderRadius: radius,
+            isPressed: _isPressed,
+          ),
+          child: widget.child,
+        );
+      }
+    }
+
+    container = buildBaseContainer();
+
+    // Apply shimmer effect as an overlay (doesn't hide content)
+    if (widget.theme.enableShimmer == true) {
+      container = Stack(
+        children: [
+          container,
+          Positioned.fill(
+            child: AnimatedBuilder(
+              animation: _shimmerAnimation,
+              builder: (context, child) {
+                return ClipRRect(
+                  borderRadius: radius,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Colors.transparent,
+                          Colors.white.withOpacity(0.1),
+                          Colors.transparent,
+                        ],
+                        stops: [
+                          _shimmerAnimation.value - 0.3,
+                          _shimmerAnimation.value,
+                          _shimmerAnimation.value + 0.3,
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       );
     }
 
-    if (widget.onTap != null || widget.theme.enableHoverAnimations) {
+    // Apply pulse effect
+    if (widget.theme.enablePulse == true) {
+      container = AnimatedBuilder(
+        animation: _pulseAnimation,
+        builder: (context, child) {
+          return Transform.scale(
+            scale: _pulseAnimation.value,
+            child: child,
+          );
+        },
+        child: container,
+      );
+    }
+
+    // Apply floating effect
+    if (widget.theme.enableFloating == true) {
+      container = AnimatedBuilder(
+        animation: _floatingAnimation,
+        builder: (context, child) {
+          return Transform.translate(
+            offset: Offset(0, math.sin(_floatingAnimation.value * math.pi * 2) * (widget.theme.floatingDistance ?? 10.0)),
+            child: child,
+          );
+        },
+        child: container,
+      );
+    }
+
+    // Apply tilt hover effect
+    if (widget.theme.enableTiltHover == true && _isHovered) {
+      container = Transform(
+        transform: Matrix4.identity()
+          ..setEntry(3, 2, 0.001)
+          ..rotateX(widget.theme.tiltIntensity ?? 0.05)
+          ..rotateY(widget.theme.tiltIntensity ?? 0.05),
+        alignment: Alignment.center,
+        child: container,
+      );
+    }
+
+    if (widget.onTap != null || widget.theme.enableHoverAnimations || widget.theme.enableTiltHover == true) {
       return MouseRegion(
         onEnter: (_) => setState(() => _isHovered = true),
         onExit: (_) => setState(() => _isHovered = false),

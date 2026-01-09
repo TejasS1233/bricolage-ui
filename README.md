@@ -183,7 +183,7 @@ Don't settle for Material Blue. Bricolage UI comes with **12+ professional prese
 | <img src="assets/default_theme.png" width="180" /> | <img src="assets/neo_brutalism_theme.png" width="180" /> | <img src="assets/cyber_theme.png" width="180" /> | <img src="assets/ios_theme.png" width="180" /> |
 |               _Clean SaaS aesthetic_               |                  _Gumroad/Notion style_                  |              _Dev tools & CLI apps_              |           _Apple-inspired squircles_           |
 
-**Also includes:** Netflix, Spotify, Amazon, YouTube, Instagram, Monochrome, Retro Windows, and more!
+**Also available:** Bubblegum, Vintage, Amethyst, Spring, Monochrome, Retro Windows
 
 ### How it works:
 
@@ -212,6 +212,28 @@ class UIRadius {
 }
 // ... and more theme classes in one file
 ```
+
+---
+
+## Visual Effects
+
+Apply professional visual effects to any component. All effects are customizable and work seamlessly with any theme.
+
+|                   **Glassmorphism**                    |                   **Neumorphism**                    |                  **Gradient**                   |                 **Border Glow**                 |
+| :----------------------------------------------------: | :--------------------------------------------------: | :---------------------------------------------: | :---------------------------------------------: |
+| <img src="assets/glassmorphism.png" width="180" /> | <img src="assets/neomorphism.png" width="180" /> | <img src="assets/gradient.png" width="180" /> | <img src="assets/border_glow.png" width="180" /> |
+|           _Frosted glass with backdrop blur_           |           _Soft shadows and highlights_            |         _Smooth color transitions_          |        _Glowing animated borders_         |
+
+**Also available:** Pulse, Floating, Tilt Hover, Hard Shadows, and Hover Animations
+
+### How to use:
+
+1. **Enable effects** in the Effects tab of the [web preview](https://bricolage-ui.vercel.app)
+2. **Adjust parameters** like blur intensity, glow color, gradient angles
+3. **Mix and match** - combine multiple effects for unique designs
+4. **Export** → All effect settings are included in your `theme.dart` file
+
+Effects automatically work with buttons, cards, textfields, alerts, chips, and dashboard components.
 
 ---
 

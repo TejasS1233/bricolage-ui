@@ -26,13 +26,14 @@ class ComponentConfig {
 
     // Helper to wrap container-like widgets with visual effects
     Widget wrapWithEffects(Widget child, {double? width, double? height, EdgeInsets? padding, double? borderRadius}) {
-      // Only glass, neum, glow apply to components - gradients are app-level
-      final hasEffects = t.enableGlassmorphism || t.enableNeumorphism || t.enableBorderGlow;
+      // Check for any visual effects - glass, neum, glow, neo-brutalism hard shadow, or new effects
+      final hasEffects = t.enableGlassmorphism || t.enableNeumorphism || t.enableBorderGlow || t.enableHardShadow ||
+          (t.enablePulse == true) || (t.enableFloating == true) || (t.enableTiltHover == true);
       if (!hasEffects) return child;
       
       return EffectContainer(
         theme: t,
-        backgroundColor: Colors.transparent, // Don't add extra background
+        backgroundColor: t.card, // Use card background for effects to be visible
         borderRadius: BorderRadius.circular((borderRadius ?? 12.0) * t.radiusScale),
         padding: padding,
         child: SizedBox(
@@ -45,18 +46,19 @@ class ComponentConfig {
 
     switch (id) {
       case 'button':
+        final hasEffects = t.enableGlassmorphism || t.enableNeumorphism || t.enableBorderGlow || t.enableHardShadow ||
+            (t.enableShimmer == true) || (t.enablePulse == true) || (t.enableFloating == true) || (t.enableTiltHover == true);
         return wrapWithEffects(
           CustomButton(
             text: properties['text'] ?? 'Click Me',
             variant: _getButtonVariant(properties['variant']),
             size: _getButtonSize(properties['size']),
-            backgroundColor: properties['backgroundColor'] ?? t.primary,
+            backgroundColor: hasEffects ? Colors.transparent : (properties['backgroundColor'] ?? t.primary),
             textColor: properties['textColor'] ?? t.primaryForeground,
-            borderColor: properties['borderColor'] ?? t.border,
+            borderColor: hasEffects ? Colors.transparent : (properties['borderColor'] ?? t.border),
             borderRadius:
                 (properties['borderRadius']?.toDouble() ?? 8.0) * t.radiusScale,
-            elevation:
-                (properties['elevation']?.toDouble() ?? 2.0) * t.shadowIntensity,
+            elevation: hasEffects ? 0 : (properties['elevation']?.toDouble() ?? 2.0) * t.shadowIntensity,
             fullWidth: properties['fullWidth'] ?? false,
             fontSize:
                 (properties['fontSize']?.toDouble() ?? 16.0) * t.fontSizeScale,
@@ -92,7 +94,7 @@ class ComponentConfig {
         );
         
         // Apply visual effects if any are enabled (gradients are app-level only)
-        if (t.enableGlassmorphism || t.enableNeumorphism || t.enableBorderGlow) {
+        if (t.enableGlassmorphism || t.enableNeumorphism || t.enableBorderGlow || t.enableHardShadow) {
           return EffectContainer(
             theme: t,
             backgroundColor: properties['backgroundColor'] ?? t.card,
@@ -117,19 +119,21 @@ class ComponentConfig {
         return cardWidget;
 
       case 'textfield':
+        final hasEffects = t.enableGlassmorphism || t.enableNeumorphism || t.enableBorderGlow || t.enableHardShadow ||
+            (t.enableShimmer == true) || (t.enablePulse == true) || (t.enableFloating == true) || (t.enableTiltHover == true);
         return wrapWithEffects(
           CustomTextField(
             label: properties['label'] ?? 'Email',
             placeholder: properties['placeholder'] ?? 'Enter your email',
             size: _getTextFieldSize(properties['size']),
-            backgroundColor: properties['backgroundColor'] ?? t.background,
-            borderColor: properties['borderColor'] ?? t.input,
+            backgroundColor: hasEffects ? Colors.transparent : (properties['backgroundColor'] ?? t.background),
+            borderColor: hasEffects ? Colors.transparent : (properties['borderColor'] ?? t.input),
             focusedBorderColor: properties['focusedBorderColor'] ?? t.ring,
             textColor: properties['textColor'] ?? t.foreground,
             labelColor: properties['labelColor'] ?? t.mutedForeground,
             borderRadius:
                 (properties['borderRadius']?.toDouble() ?? 8.0) * t.radiusScale,
-            borderWidth: properties['borderWidth']?.toDouble() ?? 1.5,
+            borderWidth: hasEffects ? 0 : (properties['borderWidth']?.toDouble() ?? 1.5),
             fontSize:
                 (properties['fontSize']?.toDouble() ?? 16.0) * t.fontSizeScale,
             prefixIcon: properties['prefixIcon'] != 'none'
@@ -219,17 +223,35 @@ class ComponentConfig {
 
       case 'badge':
         final badgeRadius = 16.0 * t.radiusScale + 2;
-        return wrapWithEffects(
-          CustomBadge(
-            text: properties['text'] ?? 'New',
-            variant: _getBadgeVariant(properties['variant']),
-            backgroundColor: t.primary,
-            foregroundColor: t.primaryForeground,
-            borderRadius: badgeRadius, // Pass to badge component
-          ),
+        final badgeWidget = CustomBadge(
+          text: properties['text'] ?? 'New',
+          variant: _getBadgeVariant(properties['variant']),
+          backgroundColor: t.primary,
+          foregroundColor: t.primaryForeground,
           borderRadius: badgeRadius,
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         );
+        
+        // Apply neo-brutalism styling
+        if (t.enableHardShadow) {
+          return Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(badgeRadius),
+              border: Border.all(color: t.border, width: t.borderWidth),
+              boxShadow: [
+                BoxShadow(
+                  color: t.border,
+                  offset: Offset(t.hardShadowOffsetX, t.hardShadowOffsetY),
+                  blurRadius: 0,
+                ),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(badgeRadius),
+              child: badgeWidget,
+            ),
+          );
+        }
+        return badgeWidget;
 
       case 'checkbox':
         return CustomCheckbox(
@@ -262,34 +284,73 @@ class ComponentConfig {
 
       case 'avatar':
         // Respect theme radiusScale - low values = more square, high values = circular
-        return CustomAvatar(
+        final avatarRadius = t.radiusScale < 0.5 ? 8.0 * t.radiusScale + 4 : null;
+        final avatarWidget = CustomAvatar(
           initials: properties['initials'] ?? 'JD',
           size: _getAvatarSize(properties['size']),
-          borderRadius: t.radiusScale < 0.5 ? 8.0 * t.radiusScale + 4 : null, // null = full circle
+          borderRadius: avatarRadius,
         );
+        
+        // Apply neo-brutalism styling directly (like cards do)
+        if (t.enableHardShadow) {
+          final size = _getAvatarSizeValue(properties['size']);
+          final borderRadius = avatarRadius ?? size / 2; // full circle if null
+          return Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(borderRadius),
+              border: Border.all(color: t.border, width: t.borderWidth),
+              boxShadow: [
+                BoxShadow(
+                  color: t.border,
+                  offset: Offset(t.hardShadowOffsetX, t.hardShadowOffsetY),
+                  blurRadius: 0,
+                ),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(borderRadius),
+              child: avatarWidget,
+            ),
+          );
+        }
+        return avatarWidget;
 
       case 'alert':
-        final alertRadius = 8.0 * t.radiusScale + 2;
-        return wrapWithEffects(
-          CustomAlert(
-            title: properties['title'] ?? 'Alert',
-            description: properties['description'],
-            variant: _getAlertVariant(properties['variant']),
-            borderRadius: alertRadius, // Pass to component
-          ),
+        final alertRadius = 8.0 * t.radiusScale;
+        final hasEffects = t.enableGlassmorphism || t.enableNeumorphism || t.enableBorderGlow || t.enableHardShadow ||
+            (t.enablePulse == true) || (t.enableFloating == true) || (t.enableTiltHover == true);
+        
+        final alertWidget = CustomAlert(
+          title: properties['title'] ?? 'Alert',
+          description: properties['description'],
+          variant: _getAlertVariant(properties['variant']),
           borderRadius: alertRadius,
-          padding: const EdgeInsets.all(12),
+          backgroundColor: hasEffects ? Colors.transparent : null,
         );
+        
+        if (hasEffects) {
+          return EffectContainer(
+            theme: t,
+            backgroundColor: t.card,
+            borderRadius: BorderRadius.circular(alertRadius),
+            padding: EdgeInsets.zero,
+            child: alertWidget,
+          );
+        }
+        return alertWidget;
 
       case 'divider':
         return const CustomDivider();
 
       case 'chip':
         final chipRadius = 16.0 * t.radiusScale + 2;
+        final hasEffects = t.enableGlassmorphism || t.enableNeumorphism || t.enableBorderGlow || t.enableHardShadow ||
+            (t.enablePulse == true) || (t.enableFloating == true) || (t.enableTiltHover == true);
         return wrapWithEffects(
           CustomChip(
             label: properties['label'] ?? 'Chip',
-            borderRadius: chipRadius, // Pass to component
+            borderRadius: chipRadius,
+            backgroundColor: hasEffects ? Colors.transparent : null,
           ),
           borderRadius: chipRadius,
         );
@@ -311,13 +372,15 @@ class ComponentConfig {
         );
 
       case 'textarea':
+        final hasEffects = t.enableGlassmorphism || t.enableNeumorphism || t.enableBorderGlow || t.enableHardShadow ||
+            (t.enableShimmer == true) || (t.enablePulse == true) || (t.enableFloating == true) || (t.enableTiltHover == true);
         return wrapWithEffects(
           CustomTextarea(
             label: properties['label'] ?? 'Description',
             placeholder: properties['placeholder'] ?? 'Enter text...',
             maxLines: properties['maxLines'] ?? 4,
-            backgroundColor: t.background,
-            borderColor: t.input,
+            backgroundColor: hasEffects ? Colors.transparent : t.background,
+            borderColor: hasEffects ? Colors.transparent : t.input,
             focusedBorderColor: t.ring,
             textColor: t.foreground,
             labelColor: t.mutedForeground,
@@ -344,15 +407,38 @@ class ComponentConfig {
         );
 
       case 'togglegroup':
-        return CustomToggleGroup(
+        final toggleRadius = 8.0 * t.radiusScale;
+        final toggleWidget = CustomToggleGroup(
           items: const ['Left', 'Center', 'Right'],
           selectedColor: t.primary,
           selectedTextColor: t.primaryForeground,
           unselectedTextColor: t.foreground,
           borderColor: t.border,
-          borderRadius: 8.0 * t.radiusScale,
+          borderRadius: toggleRadius,
           fontSize: 14.0 * t.fontSizeScale,
         );
+        
+        // Apply neo-brutalism styling
+        if (t.enableHardShadow) {
+          return Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(toggleRadius),
+              border: Border.all(color: t.border, width: t.borderWidth),
+              boxShadow: [
+                BoxShadow(
+                  color: t.border,
+                  offset: Offset(t.hardShadowOffsetX, t.hardShadowOffsetY),
+                  blurRadius: 0,
+                ),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(toggleRadius),
+              child: toggleWidget,
+            ),
+          );
+        }
+        return toggleWidget;
 
       case 'breadcrumb':
         return CustomBreadcrumb(
@@ -463,7 +549,8 @@ class ComponentConfig {
         );
 
       case 'table':
-        return CustomTable(
+        final tableRadius = 8.0 * t.radiusScale;
+        final tableWidget = CustomTable(
           columns: const [
             TableColumn(header: 'Name'),
             TableColumn(header: 'Status'),
@@ -478,6 +565,28 @@ class ComponentConfig {
           borderColor: t.border,
           fontSize: 13.0 * t.fontSizeScale,
         );
+        
+        // Apply neo-brutalism styling
+        if (t.enableHardShadow) {
+          return Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(tableRadius),
+              border: Border.all(color: t.border, width: t.borderWidth),
+              boxShadow: [
+                BoxShadow(
+                  color: t.border,
+                  offset: Offset(t.hardShadowOffsetX, t.hardShadowOffsetY),
+                  blurRadius: 0,
+                ),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(tableRadius),
+              child: tableWidget,
+            ),
+          );
+        }
+        return tableWidget;
 
       default:
         return const SizedBox();
@@ -601,6 +710,19 @@ class ComponentConfig {
         return CustomAvatarSize.xl;
       default:
         return CustomAvatarSize.md;
+    }
+  }
+
+  double _getAvatarSizeValue(String? size) {
+    switch (size) {
+      case 'sm':
+        return 32.0;
+      case 'lg':
+        return 56.0;
+      case 'xl':
+        return 72.0;
+      default:
+        return 40.0; // md
     }
   }
 
