@@ -1,6 +1,13 @@
 # Bricolage UI Playground
 
-Interactive web application for previewing, customizing, and exporting Flutter UI components with real-time theme customization.
+Interactive web application for previewing, customizing, and exporting Flutter UI components with real-time theme customization and visual effects.
+
+## What's New in v1.5.0
+
+- Visual effects system (glassmorphism, neumorphism, gradients, border glow, animations)
+- New theme presets: Bubblegum, Vintage, Amethyst, Spring
+- Enhanced effects tab with real-time preview
+- Effect parameter customization (blur, opacity, glow, animation speed)
 
 ## Live Demo
 
@@ -17,12 +24,14 @@ flutter run -d chrome
 ## Features
 
 ### Component Library
+
 - 40+ pre-built Flutter UI components
 - Real-time preview in mobile phone frame
 - Component property customization panel
 - Interactive component selection
 
 ### Preset UI Layouts
+
 - Dashboard layout with stats, progress, and alerts
 - Profile layout with avatar, bio, and settings
 - Social feed layout with posts and interactions
@@ -30,13 +39,16 @@ flutter run -d chrome
 - Settings layout with toggles and preferences
 
 ### Theme System
+
 - Global theme customization with 40+ color properties
-- Popular app theme presets (Netflix, Amazon, Flipkart, Spotify, YouTube, Instagram)
+- 12 theme presets: Default, Neo-Brutalism, Cyberpunk, Bento/iOS, Bubblegum, Vintage, Amethyst, Spring, Monochrome, Retro Windows
+- Visual effects: Glassmorphism, Neumorphism, Gradients, Border Glow, Pulse, Floating, Tilt Hover, Hard Shadows
 - Typography control with Google Fonts integration
 - Adjustable scales for radius, spacing, shadows, and font sizes
 - Real-time theme preview across all components
 
 ### Export Functionality
+
 - Download single consolidated `theme.dart` file
 - Includes all theme customizations (colors, typography, radius, spacing, shadows, effects)
 - Ready-to-integrate into Flutter projects

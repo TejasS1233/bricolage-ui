@@ -1,8 +1,18 @@
 # Bricolage UI
 
-A modern Flutter UI component library with **enterprise-ready accessibility** and **40+ customizable components**.
+A modern Flutter UI component library with **enterprise-ready accessibility**, **visual effects**, and **40+ customizable components**.
 
 ## What Makes Bricolage UI Different?
+
+### Visual Effects System
+
+- **Glassmorphism** with backdrop blur
+- **Neumorphism** with soft shadows
+- **Gradient backgrounds** with customizable angles
+- **Border glow** animations
+- **Pulse, floating, and tilt hover** effects
+- **Hard shadows** for neo-brutalism style
+- Mix and match effects on any component
 
 ### Enterprise-Grade Accessibility
 
@@ -26,7 +36,7 @@ Choose the right approach for your project:
 
 **💡 Recommendation**: Use **CLI for production apps** (like shadcn/ui), use **package for demos and MVPs**.
 
-### 🎨 Fluid Micro-Animations
+###  Fluid Micro-Animations
 
 - **ScaleTransition** on button presses for tactile feedback
 - **FadeTransition** on dialogs for smooth appearance
@@ -55,7 +65,7 @@ bricolage_ui add button card dialog
 
 ```yaml
 dependencies:
-  bricolage_ui: ^1.0.0
+  bricolage_ui: ^1.5.0
 ```
 
 ## Usage
