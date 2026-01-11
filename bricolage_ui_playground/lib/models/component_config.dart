@@ -39,6 +39,8 @@ class ComponentConfig {
           t.enableNeumorphism ||
           t.enableBorderGlow ||
           t.enableHardShadow ||
+          t.enableHoverAnimations ||
+          (t.enableShimmer == true) ||
           (t.enablePulse == true) ||
           (t.enableFloating == true) ||
           (t.enableTiltHover == true);
@@ -131,7 +133,12 @@ class ComponentConfig {
         if (t.enableGlassmorphism ||
             t.enableNeumorphism ||
             t.enableBorderGlow ||
-            t.enableHardShadow) {
+            t.enableHardShadow ||
+            t.enableHoverAnimations ||
+            (t.enableShimmer == true) ||
+            (t.enablePulse == true) ||
+            (t.enableFloating == true) ||
+            (t.enableTiltHover == true)) {
           return EffectContainer(
             theme: t,
             backgroundColor: properties['backgroundColor'] ?? t.card,

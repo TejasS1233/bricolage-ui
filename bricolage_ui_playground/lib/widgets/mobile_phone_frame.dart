@@ -420,6 +420,8 @@ class MobilePhoneFrame extends StatelessWidget {
         theme.enableNeumorphism ||
         theme.enableBorderGlow ||
         theme.enableHardShadow ||
+        theme.enableHoverAnimations ||
+        (theme.enableShimmer == true) ||
         (theme.enablePulse == true) ||
         (theme.enableFloating == true) ||
         (theme.enableTiltHover == true);
@@ -463,6 +465,8 @@ class MobilePhoneFrame extends StatelessWidget {
         theme.enableNeumorphism ||
         theme.enableBorderGlow ||
         theme.enableHardShadow ||
+        theme.enableHoverAnimations ||
+        (theme.enableShimmer == true) ||
         (theme.enablePulse == true) ||
         (theme.enableFloating == true) ||
         (theme.enableTiltHover == true);

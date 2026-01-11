@@ -38,10 +38,11 @@ class _CustomSkeletonState extends State<CustomSkeleton>
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, child) {
-        return Container(
+    return RepaintBoundary(
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (context, child) {
+          return Container(
           width: widget.width,
           height: widget.height ?? 16,
           decoration: BoxDecoration(
@@ -63,7 +64,8 @@ class _CustomSkeletonState extends State<CustomSkeleton>
                 BorderRadius.circular(widget.borderRadius ?? UIRadius.md),
           ),
         );
-      },
+        },
+      ),
     );
   }
 }

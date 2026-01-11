@@ -292,14 +292,14 @@ class _EffectContainerState extends State<EffectContainer>
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
     _shimmerAnimation = Tween<double>(
-      begin: -1.0,
-      end: 2.0,
+      begin: 0.0,
+      end: 1.0,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.linear));
 
     if (widget.theme.enableFloating == true ||
         widget.theme.enablePulse == true ||
         widget.theme.enableShimmer == true) {
-      _controller.repeat(reverse: true);
+      _controller.repeat(reverse: widget.theme.enableShimmer != true);
     }
   }
 
@@ -316,7 +316,7 @@ class _EffectContainerState extends State<EffectContainer>
         widget.theme.enablePulse == true ||
         widget.theme.enableShimmer == true) {
       if (!_controller.isAnimating) {
-        _controller.repeat(reverse: true);
+        _controller.repeat(reverse: widget.theme.enableShimmer != true);
       }
     } else {
       _controller.stop();
@@ -390,38 +390,47 @@ class _EffectContainerState extends State<EffectContainer>
 
     // Apply shimmer effect as an overlay (doesn't hide content)
     if (widget.theme.enableShimmer == true) {
-      container = Stack(
-        children: [
-          container,
-          Positioned.fill(
-            child: AnimatedBuilder(
-              animation: _shimmerAnimation,
-              builder: (context, child) {
-                return ClipRRect(
-                  borderRadius: radius,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          Colors.transparent,
-                          Colors.white.withOpacity(0.1),
-                          Colors.transparent,
-                        ],
-                        stops: [
-                          _shimmerAnimation.value - 0.3,
-                          _shimmerAnimation.value,
-                          _shimmerAnimation.value + 0.3,
-                        ],
+      container = RepaintBoundary(
+        child: Stack(
+          children: [
+            container,
+            Positioned.fill(
+              child: IgnorePointer(
+                child: AnimatedBuilder(
+                  animation: _shimmerAnimation,
+                  builder: (context, child) {
+                    // Calculate stops and clamp to valid 0-1 range
+                    final value = _shimmerAnimation.value;
+                    final stop1 = (value - 0.3).clamp(0.0, 1.0);
+                    final stop2 = value.clamp(0.0, 1.0);
+                    final stop3 = (value + 0.3).clamp(0.0, 1.0);
+                    
+                    // Ensure stops are in ascending order
+                    final stops = [stop1, stop2.clamp(stop1, 1.0), stop3.clamp(stop2.clamp(stop1, 1.0), 1.0)];
+                    
+                    return ClipRRect(
+                      borderRadius: radius,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              Colors.transparent,
+                              Colors.white.withOpacity(0.15),
+                              Colors.transparent,
+                            ],
+                            stops: stops,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
+                    );
+                  },
+                ),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       );
     }
 
@@ -469,17 +478,24 @@ class _EffectContainerState extends State<EffectContainer>
     if (widget.onTap != null ||
         widget.theme.enableHoverAnimations ||
         widget.theme.enableTiltHover == true) {
-      return MouseRegion(
-        onEnter: (_) => setState(() => _isHovered = true),
-        onExit: (_) => setState(() => _isHovered = false),
-        child: GestureDetector(
-          onTapDown: (_) => setState(() => _isPressed = true),
-          onTapUp: (_) {
-            setState(() => _isPressed = false);
-            widget.onTap?.call();
-          },
-          onTapCancel: () => setState(() => _isPressed = false),
-          child: container,
+      return RepaintBoundary(
+        child: MouseRegion(
+          cursor: widget.onTap != null
+              ? SystemMouseCursors.click
+              : SystemMouseCursors.basic,
+          opaque: true,
+          onEnter: (_) => setState(() => _isHovered = true),
+          onExit: (_) => setState(() => _isHovered = false),
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTapDown: (_) => setState(() => _isPressed = true),
+            onTapUp: (_) {
+              setState(() => _isPressed = false);
+              widget.onTap?.call();
+            },
+            onTapCancel: () => setState(() => _isPressed = false),
+            child: container,
+          ),
         ),
       );
     }

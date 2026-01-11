@@ -477,17 +477,24 @@ class _EffectContainerState extends State<EffectContainer>
     if (widget.onTap != null ||
         widget.enableHoverAnimations ||
         widget.enableTiltHover) {
-      return MouseRegion(
-        onEnter: (_) => setState(() => _isHovered = true),
-        onExit: (_) => setState(() => _isHovered = false),
-        child: GestureDetector(
-          onTapDown: (_) => setState(() => _isPressed = true),
-          onTapUp: (_) {
-            setState(() => _isPressed = false);
-            widget.onTap?.call();
-          },
-          onTapCancel: () => setState(() => _isPressed = false),
-          child: container,
+      return RepaintBoundary(
+        child: MouseRegion(
+          cursor: widget.onTap != null
+              ? SystemMouseCursors.click
+              : SystemMouseCursors.basic,
+          opaque: true,
+          onEnter: (_) => setState(() => _isHovered = true),
+          onExit: (_) => setState(() => _isHovered = false),
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTapDown: (_) => setState(() => _isPressed = true),
+            onTapUp: (_) {
+              setState(() => _isPressed = false);
+              widget.onTap?.call();
+            },
+            onTapCancel: () => setState(() => _isPressed = false),
+            child: container,
+          ),
         ),
       );
     }
