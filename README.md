@@ -212,27 +212,25 @@ class UIRadius {
 
 ---
 
-## What's New in v1.5.0
+## Visual Effects
 
-**Visual Effects System** - Professional effects for any component:
-- **Glassmorphism** - Frosted glass with backdrop blur
-- **Neumorphism** - Soft shadows and highlights
-- **Gradient Overlays** - Smooth color transitions
-- **Border Glow** - Animated glowing borders
-- **Pulse, Floating, Tilt Hover** - Micro-interactions and animations
+Apply professional visual effects to any component. All effects are customizable and work seamlessly with any theme.
 
-**Enhanced Theme System:**
-- Effect parameters now part of `GlobalTheme` class
-- 17 new customizable effect properties
-- All effects work seamlessly with 12+ theme presets
-- Export includes effect settings in your `theme.dart` file
+|                 **Glassmorphism**                  |                 **Neumorphism**                  |                 **Gradient**                  |                 **Border Glow**                  |
+| :------------------------------------------------: | :----------------------------------------------: | :-------------------------------------------: | :----------------------------------------------: |
+| <img src="assets/glassmorphism.png" width="180" /> | <img src="assets/neomorphism.png" width="180" /> | <img src="assets/gradient.png" width="180" /> | <img src="assets/border_glow.png" width="180" /> |
+|         _Frosted glass with backdrop blur_         |          _Soft shadows and highlights_           |          _Smooth color transitions_           |            _Glowing animated borders_            |
 
-**Dashboard Components:**
-- Cards, textfields, alerts, chips, and buttons support all effects
-- Enable/disable effects per component in the web preview
-- Mix and match effects for unique designs
+**Also available:** Pulse, Floating, Tilt Hover, Hard Shadows, and Hover Animations
 
-[Try effects in the live demo →](https://bricolage-ui.vercel.app)
+### How to use:
+
+1. **Enable effects** in the Effects tab of the [web preview](https://bricolage-ui.vercel.app)
+2. **Adjust parameters** like blur intensity, glow color, gradient angles
+3. **Mix and match** - combine multiple effects for unique designs
+4. **Export** → All effect settings are included in your `theme.dart` file
+
+Effects automatically work with buttons, cards, textfields, alerts, chips, and dashboard components.
 
 ---
 
