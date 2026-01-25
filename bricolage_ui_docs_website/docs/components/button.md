@@ -2,6 +2,8 @@
 
 A versatile button component with multiple variants, sizes, and states.
 
+<FlutterPreview path="/button" />
+
 ## Installation
 
 ::: code-group

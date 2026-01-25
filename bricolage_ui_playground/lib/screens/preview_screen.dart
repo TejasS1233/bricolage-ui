@@ -14,7 +14,9 @@ const double kDesktopBreakpoint = 1200;
 const double kTabletBreakpoint = 768;
 
 class PreviewScreen extends StatefulWidget {
-  const PreviewScreen({super.key});
+  final String? initialComponent;
+
+  const PreviewScreen({super.key, this.initialComponent});
 
   @override
   State<PreviewScreen> createState() => _PreviewScreenState();
@@ -22,6 +24,21 @@ class PreviewScreen extends StatefulWidget {
 
 class _PreviewScreenState extends State<PreviewScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.initialComponent != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final appState = Provider.of<AppState>(context, listen: false);
+        final component = appState.availableComponents.firstWhere(
+          (c) => c.name.toLowerCase() == widget.initialComponent!.toLowerCase(),
+          orElse: () => appState.availableComponents.first,
+        );
+        appState.selectComponent(component);
+      });
+    }
+  }
 
   Future<void> _handleDownload(BuildContext context, AppState appState) async {
     try {

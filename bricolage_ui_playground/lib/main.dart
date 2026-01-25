@@ -40,9 +40,24 @@ class MyApp extends StatelessWidget {
               ),
             ),
             initialRoute: '/',
-            routes: {
-              '/': (context) => const PreviewScreen(),
-              '/showcase': (context) => const ShowcaseScreen(),
+            initialRoute: '/',
+            onGenerateRoute: (settings) {
+              if (settings.name == '/') {
+                return MaterialPageRoute(builder: (_) => const PreviewScreen());
+              }
+              if (settings.name == '/showcase') {
+                return MaterialPageRoute(builder: (_) => const ShowcaseScreen());
+              }
+              
+              // Handle component routes e.g. /button, /card
+              final componentName = settings.name?.replaceAll('/', '');
+              if (componentName != null) {
+                // Return a specific preview for this component
+                return MaterialPageRoute(
+                  builder: (_) => PreviewScreen(initialComponent: componentName),
+                );
+              }
+              return null;
             },
           );
         },
