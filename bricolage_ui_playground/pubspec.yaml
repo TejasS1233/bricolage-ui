@@ -49,6 +49,7 @@ dependencies:
 
   # Icons
   cupertino_icons: ^1.0.8
+  url_strategy: ^0.3.0
 
 dev_dependencies:
   flutter_test:
